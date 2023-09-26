@@ -11,3 +11,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.fc-theme-standard .fc-list-day-cushion{
+  background: #22444f;
+}
+
+
+
+@media only screen and (max-width : 600px) {    
+  .fc .fc-toolbar-title{
+    display: none;
+  }
+}
