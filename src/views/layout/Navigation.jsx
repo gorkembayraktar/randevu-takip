@@ -16,7 +16,7 @@ export default function SimpleBottomNavigation() {
   const [value, setValue] = React.useState(location.pathname);
 
   const showCreateAppointment = () => {
-    dispatch.VisibleCreateAppointmentModal(true);
+    dispatch.createAppointmentModal({show: true});
   }
 
   return (

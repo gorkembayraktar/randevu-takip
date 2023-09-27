@@ -5,16 +5,16 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 import { useSelector } from "react-redux";
-import { isVisibleCreateAppointmentModal } from "../../../features/GlobalSlice";
+import { createAppointmentModal } from "../../../features/GlobalSlice";
 
 import { dispatch } from '../../../store'
 
 export default function CreateAppointment(){
 
    // const [open, setOpen] = useState(false);
-    const open = useSelector(isVisibleCreateAppointmentModal);
+    const { show: open, date, hour } = useSelector(createAppointmentModal);
 
-    const handleClose = () => dispatch.VisibleCreateAppointmentModal(false);
+    const handleClose = () => dispatch.createAppointmentModal({show: false});
 
     return <div> <Modal
         open={open}
@@ -46,7 +46,7 @@ export default function CreateAppointment(){
                 <Grid container spacing={2}>
                     <Grid item  xs={6}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker defaultValue={dayjs(Date.now())} label="Randevu Tarihi" />
+                        <DatePicker defaultValue={date || dayjs(Date.now())} label="Randevu Tarihi" />
                         </LocalizationProvider>
                     </Grid>
                     <Grid item  xs={6}>
@@ -56,7 +56,7 @@ export default function CreateAppointment(){
                         label="Saat"
                         type="time"
                         fullWidth
-                        defaultValue={`${new Date().getHours()}:${new Date().getMinutes()}`}
+                        defaultValue={hour || `${new Date().getHours()}:${new Date().getMinutes()}`}
                         sx={{mb:1}}
                         />
                     </Grid>

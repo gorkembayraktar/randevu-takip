@@ -2,10 +2,15 @@ import store from './index'
 
 
 import { 
-    setVisibleCreateAppointmentModal
+    setCreateAppointmentModal,
+    setCreateAppointmentModalProps
 } from '../features/GlobalSlice'
 
 
-export const VisibleCreateAppointmentModal = ( state ) => {
-    return store.dispatch( setVisibleCreateAppointmentModal( state ) );
+export const createAppointmentModal = ( state ) => {
+    return store.dispatch( setCreateAppointmentModal( state ) );
 }
+export const CreateAppointmentModalProps = ( state ) => {
+    return store.dispatch( setCreateAppointmentModalProps( state ) );
+}
+

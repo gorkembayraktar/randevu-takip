@@ -2,7 +2,11 @@ import {  createSlice } from '@reduxjs/toolkit';
 
 
 const initialState = {
-   isVisibleCreateAppointmentModal: false,
+   createAppointmentModal:{
+    show: false,
+    date: '',
+    hour: ''
+   },
    appointments: []
 };
 
@@ -11,19 +15,28 @@ export const globalSlice = createSlice({
   name: 'global',
   initialState,
   reducers: {
-    setVisibleCreateAppointmentModal: (state, action) => {
-      state.isVisibleCreateAppointmentModal = action.payload ?? false;
+    setCreateAppointmentModal: (state, action) => {
+      state.createAppointmentModal.show = action.payload.show ?? false;
+      state.createAppointmentModal.date = action.payload.date;
+      state.createAppointmentModal.hour = action.payload.hour;
     },
+    setCreateAppointmentModalProps: (state, action) => {
+      state.createAppointmentModal = {
+        ...state.createAppointmentModal,
+        ...action.payload
+      }
+    }
   },
 });
 
 export const { 
-    setVisibleCreateAppointmentModal
+    setCreateAppointmentModal,
+    setCreateAppointmentModalProps
  } = globalSlice.actions;
 
 
 
-export const isVisibleCreateAppointmentModal = (state) => state.global.isVisibleCreateAppointmentModal;
+export const createAppointmentModal = (state) => state.global.createAppointmentModal;
 
 
 export default globalSlice.reducer;

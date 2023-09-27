@@ -5,7 +5,6 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import React, { useEffect, useRef, useState } from "react";
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
-import { Slide } from '@mui/material';
 import { useSwipeable } from "react-swipeable";
 
 

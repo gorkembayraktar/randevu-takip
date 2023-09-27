@@ -22,6 +22,11 @@ export const randevu_saatleri = [
 ]
 
 
+export const randevular = [
+    
+]
+
+
 export const gunluk_randevu_saatleri = {
     0: [
 
@@ -43,6 +48,8 @@ export const gunluk_randevu_saatleri = {
     3:[{title: 'Randevu alımı Kapalı', hour: '00:00', isClosed: true, end: '23:59'}],
     5:[
         {title: 'Randevu al',hour: '05:00'},
+        {title: 'Randevu al',hour: '10:00'},
+        {title: 'Randevu al',hour: '10:00'},
         {title: 'Randevu al',hour: '10:00'},
         {title: 'Randevu al',hour: '11:00'},
         {title: 'Randevu al',hour: '16:00'},

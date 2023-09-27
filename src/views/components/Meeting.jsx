@@ -10,6 +10,9 @@ import { createRef, useEffect, useState } from 'react';
 import { Box, Button, IconButton } from '@mui/material';
 import { GridDeleteIcon } from '@mui/x-data-grid';
 
+import { dispatch } from '../../store';
+import dayjs from 'dayjs';
+
 
 
 export default function Meeting({calendarEvents,setCalendarEvents, showDialogDelete}) {
@@ -54,13 +57,25 @@ export default function Meeting({calendarEvents,setCalendarEvents, showDialogDel
       if(info.event.start < new Date()) return;
 
       const clickedEvent = info.event;
+   
+
+      const selectDate = clickedEvent.start;
+
+      dispatch.createAppointmentModal({
+        show: true,
+        date: dayjs(selectDate),
+        hour: dayjs(selectDate).format('HH:mm')
+      })
+      
+      /*
       const updatedEvents = calendarEvents.map((event) => {
         if (event.id == clickedEvent.id) {
           return { ...event, isFull: true };
         }
         return event;
       });
-    setCalendarEvents( updatedEvents );
+      setCalendarEvents( updatedEvents );
+      */
   };
 
   const handleDataTransform  = (info) => {
