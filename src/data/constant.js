@@ -19,8 +19,6 @@ export const randevu_saatleri = [
     {id:6, day:4, hour: '07:00', notAvailable: false },
     {id:7, day:5, hour: '05:00', notAvailable: false },
     {id:8, day:6, hour: '07:00', notAvailable: false },
-    {id:9, day:0, hour: '07:00', notAvailable: true },
-    {id:10, day:0, hour: '07:00', notAvailable: false }
 ]
 
 

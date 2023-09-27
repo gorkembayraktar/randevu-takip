@@ -17,6 +17,9 @@ code {
   background: #22444f;
 }
 
+:root {
+  --fc-list-event-hover-bg-color: #46957b;
+}
 
 
 @media only screen and (max-width : 600px) {    

@@ -7,7 +7,8 @@ import listPlugin from '@fullcalendar/list';
 import interactionPlugin,{ Draggable } from '@fullcalendar/interaction'; // for selectable
 
 import { createRef, useEffect, useState } from 'react';
-import { Box } from '@mui/material';
+import { Box, Button, IconButton } from '@mui/material';
+import { GridDeleteIcon } from '@mui/x-data-grid';
 
 
 
@@ -115,16 +116,21 @@ function renderEventContent(eventInfo) {
       <div className="fc-daygrid-event-dot" style={{borderColor: eventInfo.event.backgroundColor}}></div>
     }
   
-    <div className="fc-event-time">{eventInfo.timeText}</div>
-    <div className="fc-event-title">
+    <div className="fc-event-time">
+      {eventInfo.timeText}
+      
+      </div>
+    <div className="fc-event-title" >
       {eventInfo.event.title }
-     
-    </div>
-    { eventInfo.event.extendedProps.isFull &&
-        <>
-        <button className="event-delete" onClick={ () => deleteEvent(eventInfo) }>İptal</button>
-        </>
+      { ['listWeek', 'timeGridWeek'].includes(eventInfo.view.type ) && eventInfo.event.extendedProps.isFull &&
+       
+        <IconButton size="small" IconButton className="" onClick={ () => deleteEvent(eventInfo) }> <GridDeleteIcon /></IconButton>
+        
       }
+      
+    </div>
+
+    
     </>
   )
 }

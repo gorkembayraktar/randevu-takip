@@ -31,10 +31,10 @@ export default function DeleteDialog({deleteDialog, handleDialogClose, handleDDC
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} autoFocus>Vazgeç</Button>
+            <Button onClick={handleClose} color="primary" autoFocus>Vazgeç</Button>
 
-            <Button onClick={handleDDConfirm} >
-              Sil
+            <Button onClick={handleDDConfirm}  color="success">
+              Onaylıyorum
             </Button>
           </DialogActions>
         </Dialog>

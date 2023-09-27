@@ -5,10 +5,6 @@ import {
 } from "react-router-dom";
 
 
-
-import Header from './views/layout/Header'
-import Navigation from './views/layout/Navigation'
-
 import { routes } from './routes'
 
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -16,14 +12,14 @@ import CssBaseline from '@mui/material/CssBaseline';
 
 import { Box } from '@mui/material';
 
-import ScrollToTop from './views/components/ScrollToTop'
+import { AppLayout } from './views/layout/AppLayout';
 
 
 
 
 export default function App() {
 
-  const mode = 'dark';
+  const mode = 'light';
    
   const theme = React.useMemo(
     () =>
@@ -77,14 +73,7 @@ export default function App() {
                 route.withoutSection ? 
                   route.element 
                 :  
-                <>
-
-                <ScrollToTop />
-                <Header />
-                {route.element}
-                <Box sx={{height:100}}> </Box> 
-                <Navigation />
-                </>
+                <AppLayout element={route.element} />
             }  exact={route.exact}/>
           ))
           }

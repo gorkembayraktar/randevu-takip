@@ -7,7 +7,9 @@ import { Chip, Divider, Grid, Tooltip, Typography } from '@mui/material';
 
 import { ozel_gunler } from '../../data/constant';
 import dayjs from 'dayjs';
+import * as locale from 'dayjs/locale/tr'
 
+dayjs.locale(locale)
 
 const DATE_STATUS = {
     1: "Aktif",
@@ -24,12 +26,25 @@ const columns = [
   { 
     field: 'status', 
     headerName: 'Durum',
-    width: 150, 
-    renderCell: (params)  => <Chip  label={DATE_STATUS[params.row.status] || params.row.status} variant="outlined" color={ DATE_STATUS_COLOR[params.row.status]} />
+    width: 120, 
+    renderCell: (params)  => <Chip 
+                      label={DATE_STATUS[params.row.status] || params.row.status} variant="outlined" color={ DATE_STATUS_COLOR[params.row.status]} />
     },
-  { field: 'content', headerName: 'Açıklama',   flex: 1, width: 130 },
-  { field: 'start', headerName: 'Başlangıç Tarihi', width: 170  },
-  { field: 'end', headerName: 'Bitiş Tarihi', width: 170 },
+  { 
+    field: 'content', 
+    headerName: 'Açıklama',   
+    flex: 1, 
+    width: 300, 
+  },
+  { 
+    field: 'start', 
+    headerName: 'Başlangıç Tarihi', 
+    width: 170 ,
+    
+    valueGetter: (params) => dayjs(params.row.start).format('M MMMM dddd, YYYY')
+  },
+  { field: 'end', headerName: 'Bitiş Tarihi', width: 170,
+  valueGetter: (params) => dayjs(params.row.end).format('M MMMM dddd, YYYY') },
   { 
     align:'center',
     field: 'total', 
@@ -58,8 +73,10 @@ for(let i = 0; i < 100; i++){
 const holidayColumns =[
     { field: 'id', headerName: 'ID', width: 70 },
     { field: 'title', headerName: 'Başlık',   flex: 1, width: 300},
-    { field: 'start', headerName: 'Başlangıç Tarihi', width: 170  },
-    { field: 'end', headerName: 'Bitiş Tarihi', width: 170 },
+    { field: 'start', headerName: 'Başlangıç Tarihi', width: 170,
+    valueGetter: (params) => dayjs(params.row.start).format('M MMMM dddd, YYYY') },
+    { field: 'end', headerName: 'Bitiş Tarihi', width: 170,
+    valueGetter: (params) => dayjs(params.row.end).format('M MMMM dddd, YYYY') },
     { 
       align:'center',
       field: 'total', 

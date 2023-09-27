@@ -8,6 +8,7 @@ import Container from '@mui/material/Container';
 import { Box, Button, IconButton, Menu, MenuItem } from '@mui/material';
 import { AccountCircle } from '@mui/icons-material';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 
 
@@ -37,8 +38,8 @@ const Header = () =>{
                   <Typography
                       variant="h6"
                       noWrap
-                      component="a"
-                      href="/"
+                      component={Link}
+                      to="/"
                       sx={{
                       mr: 2,
                       ml:1,

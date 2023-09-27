@@ -4,12 +4,17 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
+import { useSelector } from "react-redux";
+import { isVisibleCreateAppointmentModal } from "../../../features/GlobalSlice";
+
+import { dispatch } from '../../../store'
 
 export default function CreateAppointment(){
 
-    const [open, setOpen] = useState(false);
+   // const [open, setOpen] = useState(false);
+    const open = useSelector(isVisibleCreateAppointmentModal);
 
-    const handleClose = () => setOpen(false);
+    const handleClose = () => dispatch.VisibleCreateAppointmentModal(false);
 
     return <div> <Modal
         open={open}

@@ -81,7 +81,7 @@ const History = () =>{
             <Grid container spacing={2}>
                   <Grid item sm={8} sx={{ width:'100%' }}>
 
-                  <TableRows rows={rows} columns={columns} />
+                  <TableRows rows={rows} columns={columns} pageSize={10} />
 
                   </Grid>
               </Grid> 
