@@ -23,7 +23,20 @@ export const randevu_saatleri = [
 
 
 export const randevular = [
-    
+    {
+        date: '09.12.2023',
+        appointments:[
+            {
+                created_at:null,
+                updated_at: null,
+                name: 'Görkem',
+                phone: '055555',
+                note: 'Mesaj',
+                date: '09.12.2023',
+                hours: '23:00'
+            }
+        ]
+    }
 ]
 
 
@@ -59,7 +72,8 @@ export const gunluk_randevu_saatleri = {
         {title: 'Randevu al',hour: '10:00'},
         {title: 'Randevu al',hour: '11:00'},
         {title: 'Randevu al',hour: '16:00'},
-        {title: 'Randevu al',hour: '18:00'} 
+        {title: 'Randevu al',hour: '18:00'},
+        {title: 'Randevu al',hour: '23:00'}
     ]
 }
 

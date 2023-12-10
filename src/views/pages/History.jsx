@@ -4,6 +4,7 @@ import Container from '@mui/material/Container';
 import TableRows from '../components/TableRows';
 import { Button, Chip, Divider, Grid, IconButton, Tooltip, Typography } from '@mui/material';
 import { GridDeleteIcon } from '@mui/x-data-grid';
+import { useTitle } from '../../hooks/useTitle';
 
 
 const MEETING_STATUS = {
@@ -69,24 +70,21 @@ for(let i = 0; i < 100; i++){
 
 const History = () =>{
   const mode = 'dark';
-
+  useTitle("Geçmiş Randevular");
 
   return (
       <>
-         <Container sx={{ pt:3 }}  style={{minHeight:"80vh"}} dark>
-            <Typography variant="h5" component="h6">
-              Geçmiş Randevular
-            </Typography>
-            <Divider  sx={{my:3}}/>
-            <Grid container spacing={2}>
-                  <Grid item sm={8} sx={{ width:'100%' }}>
+       
+        <Typography color="red" fontFamily="revert" variant="h5" component="h6">
+          Geçmiş Randevular
+        </Typography>
+        <Grid container spacing={2}>
+              <Grid item sm={8} sx={{ width:'100%' }}>
 
-                  <TableRows rows={rows} columns={columns} pageSize={10} />
+              <TableRows rows={rows} columns={columns} pageSize={10} />
 
-                  </Grid>
-              </Grid> 
-             
-         </Container>
+              </Grid>
+          </Grid> 
       </>
   );
 }

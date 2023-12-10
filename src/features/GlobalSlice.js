@@ -7,7 +7,9 @@ const initialState = {
     date: '',
     hour: ''
    },
-   appointments: []
+   appointments: [
+    
+   ]
 };
 
 

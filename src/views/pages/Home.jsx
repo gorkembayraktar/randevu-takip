@@ -12,11 +12,12 @@ import DeleteDialog from '../components/modal/DeleteDialog'
 import { useState } from 'react';
 import { Alert, AlertTitle, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { useTitle } from '../../hooks/useTitle';
 
 
 const Home = () =>{
   const mode = 'dark';
-  
+  useTitle("Randevular");
 
   const [calendarEvents, setCalendarEvents] = useState(get_daily_data(7));
 
@@ -60,18 +61,8 @@ const Home = () =>{
 
   return (
       <>
-         <Container sx={{ pt:3 }}  style={{minHeight:"80vh"}} dark>
-                <Alert severity="info"
-                 action={
-                  <Button color="inherit" size="small" component={Link} to="/limit-dates">
-                    Git
-                  </Button>
-                }>
-                  <AlertTitle>Randevu Tarihlerini kısıtlamak için</AlertTitle>
-                </Alert>
-               <Meeting calendarEvents={calendarEvents} setCalendarEvents={setCalendarEvents} showDialogDelete={showDialogDelete} />
-               <DeleteDialog deleteDialog={deleteDialog} handleDialogClose={handleDialogClose} handleDDConfirm={handleDDConfirm} />
-         </Container>
+        <Meeting calendarEvents={calendarEvents} setCalendarEvents={setCalendarEvents} showDialogDelete={showDialogDelete} />
+        <DeleteDialog deleteDialog={deleteDialog} handleDialogClose={handleDialogClose} handleDDConfirm={handleDDConfirm} />
       </>
   );
 }

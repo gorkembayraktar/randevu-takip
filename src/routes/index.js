@@ -1,4 +1,3 @@
-
 import {
     Navigate 
   } from "react-router-dom";
@@ -6,6 +5,8 @@ import Home from "../views/pages/Home";
 import Setting from "../views/pages/Setting";
 import History from "../views/pages/History";
 import LimitDates from "../views/pages/LimitDates";
+import Login  from "../views/pages/Login";
+import Holiday from "../views/pages/Holiday";
 
 export const routes = [
     {
@@ -13,6 +14,13 @@ export const routes = [
         element:<Home/>,
         exact:true,
         auth:false
+    },
+    {
+        path:'/login',
+        element:<Login />,
+        exact:true,
+        auth:false,
+        withoutSection: true
     },
     {
         path:'/setting',
@@ -33,8 +41,16 @@ export const routes = [
         auth:false
     },
     {
+        path:'/holiday',
+        element:<Holiday />,
+        exact:true,
+        auth:false
+    },
+    {
         //404 page navigate to main page
         path: '*',
         element: <Navigate  to="/" />
     }
 ];
+
+

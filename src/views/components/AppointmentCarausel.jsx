@@ -54,7 +54,7 @@ export const AppointmentCaraousel = () => {
     const nextCount = data.length - selectedIndis - 1;
     const progress = Math.ceil( (selectedIndis) / (data.length - 1) * 100);
 
-    return <Paper sx={{ zIndex: 99, position: 'fixed', bottom: { xs:55, sm: 0, md: 0}, left: 0, right: 0, py:1, display: 'block'}} elevation={3}>
+    return <Paper sx={{ zIndex: 99, position: 'fixed', bottom: { xs:55, sm: 0, md: 0}, left: 0, right: 0, py:1, display: 'block'}} elevation={1}>
       <Container>
         <Grid container spacing={1}>
             <Grid item sx={{width: 'auto', display:'flex', alignItems:'center', justifyContent:'center'}}>

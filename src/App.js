@@ -19,7 +19,7 @@ import { AppLayout } from './views/layout/AppLayout';
 
 export default function App() {
 
-  const mode = 'light';
+  const mode = 'dark';
    
   const theme = React.useMemo(
     () =>

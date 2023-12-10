@@ -61,6 +61,16 @@ export default function CreateAppointment(){
                         />
                     </Grid>
                 </Grid>
+
+                <TextField
+                multiline
+                label="Not"
+                type="text"
+                rows={2}
+                defaultValue=""
+                fullWidth
+                sx={{mb:1}}
+                />
             </Typography>
             <Divider  sx={{my:3}}/>
             <Typography id="modal-modal-footer" sx={{ mt: 2 }}>

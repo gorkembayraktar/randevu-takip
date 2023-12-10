@@ -51,16 +51,16 @@ export default function Meeting({calendarEvents,setCalendarEvents, showDialogDel
     
 
     const handleEventClick = (info) => {
-      if(info.event.extendedProps.notAvailable) return;
-      if(info.event.extendedProps.isFull) return;
-      if(info.event.extendedProps.isClosed) return;
-      if(info.event.start < new Date()) return;
+      if(info.event.extendedProps.notAvailable) return console.log('not availabe');
+      if(info.event.extendedProps.isFull) return console.log('isFull');
+      if(info.event.extendedProps.isClosed) return console.log('isClosed');
+      if(info.event.start < new Date()) return console.log('başlangıç tarihi şuanki tarihten küçük');
 
       const clickedEvent = info.event;
    
 
       const selectDate = clickedEvent.start;
-
+      
       dispatch.createAppointmentModal({
         show: true,
         date: dayjs(selectDate),
@@ -174,7 +174,7 @@ function renderEventContent(eventInfo) {
     <Box sx={{ display:{ xs: 'block', sm: 'none'}}}>{ title }</Box>
       <FullCalendar
         dayMaxEventRows= {3}
-        initialView='listWeek'
+        initialView='dayGridMonth'
         moreLinkClick={'day'}
         locale={trLocale}
         plugins={[dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin ]}
