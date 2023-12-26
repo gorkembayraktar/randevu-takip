@@ -12,31 +12,40 @@ import { GridDeleteIcon } from '@mui/x-data-grid';
 
 import { dispatch } from '../../store';
 import dayjs from 'dayjs';
+import { AppointmentStatus } from '../../data/constant';
+import { createAppointmentModal } from '../../store/dispatch';
 
 
 
-export default function Meeting({calendarEvents,setCalendarEvents, showDialogDelete}) {
+export default function Meeting({calendarEvents, showDialogDelete}) {
 
   const calendarRef = createRef();
 
   const [title, setTitle] = useState("");
 
+  console.log(calendarEvents)
 
 
   // load external events
+  /*
   useEffect(() => {
     setTitle( calendarRef.current.calendar.currentData.viewTitle );
   },[calendarRef]);
 
+  */
 
   const handleDateClick = (info) => {
     // Etkinliğe tıklanınca bu işlev çağrılır
     if(info.view.type == 'timeGridDay') return;
     if( info.view.type != 'timeGridWeek' ){
+      console.log(info.view.type, info)
+      /*
         calendarRef.current
         .getApi()
         .changeView('timeGridWeek', info.date)
         return;
+
+        */
     }
   };
 
@@ -51,21 +60,46 @@ export default function Meeting({calendarEvents,setCalendarEvents, showDialogDel
     
 
     const handleEventClick = (info) => {
-      if(info.event.extendedProps.notAvailable) return console.log('not availabe');
-      if(info.event.extendedProps.isFull) return console.log('isFull');
-      if(info.event.extendedProps.isClosed) return console.log('isClosed');
-      if(info.event.start < new Date()) return console.log('başlangıç tarihi şuanki tarihten küçük');
+      const props  = info.event.extendedProps;
 
+      if(props.status === AppointmentStatus.isNotAvailable){
+          return console.log('not availabe');
+      }
+
+      if(props.status === AppointmentStatus.isClosed){
+          return console.log('isClosed');
+      }
+
+      /*
+      if(info.event.start < new Date()) 
+          return console.log('başlangıç tarihi şuanki tarihten küçük');
+      */
+
+       
       const clickedEvent = info.event;
    
-
       const selectDate = clickedEvent.start;
       
-      dispatch.createAppointmentModal({
-        show: true,
-        date: dayjs(selectDate),
-        hour: dayjs(selectDate).format('HH:mm')
-      })
+      if(  props.status == AppointmentStatus.isAvailable  ){
+        const p = {
+          show: true,
+          date: dayjs(selectDate.toString()).toString(),
+          hour: dayjs(selectDate.toString()).format('HH:mm').toString()
+        };
+        
+    
+        dispatch.createAppointmentModal(p)
+        
+        return;
+      }
+     
+      if(  props.status == AppointmentStatus.isFull  ){
+
+      }
+
+    
+      
+     
       
       /*
       const updatedEvents = calendarEvents.map((event) => {
@@ -79,22 +113,8 @@ export default function Meeting({calendarEvents,setCalendarEvents, showDialogDel
   };
 
   const handleDataTransform  = (info) => {
-    if(info.isFull){
-      info.title= !info.info ? 'DOLU' : `${info.info.name} - ${info.info.phone}`
-      info.backgroundColor= 'red'
-    }else if(info.isClosed){
-      info.backgroundColor= 'red'
-      info.title = info.title ?? 'Randevu alımı bu süre boyunca kapatıldı'
-    }else if(info.start < new Date()){
-      info.title='Süresi geçti alınamaz'
-      info.backgroundColor= 'gray'
-    }else if(info.notAvailable){
-      info.backgroundColor= '#ccc'
-      info.title = 'Randevu alımı bu saat için kapatıldı.'
-    }else{
-      info.backgroundColor= '#3788d8'
-      info.title = 'Randevu al'
-    }
+   
+   
   }
 
   const deleteEvent = (info) =>{
@@ -163,7 +183,7 @@ function renderEventContent(eventInfo) {
 
   if( eventInfo.event.start > new Date() ){
   }else{
-    setCalendarEvents((state) => [...state,{...ntt}]);
+    //setCalendarEvents((state) => [...state,{...ntt}]);
   }
 
 };
@@ -188,7 +208,6 @@ function renderEventContent(eventInfo) {
         dateClick={ handleDateClick}
         ref={calendarRef}
         eventClick={handleEventClick}
-        eventDataTransform ={handleDataTransform}
         eventContent={renderEventContent}
         droppable={true}
         selectMirror={true}

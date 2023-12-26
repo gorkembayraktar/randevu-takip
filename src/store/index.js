@@ -4,7 +4,10 @@ import * as Dispatches from './dispatch'
 export const store = configureStore({
   reducer: {
     global: GlobalReducer,
-  }
+  },
+  middleware: getDefaultMiddleware => getDefaultMiddleware({
+    serializableCheck: false,
+  })
 });
 
 export const dispatch = Dispatches;

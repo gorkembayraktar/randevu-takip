@@ -21,23 +21,33 @@ export const randevu_saatleri = [
     {id:8, day:6, hour: '07:00', notAvailable: false },
 ]
 
+export const AppointmentStatus = {
+    isAvailable: 0,
+    isFull: 1,
+    isNotAvailable: 2,
+    isClosed: 3
+}
 
 export const randevular = [
     {
-        date: '09.12.2023',
-        appointments:[
-            {
-                created_at:null,
-                updated_at: null,
-                name: 'Görkem',
-                phone: '055555',
-                note: 'Mesaj',
-                date: '09.12.2023',
-                hours: '23:00'
-            }
-        ]
+        date: '12.25.2023',
+        time: '23:00',
+        name: 'Görkem',
+        phone: '055555',
+        note: 'Mesaj',
+        created_at:null,
+        updated_at: null,
+        status: AppointmentStatus.isFull
+    },
+    {
+        date: '12.25.2023',
+        message: 'Randevu al',
+        time: '22:00',
+        status: AppointmentStatus.isAvailable
     }
 ]
+
+
 
 
 export const gunluk_randevu_saatleri = {
@@ -46,9 +56,9 @@ export const gunluk_randevu_saatleri = {
     ],// pazar
     1:[
         {title: 'Randevu al',hour: '05:00'},
-        {title: 'Randevu al',hour: '10:00', isFull: true, info: {name: 'Görkem', phone: '0855555'}},
+        {title: 'Randevu al',hour: '10:00', status:'isFull', message: 'Bu randevu dolu', user: {name: 'Görkem', phone: '0855555'}},
         {title: 'Randevu al',hour: '11:00'},
-        {title: 'Randevu al',hour: '16:00', isFull: true, info: {name: 'Görkem', phone: '0855555'}},
+        {title: 'Randevu al',hour: '16:00', status:'isFull', info: {name: 'Görkem', phone: '0855555'}},
         {title: 'Randevu al',hour: '18:00'}
     ],
     2:[
@@ -119,7 +129,84 @@ export const ozel_gunler = [
     },
 ]
 
-export const get_daily_data = ( maxDay = 7 ) =>{
+
+export const get_daily_data = ( ) => {
+    const date = new Date();
+    date.setHours()
+    return [
+        ...randevular.map(k => ({
+                ...k, 
+                start: setHours(new Date(k.date), k.time),
+                end: setHours(new Date(k.date), k.time)
+            })
+        ).map(info => {
+           
+            if(info.status == AppointmentStatus.isFull){
+                info.title= `${info?.name} - ${info?.phone}`
+                info.backgroundColor= 'red'
+            }else if(info.status == AppointmentStatus.isClosed){
+                info.backgroundColor= 'red'
+                info.title = info?.title ?? 'Randevu alımı bu süre boyunca kapatıldı'
+            }else if(info.status == AppointmentStatus.isNotAvailable){
+                info.backgroundColor= '#ccc'
+                info.title = 'Randevu alımı bu saat için kapatıldı.'
+            }else if(info.start < new Date()){
+                info.title='Süresi geçti alınamaz'
+                info.backgroundColor= 'gray'
+            }else if(info.status == AppointmentStatus.isAvailable){
+                info.backgroundColor= '#3788d8'
+                info.title = info.message
+            }
+            return info
+        })   
+    ]
+}
+
+
+export const get_fake_appointment = (form) => {
+    const info = {
+        date: form.date,
+        time: form.time,
+        name: form.name,
+        phone: form.phone,
+        note: form.note,
+        created_at:null,
+        updated_at: null,
+        status: AppointmentStatus.isFull
+    };
+
+    info.start = setHours(new Date(info.date),info.time);
+    info.end =  setHours(new Date(info.date), info.time);
+
+    if(info.status == AppointmentStatus.isFull){
+        info.title= `${info?.name} - ${info?.phone}`
+        info.backgroundColor= 'red'
+    }else if(info.status == AppointmentStatus.isClosed){
+        info.backgroundColor= 'red'
+        info.title = info?.title ?? 'Randevu alımı bu süre boyunca kapatıldı'
+    }else if(info.status == AppointmentStatus.isNotAvailable){
+        info.backgroundColor= '#ccc'
+        info.title = 'Randevu alımı bu saat için kapatıldı.'
+    }else if(info.start < new Date()){
+        info.title='Süresi geçti alınamaz'
+        info.backgroundColor= 'gray'
+    }else if(info.status == AppointmentStatus.isAvailable){
+        info.backgroundColor= '#3788d8'
+        info.title = info.message
+    }
+
+    return info;
+}
+
+const setHours = (date, stringhours) => {
+    const split = stringhours.split(':');
+    date.setHours(parseInt(split[0]), parseInt(split[1]));
+    return date;
+}
+
+
+
+export const get_daily_data2 = ( maxDay = 7 ) =>{
 
     const data = [];
 
@@ -178,3 +265,4 @@ export const get_daily_data = ( maxDay = 7 ) =>{
     }
     return data;
 }
+

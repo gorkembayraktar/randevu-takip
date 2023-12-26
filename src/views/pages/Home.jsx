@@ -13,13 +13,20 @@ import { useState } from 'react';
 import { Alert, AlertTitle, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useTitle } from '../../hooks/useTitle';
+import { useSelector } from 'react-redux';
+import { getAppointments } from '../../features/GlobalSlice';
 
 
 const Home = () =>{
   const mode = 'dark';
   useTitle("Randevular");
 
-  const [calendarEvents, setCalendarEvents] = useState(get_daily_data(7));
+ 
+  const calendarEvents = useSelector(getAppointments);
+
+  const setCalendarEvents = () => {
+    
+  }
 
   const [deleteDialog, setDeleteDialog] = useState({
     info: null,

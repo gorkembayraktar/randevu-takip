@@ -1,22 +1,55 @@
 import { Box, Button, ButtonGroup, Divider, Grid, Modal, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 import { useSelector } from "react-redux";
-import { createAppointmentModal } from "../../../features/GlobalSlice";
+import { getCreateAppointmentModal } from "../../../features/GlobalSlice";
 
 import { dispatch } from '../../../store'
+import { memo, useEffect, useState } from "react";
+import { AppointmentStatus, get_fake_appointment } from "../../../data/constant";
 
-export default function CreateAppointment(){
+function CreateAppointment(){
 
    // const [open, setOpen] = useState(false);
-    const { show: open, date, hour } = useSelector(createAppointmentModal);
+    const { show: open, date, hour } = useSelector(getCreateAppointmentModal);
+
+
+    console.log("CreateAppointment", open, date, hour)
 
     const handleClose = () => dispatch.createAppointmentModal({show: false});
 
-    return <div> <Modal
+    
+
+    const [form, setForm] = useState({});
+
+    useEffect(() =>{
+        setForm({
+            name: '',
+            phone: '',
+            date: (date && dayjs(date)) || dayjs(Date.now()),
+            time: hour || `${new Date().getHours()}:${new Date().getMinutes()}`,
+            note: ''
+        });
+    },[open])
+
+    const handleForm = (e) => {
+        setFormItem(e.target.name, e.target.value);
+    }
+    const setFormItem = (name, value) => {
+        setForm({
+            ...form,
+            [name]: value
+        });
+    }
+
+    const handleCreate = () => {
+        dispatch.addAppointment(get_fake_appointment(form))
+    }
+  
+    return  <Modal
         open={open}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -25,13 +58,15 @@ export default function CreateAppointment(){
             <Typography id="modal-modal-title" variant="h6" component="h2">
              Randevu Oluştur
             </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            <div id="modal-modal-description" sx={{ mt: 2 }}>
             <TextField
                 required
                 id="outlined-required"
                 label="Adı Soyadı"
-                defaultValue=""
                 fullWidth
+                value={form.name}
+                name="name"
+                onChange={handleForm}
                 sx={{mb:1}}
                 />
                 <TextField
@@ -39,14 +74,20 @@ export default function CreateAppointment(){
                 id="outlined-required"
                 label="Telefonu"
                 type="number"
-                defaultValue=""
+                name="phone"
+                onChange={handleForm}
                 fullWidth
                 sx={{mb:1}}
                 />
                 <Grid container spacing={2}>
                     <Grid item  xs={6}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker defaultValue={date || dayjs(Date.now())} label="Randevu Tarihi" />
+                        <DatePicker 
+                        value={form.date} 
+                        label="Randevu Tarihi"
+                        name="date"
+                        onChange={(newValue) => setFormItem('date', dayjs(newValue).format("MM.DD.YYYY"))}
+                        />
                         </LocalizationProvider>
                     </Grid>
                     <Grid item  xs={6}>
@@ -56,7 +97,9 @@ export default function CreateAppointment(){
                         label="Saat"
                         type="time"
                         fullWidth
-                        defaultValue={hour || `${new Date().getHours()}:${new Date().getMinutes()}`}
+                        value={form.time}
+                        name="time"
+                        onChange={handleForm}
                         sx={{mb:1}}
                         />
                     </Grid>
@@ -67,28 +110,36 @@ export default function CreateAppointment(){
                 label="Not"
                 type="text"
                 rows={2}
-                defaultValue=""
+                value={form.note}
                 fullWidth
+                name="note"
+                onChange={handleForm}
                 sx={{mb:1}}
                 />
-            </Typography>
+            </div>
             <Divider  sx={{my:3}}/>
-            <Typography id="modal-modal-footer" sx={{ mt: 2 }}>
+            <div id="modal-modal-footer" sx={{ mt: 2 }}>
                 <ButtonGroup sx={{float:'right'}}>
                     <Button aria-label="delete" size="small" onClick={handleClose}>
                         Vazgeç
                     </Button >
                     <Button 
-                    aria-label="delete" variant="outlined" size="small" color="success">
+                    aria-label="delete" 
+                    variant="outlined" 
+                    size="small" 
+                    color="success"
+                    onClick={handleCreate}
+                    >
                         Oluştur
                     </Button >
                 </ButtonGroup>
-            </Typography>
+            </div>
         </Box>
     </Modal>
-    </div>
 }
 
+
+export default memo(CreateAppointment)
 
 
 const style = {

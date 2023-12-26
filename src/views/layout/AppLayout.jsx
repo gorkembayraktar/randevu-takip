@@ -21,8 +21,8 @@ export const AppLayout = ({element}) => {
     */
     return <>
         <ScrollToTop />
-        <Template element={element} />
- 
+            <Template element={element} />
+            <CreateAppointment />
         <Navigation />
     </>
 }
