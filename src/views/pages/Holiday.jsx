@@ -30,7 +30,6 @@ const holidayColumns =[
 const holidayRows = ozel_gunler.map((k,i) =>({...k, id: i + 1}));
 
 const Holiday = () =>{
-  const mode = 'dark';
   useTitle("Resmi Tatiller");
 
   return (

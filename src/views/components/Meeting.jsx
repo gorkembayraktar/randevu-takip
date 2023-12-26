@@ -14,6 +14,7 @@ import { dispatch } from '../../store';
 import dayjs from 'dayjs';
 import { AppointmentStatus } from '../../data/constant';
 import { createAppointmentModal } from '../../store/dispatch';
+import { useAlert } from '../../hooks/useAlert';
 
 
 
@@ -23,7 +24,9 @@ export default function Meeting({calendarEvents, showDialogDelete}) {
 
   const [title, setTitle] = useState("");
 
-  console.log(calendarEvents)
+  const {success, error} = useAlert();
+
+  console.log("meeting", calendarEvents)
 
 
   // load external events
@@ -48,13 +51,14 @@ export default function Meeting({calendarEvents, showDialogDelete}) {
         */
     }
   };
-
+  /*
   useEffect(() => {
     if (calendarRef.current) {
        calendarRef.current.getApi().refetchEvents();
     }
   
   },[calendarEvents])
+  */
  //
 
     
@@ -63,28 +67,40 @@ export default function Meeting({calendarEvents, showDialogDelete}) {
       const props  = info.event.extendedProps;
 
       if(props.status === AppointmentStatus.isNotAvailable){
-          return console.log('not availabe');
+         error("Bu tarih kullanılamaz") 
+         console.log('not availabe');
+         return;
       }
 
       if(props.status === AppointmentStatus.isClosed){
+          error("Bu tarih kapatıldı.") 
           return console.log('isClosed');
       }
-
-      /*
-      if(info.event.start < new Date()) 
-          return console.log('başlangıç tarihi şuanki tarihten küçük');
-      */
-
-       
       const clickedEvent = info.event;
    
       const selectDate = clickedEvent.start;
-      
+
+      if(  
+        props.status == AppointmentStatus.isFull ||
+        props.status == AppointmentStatus.isCompleted
+        ){
+        dispatch.editAppointmentModal({open: true, appointmentId: clickedEvent.id});
+        return;
+      }
+
+     
+      if(info.event.start < new Date()) {
+        error("başlangıç tarihi şuanki tarihten küçük") 
+        return console.log('başlangıç tarihi şuanki tarihten küçük');
+      }
+          
+     
       if(  props.status == AppointmentStatus.isAvailable  ){
         const p = {
           show: true,
           date: dayjs(selectDate.toString()).toString(),
-          hour: dayjs(selectDate.toString()).format('HH:mm').toString()
+          hour: dayjs(selectDate.toString()).format('HH:mm').toString(),
+          appointmentId: clickedEvent.id
         };
         
     
@@ -93,9 +109,7 @@ export default function Meeting({calendarEvents, showDialogDelete}) {
         return;
       }
      
-      if(  props.status == AppointmentStatus.isFull  ){
-
-      }
+ 
 
     
       
@@ -143,7 +157,7 @@ export default function Meeting({calendarEvents, showDialogDelete}) {
   }
   // a custom render function
 function renderEventContent(eventInfo) {
-   
+   console.log(eventInfo)
   return (
     <>
     {
@@ -189,6 +203,8 @@ function renderEventContent(eventInfo) {
 };
 
 
+
+
   return (
     <>
     <Box sx={{ display:{ xs: 'block', sm: 'none'}}}>{ title }</Box>
@@ -211,9 +227,7 @@ function renderEventContent(eventInfo) {
         eventContent={renderEventContent}
         droppable={true}
         selectMirror={true}
-        eventReceive={handleEventReceive}
-       
-        
+        eventReceive={handleEventReceive}      
       />
     </>
   )

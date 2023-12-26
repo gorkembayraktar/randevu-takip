@@ -49,7 +49,7 @@ export default function Login() {
 
 
   return (
-    <Container dark sx={{ pt:3 }}  style={{minHeight:"80vh"}} dark>
+    <Container dark sx={{ pt:3 }}  style={{minHeight:"80vh"}} >
         <Item sx={{ maxWidth:300}} style={style}>
         <Box sx={{ '& > :not(style)': { m: 1 }, display:'flex', flexDirection: 'column', }}  >
         <Typography variant="h4" gutterBottom>

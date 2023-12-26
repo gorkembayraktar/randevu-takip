@@ -6,6 +6,7 @@ import RestoreIcon from '@mui/icons-material/Restore';
 //import BlockIcon from '@mui/icons-material/Block';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import SettingsIcon from '@mui/icons-material/Settings';
+import UserIcon from '@mui/icons-material/Person';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
@@ -35,6 +36,7 @@ export default function SimpleBottomNavigation() {
         <BottomNavigationAction label="Yeni Randevu" icon={<CalendarMonthIcon />}  onClick={ showCreateAppointment } />
         {/*<BottomNavigationAction value="/limit-dates"  component={Link} to="/limit-dates" label="Tarih Kısıtlama" icon={<BlockIcon />} /> */}
         <BottomNavigationAction value="/setting"  component={Link} to="/setting" label="Ayarlar" icon={<SettingsIcon />} />
+        <BottomNavigationAction value="/profile"  component={Link} to="/profile" label="Profil" icon={<UserIcon />} />
       </BottomNavigation>
     </Paper>
   );

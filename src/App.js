@@ -13,13 +13,15 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { Box } from '@mui/material';
 
 import { AppLayout } from './views/layout/AppLayout';
+import { useSelector } from 'react-redux';
+import { getTheme } from './features/GlobalSlice';
 
 
 
 
 export default function App() {
 
-  const mode = 'dark';
+  const mode = useSelector(getTheme);
    
   const theme = React.useMemo(
     () =>

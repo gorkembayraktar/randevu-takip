@@ -12,8 +12,16 @@ import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { FormControlLabel, Switch } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { ITheme } from '../../identify/IScopes';
+import { useSelector } from 'react-redux';
+import { getTheme } from '../../features/GlobalSlice';
+import { dispatch } from '../../store';
 
 export default function AccountMenu() {
+
+  const theme = useSelector(getTheme);
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -73,7 +81,11 @@ export default function AccountMenu() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem 
+          component={Link} 
+          to="/profile" 
+          onClick={handleClose}
+          >
           <Avatar /> Profil
         </MenuItem>
         <Divider />
@@ -86,9 +98,12 @@ export default function AccountMenu() {
         <MenuItem >
             <FormControlLabel
             control={
-                <Switch name="antoine" />
+                <Switch 
+                name="antoine" 
+                checked={ITheme.dark == theme}
+                onClick={() => dispatch.setTheme(  ITheme.dark == theme ? ITheme.light : ITheme.dark ) } />
             }
-            label="Tema: Aydınlık"
+            label={ ITheme.dark == theme ? `Tema: Aydınlık Geç` : `Tema: Karanlık Geç`}
             />
         </MenuItem>
         <MenuItem onClick={handleClose}>

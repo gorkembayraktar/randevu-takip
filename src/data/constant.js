@@ -25,11 +25,14 @@ export const AppointmentStatus = {
     isAvailable: 0,
     isFull: 1,
     isNotAvailable: 2,
-    isClosed: 3
+    isClosed: 3,
+    isCompleted: 4,
+    isCanceled: 5
 }
 
 export const randevular = [
     {
+        id: 1,
         date: '12.25.2023',
         time: '23:00',
         name: 'Görkem',
@@ -40,7 +43,8 @@ export const randevular = [
         status: AppointmentStatus.isFull
     },
     {
-        date: '12.25.2023',
+        id: 2,
+        date: '12.28.2023',
         message: 'Randevu al',
         time: '22:00',
         status: AppointmentStatus.isAvailable
@@ -165,6 +169,7 @@ export const get_daily_data = ( ) => {
 
 export const get_fake_appointment = (form) => {
     const info = {
+        id: Date.now(),
         date: form.date,
         time: form.time,
         name: form.name,
@@ -198,7 +203,7 @@ export const get_fake_appointment = (form) => {
     return info;
 }
 
-const setHours = (date, stringhours) => {
+export const setHours = (date, stringhours) => {
     const split = stringhours.split(':');
     date.setHours(parseInt(split[0]), parseInt(split[1]));
     return date;

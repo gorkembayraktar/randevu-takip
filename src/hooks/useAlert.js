@@ -8,10 +8,8 @@ export function useAlert() {
     const message = (variant, message) => {
         // variant could be success, error, warning, info, or default
         enqueueSnackbar(message, { variant });
-
-        console.log(variant, message)
     };
     
-    const variants = ["success", "danger"];
+    const variants = ["success", "error"];
     return variants.reduce( (a, c) => ({...a, [c]: (m) => message(c, m)}), {});
   }
