@@ -10,6 +10,8 @@ import { getCreateAppointmentModal } from "../../../features/GlobalSlice";
 import { dispatch } from '../../../store'
 import { memo, useEffect, useState } from "react";
 import { AppointmentStatus, get_fake_appointment } from "../../../data/constant";
+import { useAlert } from "../../../hooks/useAlert";
+import { useSnackbar } from "notistack";
 
 function CreateAppointment(){
 
@@ -21,6 +23,8 @@ function CreateAppointment(){
 
     const handleClose = () => dispatch.createAppointmentModal({show: false});
 
+
+    const { success } = useAlert();
     
 
     const [form, setForm] = useState({});
@@ -45,8 +49,12 @@ function CreateAppointment(){
         });
     }
 
+
     const handleCreate = () => {
+     
         dispatch.addAppointment(get_fake_appointment(form))
+
+        success("merhaba " +  form.name);
     }
   
     return  <Modal

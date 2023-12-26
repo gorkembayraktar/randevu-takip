@@ -4,7 +4,7 @@ import Header from "./Header"
 import { Box } from "@mui/material"
 import ScrollToTop from "../components/ScrollToTop"
 import AppointmentCaraousel from '../components/AppointmentCarausel'
-
+import { SnackbarProvider } from 'notistack';
 import Template from "./Template"
 export const AppLayout = ({element}) => {
 
@@ -19,10 +19,10 @@ export const AppLayout = ({element}) => {
         <Navigation />
     </>
     */
-    return <>
-        <ScrollToTop />
-            <Template element={element} />
-            <CreateAppointment />
-        <Navigation />
-    </>
+    return <SnackbarProvider maxSnack={3}>
+                <ScrollToTop />
+                <Template element={element} />
+                <CreateAppointment />
+                <Navigation />
+            </SnackbarProvider>
 }
