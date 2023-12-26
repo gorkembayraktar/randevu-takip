@@ -12,9 +12,8 @@ import { GridDeleteIcon } from '@mui/x-data-grid';
 
 import { dispatch } from '../../store';
 import dayjs from 'dayjs';
-import { AppointmentStatus } from '../../data/constant';
-import { createAppointmentModal } from '../../store/dispatch';
 import { useAlert } from '../../hooks/useAlert';
+import { IAppointmentStatus } from '../../identify/IScopes';
 
 
 
@@ -66,13 +65,13 @@ export default function Meeting({calendarEvents, showDialogDelete}) {
     const handleEventClick = (info) => {
       const props  = info.event.extendedProps;
 
-      if(props.status === AppointmentStatus.isNotAvailable){
+      if(props.status === IAppointmentStatus.isNotAvailable){
          error("Bu tarih kullanılamaz") 
          console.log('not availabe');
          return;
       }
 
-      if(props.status === AppointmentStatus.isClosed){
+      if(props.status === IAppointmentStatus.isClosed){
           error("Bu tarih kapatıldı.") 
           return console.log('isClosed');
       }
@@ -81,8 +80,8 @@ export default function Meeting({calendarEvents, showDialogDelete}) {
       const selectDate = clickedEvent.start;
 
       if(  
-        props.status == AppointmentStatus.isFull ||
-        props.status == AppointmentStatus.isCompleted
+        props.status == IAppointmentStatus.isFull ||
+        props.status == IAppointmentStatus.isCompleted
         ){
         dispatch.editAppointmentModal({open: true, appointmentId: clickedEvent.id});
         return;
@@ -95,7 +94,7 @@ export default function Meeting({calendarEvents, showDialogDelete}) {
       }
           
      
-      if(  props.status == AppointmentStatus.isAvailable  ){
+      if(  props.status == IAppointmentStatus.isAvailable  ){
         const p = {
           show: true,
           date: dayjs(selectDate.toString()).toString(),
@@ -157,7 +156,7 @@ export default function Meeting({calendarEvents, showDialogDelete}) {
   }
   // a custom render function
 function renderEventContent(eventInfo) {
-   console.log(eventInfo)
+   
   return (
     <>
     {
