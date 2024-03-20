@@ -1,87 +1,179 @@
 
-import Container from '@mui/material/Container';
 
 import TableRows from '../components/TableRows';
-import { Box, Chip, Divider, Grid, Tooltip, Typography } from '@mui/material';
+import { Box, Button, Chip, IconButton, Paper, Stack, Tooltip, Typography } from '@mui/material';
 
+import DoneAllSharpIcon from '@mui/icons-material/DoneAllSharp';
+import HourglassEmptySharpIcon from '@mui/icons-material/HourglassEmptySharp';
 
-import { ozel_gunler } from '../../data/constant';
 import dayjs from 'dayjs';
 import * as locale from 'dayjs/locale/tr'
 import { useTitle } from '../../hooks/useTitle';
+import { GridDeleteIcon } from '@mui/x-data-grid';
+
+import HourglassBottomSharpIcon from '@mui/icons-material/HourglassBottomSharp';
+
+import AddCircleSharpIcon from '@mui/icons-material/AddCircleSharp';
+import DeleteDialog from '../components/modal/DeleteDialog';
+import { useState } from 'react';
+import CreateLimitDate from '../components/modal/CreateLimitDate';
 
 dayjs.locale(locale)
 
-const DATE_STATUS = {
-    1: "Aktif",
-    2: "Tamamlandı"
-};
-
-const DATE_STATUS_COLOR = {
-    1: "success",
-    2: "info"
-};
-
-const columns = [
-  { field: 'id', headerName: 'ID', width: 70 },
-  { 
-    field: 'status', 
-    headerName: 'Durum',
-    width: 120, 
-    renderCell: (params)  => <Chip 
-                      label={DATE_STATUS[params.row.status] || params.row.status} variant="outlined" color={ DATE_STATUS_COLOR[params.row.status]} />
-    },
-  { 
-    field: 'content', 
-    headerName: 'Açıklama',   
-    flex: 1, 
-    width: 300, 
+const limitDatesStatusProps = {
+  aktif: {
+    Icon: HourglassBottomSharpIcon,
+    color: 'primary',
+    hint: 'Devam ediyor.'
   },
-  { 
-    field: 'start', 
-    headerName: 'Başlangıç Tarihi', 
-    width: 170 ,
-    
-    valueGetter: (params) => dayjs(params.row.start).format('M MMMM dddd, YYYY')
+  bekleniyor: {
+    Icon: HourglassEmptySharpIcon,
+    color: 'primary',
+    hint: 'Bekleniyor.'
   },
-  { field: 'end', headerName: 'Bitiş Tarihi', width: 170,
-  valueGetter: (params) => dayjs(params.row.end).format('M MMMM dddd, YYYY') },
-  { 
-    align:'center',
-    field: 'total', 
-    headerName: 'Toplam Gün', 
-    valueGetter: (params) => dayjs(params.row.end).diff(params.row.start, 'day') + 1
+  tamamlandi: {
+    Icon: DoneAllSharpIcon,
+    color: 'success',
+    hint: 'Tamamlandı'
   }
-];
+};
+
+const CustomIcon = ({ status }) => {
+
+  const { Icon, color, hint } = limitDatesStatusProps[status];
+
+  return <Tooltip title={hint}>
+    <Icon color={color} />
+  </Tooltip>
+}
+
 
 
 const currenDate = new Date();
 const f = new Date();
-f.setDate( currenDate.getDate() + 1 );
+f.setDate(currenDate.getDate() + 3);
 const rows = [
-  { id: 1, content: 'izindeyiz', start: new Date(), end: f, status: 1 },
+  { id: 1, content: 'izindeyiz', start: new Date(), end: f, status: 'tamamlandi' },
 ];
 
-for(let i = 0; i < 100; i++){
+for (let i = 0; i < 100; i++) {
   rows.push({
     ...rows[0],
-    status: Math.random() > 0.5 ? 1 : 2,
+    status: Math.random() > 0.5 ? 'tamamlandi' : 'aktif',
     id: i + 2
   });
 }
 
 
-const LimitDates = () =>{
-  useTitle("Kısıtlanan Tarihler");
+const LimitDates = () => {
+  useTitle("İzinli Tarihler");
+
+
+  const [openCreateModal, setOpenCreateModal] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
+
+  const handleDelete = () => {
+
+    alert(`Silme işlemi onaylandı: ${JSON.stringify(selectedRow)}`);
+
+    setSelectedRow(null);
+  };
+
+
+  const columns = [
+    {
+      field: 'status',
+      headerName: 'Durum',
+      align: 'center',
+      renderCell: (params) => <CustomIcon status={params.row.status} />
+    },
+    { field: 'id', headerName: 'ID', width: 70 },
+    { field: 'user', headerName: 'Kullanıcı', valueGetter: (params) => 'test' },
+
+    {
+      field: 'content',
+      headerName: 'Açıklama',
+      flex: 1,
+      width: 300,
+    },
+    {
+      field: 'created_at',
+      headerName: 'Oluşturma Tarihi',
+      width: 170,
+
+      valueGetter: (params) => dayjs(params.row.start).format('M MMMM YYYY, H:mm')
+    },
+    {
+      field: 'start',
+      headerName: 'Başlangıç Tarihi',
+      width: 170,
+
+      valueGetter: (params) => dayjs(params.row.start).format('M MMMM YYYY, H:mm')
+    },
+    {
+      field: 'end', headerName: 'Bitiş Tarihi', width: 170,
+      valueGetter: (params) => dayjs(params.row.end).format('M MMMM YYYY, H:mm')
+    },
+    {
+      align: 'center',
+      field: 'total',
+      headerName: 'Toplam Gün',
+      renderCell: ({ row }) => <Chip label={dayjs(row.end).diff(row.start, 'day')} size='small' />
+      // valueGetter: (params) => dayjs(params.row.end).diff(params.row.start, 'day') + 1
+    },
+    {
+      field: "action",
+      headerName: "Aksiyon",
+      sortable: false,
+      disableClickEventBubbling: true,
+      renderCell: ({ row }) =>
+        <IconButton color="error" onClick={() => setSelectedRow(row)}>
+          <GridDeleteIcon />
+        </IconButton>
+    },
+  ];
 
   const mode = 'dark';
   return (
-      <Box>
-        <Typography color="red" fontFamily="revert" variant="h5" component="h6">
-          Kısıtlanan Tarihler
-        </Typography>
-        <TableRows rows={rows} columns={columns} pageSize={10} />
-      </Box>
+    <Box>
+
+      <Paper elevation={2} sx={{ py: 1, px: 2, mb: 2, }}>
+        <Stack
+          direction={{ xs: 'row', sm: 'row' }}
+          justifyContent="space-between"
+          alignItems="center"
+          spacing={2}
+        >
+
+          <Typography fontFamily="revert" fontWeight="bold">
+            İzinli Tarihler
+          </Typography>
+          <Button
+            variant="outlined"
+            tabIndex={-1}
+            startIcon={<AddCircleSharpIcon />}
+            onClick={() => setOpenCreateModal(true)}
+          >
+            Oluştur
+          </Button>
+        </Stack>
+      </Paper>
+      <TableRows rows={rows} columns={columns} pageSize={10} />
+
+
+      <DeleteDialog
+        props={{
+          open: selectedRow !== null,
+          title: "İşlem Onayı",
+          content: "Bu kaydı silmek istediğinizden emin misiniz?",
+        }}
+        close={() => setSelectedRow(null)} // Dialog kapatma fonksiyonu
+        confirm={handleDelete} // Silme işlemini gerçekleştirme fonksiyonu
+      />
+
+      <CreateLimitDate open={openCreateModal} close={() => setOpenCreateModal(false)} />
+
+    </Box >
   );
 }
 

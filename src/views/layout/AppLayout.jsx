@@ -7,7 +7,7 @@ import ScrollToTop from "../components/ScrollToTop"
 import AppointmentCaraousel from '../components/AppointmentCarausel'
 import { SnackbarProvider } from 'notistack';
 import Template from "./Template"
-export const AppLayout = ({element}) => {
+export const AppLayout = ({ element }) => {
 
     /*
     return <>
@@ -21,10 +21,10 @@ export const AppLayout = ({element}) => {
     </>
     */
     return <SnackbarProvider maxSnack={3}>
-                <ScrollToTop />
-                <Template element={element} />
-                <CreateAppointment />
-                <EditAppointment />
-                <Navigation />
-            </SnackbarProvider>
+        <ScrollToTop />
+        <Template element={element} />
+        <CreateAppointment />
+        <EditAppointment />
+        <Navigation />
+    </SnackbarProvider>
 }

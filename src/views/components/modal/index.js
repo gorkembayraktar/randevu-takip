@@ -1,4 +1,4 @@
-import { Box, Divider, Modal, Typography } from "@mui/material";
+import { Box, Divider, Modal, Paper, Typography } from "@mui/material";
 
 const style = {
     position: 'absolute',
@@ -25,12 +25,16 @@ export function CenterModal({ open, children }){
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
         >
+       
         <Box sx={style}>
-            {childMap?.Title}
-            {childMap?.Description}
-            <Divider  sx={{my:3}}/>
-            {childMap?.Footer}
+            <Paper  elevation={1} sx={{ px: 1, pt: 1 }}>
+                {childMap?.Title}
+                {childMap?.Description}
+                <Divider  sx={{my:3}}/>
+                {childMap?.Footer}
+            </Paper>
         </Box>
+      
     </Modal>
 }
 

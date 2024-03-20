@@ -18,7 +18,10 @@ import SlowMotionVideoIcon from '@mui/icons-material/SlowMotionVideo';
 
 import { routes } from '../../routes'
 import AccountMenu from '../components/AccountMenu';
+import { Button } from '@mui/material';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
+import { dispatch } from '../../store'
 
 const drawerWidth = 240;
 
@@ -32,42 +35,48 @@ function Template(props) {
 
   const drawer = (
     <div>
-        <Toolbar disableGutters sx={{ justifyContent:'center'  }}>   
+      <Toolbar disableGutters sx={{ justifyContent: 'center' }}>
         <SlowMotionVideoIcon />
-          <Typography
-              variant="h6"
-              noWrap
-              component={Link}
-              to="/"
-              sx={{
-              mr: 2,
-              ml:1,
-              display: {  md: 'flex',},
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              color: 'inherit',
-              textDecoration: 'none',
-              }}
-          >
-            Randevu Takip
-          </Typography>
+        <Typography
+          variant="h6"
+          noWrap
+          component={Link}
+          to="/"
+          sx={{
+            mr: 2,
+            ml: 1,
+            display: { md: 'flex', },
+            fontFamily: 'monospace',
+            fontWeight: 700,
+            color: 'inherit',
+            textDecoration: 'none',
+          }}
+        >
+          Randevu Takip
+        </Typography>
       </Toolbar>
       <Divider />
       <ListLeftMenu />
-      
+
     </div>
   );
 
   const container = window !== undefined ? () => window().document.body : undefined;
 
+
+  const showCreateAppointment = () => {
+    dispatch.createAppointmentModal({ show: true });
+  }
+
+
   return (
-    <Box sx={{ display: 'flex',zIndex: 999999, }}>
+    <Box sx={{ display: 'flex', zIndex: 999999, }}>
       <CssBaseline />
       <AppBar
         color="inherit"
         position="fixed"
         sx={{
-          
+
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
         }}
@@ -83,9 +92,18 @@ function Template(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-             
+
           </Typography>
-          <Box sx={{ ml: 'auto'}}>
+          <Button
+            variant="outlined"
+            color="info"
+            size='small'
+            startIcon={<CalendarMonthIcon />}
+            onClick={showCreateAppointment}
+          >
+            Yeni Randevu
+          </Button>
+          <Box sx={{ ml: 'auto' }}>
             <AccountMenu />
           </Box>
         </Toolbar>
@@ -127,11 +145,11 @@ function Template(props) {
         sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
       >
         <Toolbar />
-        
+
         {
           element
         }
-      
+
       </Box>
     </Box>
   );

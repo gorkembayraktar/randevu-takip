@@ -17,15 +17,15 @@ import { useSelector } from 'react-redux';
 import { getAppointments } from '../../features/GlobalSlice';
 
 
-const Home = () =>{
+const Home = () => {
   const mode = 'dark';
   useTitle("Randevular");
 
- 
+
   const calendarEvents = useSelector(getAppointments);
 
   const setCalendarEvents = () => {
-    
+
   }
 
   const [deleteDialog, setDeleteDialog] = useState({
@@ -45,21 +45,21 @@ const Home = () =>{
 
   const handleDialogClose = () => {
     setDeleteDialog(
-     {
-      ...deleteDialog,
-      open: false
-     }
+      {
+        ...deleteDialog,
+        open: false
+      }
     )
   }
   const handleDDConfirm = () => {
     const id = deleteDialog.info.id;
-    if(!id) {
+    if (!id) {
       handleDialogClose();
       return;
     }
     const filter = calendarEvents.filter(c => {
-      return  (c.id != id);
-     });
+      return (c.id != id);
+    });
     setCalendarEvents(
       [...filter]
     );
@@ -67,10 +67,10 @@ const Home = () =>{
   }
 
   return (
-      <>
-        <Meeting calendarEvents={calendarEvents} setCalendarEvents={setCalendarEvents} showDialogDelete={showDialogDelete} />
-        <DeleteDialog deleteDialog={deleteDialog} handleDialogClose={handleDialogClose} handleDDConfirm={handleDDConfirm} />
-      </>
+    <>
+      <Meeting calendarEvents={calendarEvents} setCalendarEvents={setCalendarEvents} showDialogDelete={showDialogDelete} />
+      <DeleteDialog props={deleteDialog} close={handleDialogClose} confirm={handleDDConfirm} />
+    </>
   );
 }
 
