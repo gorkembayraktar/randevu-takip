@@ -2,7 +2,7 @@ import {
     Navigate 
   } from "react-router-dom";
 
-import { Home, Setting, History, LimitDates, Login, Holiday, Profile } from '../views/pages'
+import { Home, Setting, History, LimitDates, Login, Holiday, Profile, Customers } from '../views/pages'
 
 
 export const routes = [
@@ -18,6 +18,12 @@ export const routes = [
         exact:true,
         auth:false,
         withoutSection: true
+    },
+    {
+        path:'/customers',
+        element:<Customers/>,
+        exact:true,
+        auth:false
     },
     {
         path:'/setting',

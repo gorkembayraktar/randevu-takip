@@ -20,6 +20,11 @@ const ROUTES = [
         text: 'Randevular'
     },
     {
+        icon: <VideoSettingsIcon />,
+        to: '/customers',
+        text: 'Müşteriler'
+    },
+    {
         icon: <TranslateIcon />,
         to: '/history',
         text: 'Geçmiş Randevular'

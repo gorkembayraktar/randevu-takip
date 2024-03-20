@@ -5,7 +5,7 @@ import LimitDates from "./LimitDates";
 import Login  from "./Login";
 import Holiday from "./Holiday";
 import Profile from "./Profile";
-
+import Customers from "./Customers";
 
 
 export {
@@ -15,5 +15,6 @@ export {
     LimitDates, 
     Login, 
     Holiday, 
-    Profile
+    Profile,
+    Customers
 }

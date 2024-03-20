@@ -149,7 +149,7 @@ function Template(props) {
         {
           element
         }
-
+        <Box sx={{ height: 50, width: "100%" }}></Box>
       </Box>
     </Box>
   );

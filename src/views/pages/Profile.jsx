@@ -10,9 +10,9 @@ const Profile = () => {
   const mode = 'dark';
   return (
     <Paper elevation={2}>
-      <Grid container spacing={2}>
+      <Grid container>
 
-        adsad
+        profil
 
       </Grid>
     </Paper>
