@@ -34,8 +34,8 @@ function Template(props) {
   };
 
   const drawer = (
-    <div>
-      <Toolbar disableGutters sx={{ justifyContent: 'center' }}>
+    <div >
+      <Toolbar disableGutters sx={{ justifyContent: 'center', }}>
         <SlowMotionVideoIcon />
         <Typography
           variant="h6"

@@ -25,6 +25,7 @@ export const AppLayout = ({ element }) => {
         <Template element={element} />
         <CreateAppointment />
         <EditAppointment />
+        <AppointmentCaraousel />
         <Navigation />
     </SnackbarProvider>
 }

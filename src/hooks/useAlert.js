@@ -10,6 +10,6 @@ export function useAlert() {
         enqueueSnackbar(message, { variant });
     };
     
-    const variants = ["success", "error"];
+    const variants = ["success", "error", "info"];
     return variants.reduce( (a, c) => ({...a, [c]: (m) => message(c, m)}), {});
   }

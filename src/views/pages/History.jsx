@@ -2,49 +2,48 @@
 import Container from '@mui/material/Container';
 
 import TableRows from '../components/TableRows';
-import { Button, Chip, Divider, Grid, IconButton, Tooltip, Typography } from '@mui/material';
+import { Button, ButtonGroup, Chip, Divider, Grid, IconButton, Paper, Stack, Tooltip, Typography } from '@mui/material';
 import { GridDeleteIcon } from '@mui/x-data-grid';
 import { useTitle } from '../../hooks/useTitle';
-
+import { AsYouType } from 'libphonenumber-js'
+import dayjs from 'dayjs';
+import DoneSharpIcon from '@mui/icons-material/DoneSharp';
+import BlockSharpIcon from '@mui/icons-material/BlockSharp';
+import { useState } from 'react';
+import { useAlert } from '../../hooks/useAlert';
+import DeleteDialog from '../components/modal/DeleteDialog';
+import EditSharpIcon from '@mui/icons-material/EditSharp';
 
 const MEETING_STATUS = {
-  1: "Onaylandı",
+  1: "Tamamlandı",
   2: "İptal Edildi",
-  3: "Başka tarihe taşındı",
 }
 
-const columns = [
-  { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'fullname', headerName: 'Adı Soyadı', width: 130 },
-  { field: 'phone', headerName: 'Telefon', width: 130 },
-  {
-    field: 'statushandle',
-    headerName: 'Durum',
-    description: 'Randevunun durum bilgisi.',
-    sortable: false,
-    width: 160,
+const meetingStatus = {
+  1: {
+    Icon: DoneSharpIcon,
+    color: 'success',
+    hint: 'Tamamlandı'
+  },
+  2: {
+    Icon: BlockSharpIcon,
+    color: 'default',
+    hint: 'İptal edildi'
+  }
+};
 
-    renderCell: (params)  => <Chip size="small" label={MEETING_STATUS[params.row.status] || params.row.status} variant="outlined" color="success" />
-             ,
-  },
-  {
-    field: 'date',
-    headerName: 'Randevu Tarih',
-    width: 160,
-    renderCell: (params) => <Tooltip title="1 gün önce">x eylül pazar </Tooltip>,
-  },
-  {
-    field: "action",
-    headerName: "Aksiyon",
-    sortable: false,
-    disableClickEventBubbling: true,
-    renderCell: ({ row }) =>
-      <IconButton color="error" onClick={() => alert(JSON.stringify(row))}>
-         <GridDeleteIcon />
-      </IconButton>,
-  },
- 
-];
+const CustomIcon = ({ status }) => {
+
+  if (!status || !meetingStatus[status])
+    return null
+  const { Icon, color, hint } = meetingStatus[status];
+
+
+  return <Tooltip title={hint}>
+    <Icon color={color} />
+  </Tooltip>
+}
+
 /**
  * kolon işlemi yapmak için
  *  {
@@ -61,31 +60,96 @@ const rows = [
   { id: 1, fullname: 'Ahmet Çağar', phone: '0535225555', date: new Date(), status: 1 },
 ];
 
-for(let i = 0; i < 100; i++){
+for (let i = 0; i < 100; i++) {
   rows.push({
     ...rows[0],
-    id: i + 2
+    id: i + 2,
+    status: Math.random() > 0.5 ? 1 : 2
   });
 }
 
-const History = () =>{
+const History = () => {
   const mode = 'dark';
   useTitle("Geçmiş Randevular");
+  const { success, alert } = useAlert();
+  const [selectedRow, setSelectedRow] = useState(null);
+  const handleDelete = () => {
+
+    success('Başarılı şekilde silindi');
+    setSelectedRow(null);
+  };
+
+
+  const columns = [
+    {
+      field: 'status',
+      headerName: 'Durum',
+      align: 'center',
+      renderCell: (params) => <CustomIcon status={params.row.status} />
+    },
+    { field: 'id', headerName: 'ID', width: 70 },
+    { field: 'fullname', headerName: 'Adı Soyadı', flex: true },
+
+    { field: 'phone', flex: true, headerName: 'Telefon', width: 150, valueGetter: (params) => new AsYouType('TR').input(params.row.phone) },
+    { field: 'created_at', headerName: 'Oluşturma tarih', width: 150, valueGetter: (params) => '1 ocak' },
+    {
+      field: 'date',
+      headerName: 'Randevu Tarih',
+      width: 160,
+      renderCell: (params) => <Tooltip title="1 gün önce">{dayjs(params.row.start).format('M MMMM YYYY')}</Tooltip>,
+    },
+    {
+      field: "action",
+      headerName: "Aksiyon",
+      sortable: false,
+      disableClickEventBubbling: true,
+      renderCell: ({ row }) =>
+        <ButtonGroup variant="outlined" aria-label="Aksiyon">
+          <Tooltip title="Bu kaydı sil">
+            <IconButton color="error" onClick={() => setSelectedRow(row)} >
+              <GridDeleteIcon />
+            </IconButton>
+          </Tooltip>
+        </ButtonGroup>
+    },
+
+  ];
 
   return (
-      <>
-       
-        <Typography color="red" fontFamily="revert" variant="h5" component="h6">
-          Geçmiş Randevular
-        </Typography>
-        <Grid container spacing={2}>
-              <Grid item sm={8} sx={{ width:'100%' }}>
+    <>
+      <Paper elevation={2} sx={{ py: 1, px: 2, mb: 2, }}>
+        <Stack
+          direction={{ xs: 'row', sm: 'row' }}
+          justifyContent="space-between"
+          alignItems="center"
+          spacing={2}
+        >
 
-              <TableRows rows={rows} columns={columns} pageSize={10} />
+          <Typography fontFamily="revert" fontWeight="bold">
+            Geçmiş Randevular
+          </Typography>
 
-              </Grid>
-          </Grid> 
-      </>
+        </Stack>
+      </Paper>
+
+      <Grid container spacing={2}>
+        <Grid item sx={{ width: '100%' }}>
+
+          <TableRows rows={rows} columns={columns} pageSize={10} />
+
+        </Grid>
+      </Grid>
+
+      <DeleteDialog
+        props={{
+          open: selectedRow !== null,
+          title: "İşlem Onayı",
+          content: "Bu kaydı silmek istediğinizden emin misiniz?",
+        }}
+        close={() => setSelectedRow(null)} // Dialog kapatma fonksiyonu
+        confirm={handleDelete} // Silme işlemini gerçekleştirme fonksiyonu
+      />
+    </>
   );
 }
 
