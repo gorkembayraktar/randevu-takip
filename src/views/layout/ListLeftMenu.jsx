@@ -3,44 +3,45 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import TranslateIcon from '@mui/icons-material/Translate';
-import VideoSettingsIcon from '@mui/icons-material/VideoSettings';
-import FontDownloadIcon from '@mui/icons-material/FontDownload';
-import ListIcon from '@mui/icons-material/List';
 import { Divider, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import AudiotrackIcon from '@mui/icons-material/Audiotrack';
 
+import DateRangeSharpIcon from '@mui/icons-material/DateRangeSharp';
+import PeopleSharpIcon from '@mui/icons-material/PeopleSharp';
+import RestoreSharpIcon from '@mui/icons-material/RestoreSharp';
+import EditCalendarSharpIcon from '@mui/icons-material/EditCalendarSharp';
+import BusinessSharpIcon from '@mui/icons-material/BusinessSharp';
+import SettingsSharpIcon from '@mui/icons-material/SettingsSharp';
 
 const ROUTES = [
     {
-        icon: <VideoSettingsIcon />,
+        icon: <DateRangeSharpIcon />,
         to: '/',
         text: 'Randevular'
     },
     {
-        icon: <VideoSettingsIcon />,
+        icon: <PeopleSharpIcon />,
         to: '/customers',
         text: 'Müşteriler'
     },
     {
-        icon: <TranslateIcon />,
+        icon: <RestoreSharpIcon />,
         to: '/history',
         text: 'Geçmiş Randevular'
     },
     {
-        icon: <AudiotrackIcon />,
+        icon: <EditCalendarSharpIcon />,
         to: '/limit-dates',
         text: 'İzinli Tarihler'
     },
     {
-        icon: <FontDownloadIcon />,
+        icon: <BusinessSharpIcon />,
         to: '/holiday',
         text: 'Resmi Tatiller'
     },
     {
-        icon: <ListIcon />,
+        icon: <SettingsSharpIcon />,
         to: '/setting',
         text: 'Ayarlar'
     }
