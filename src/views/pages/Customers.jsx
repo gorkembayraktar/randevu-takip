@@ -13,6 +13,7 @@ import { useState } from 'react';
 import { useAlert } from '../../hooks/useAlert';
 import DeleteDialog from '../components/modal/DeleteDialog';
 import EditSharpIcon from '@mui/icons-material/EditSharp';
+import AddCircleSharpIcon from '@mui/icons-material/AddCircleSharp';
 
 const MEETING_STATUS = {
   1: "Tamamlandı",
@@ -82,6 +83,11 @@ const Customers = () => {
               <GridDeleteIcon />
             </IconButton>
           </Tooltip>
+          <Tooltip title="Bu kaydı güncelle">
+            <IconButton color="info" onClick={() => null} >
+              <EditSharpIcon />
+            </IconButton>
+          </Tooltip>
         </ButtonGroup>
     },
 
@@ -100,6 +106,14 @@ const Customers = () => {
           <Typography fontFamily="revert" fontWeight="bold">
             Müşteriler
           </Typography>
+          <Button
+            variant="outlined"
+            tabIndex={-1}
+            startIcon={<AddCircleSharpIcon />}
+            onClick={() => null}
+          >
+            Oluştur
+          </Button>
 
         </Stack>
       </Paper>
