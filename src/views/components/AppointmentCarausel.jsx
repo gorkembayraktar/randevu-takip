@@ -49,11 +49,17 @@ export const AppointmentCaraousel = () => {
   }
 
   const handleCancel = () => {
+
+    if (data.findIndex((k) => k.id == selectedRow.id) == data.length - 1) {
+      prev();
+    }
+
     setData(
       data.filter(
         item => item.id !== selectedRow.id
       )
     )
+
     info('Başarılı şekilde iptal edildi.');
     setSelectedRow(null);
   };
