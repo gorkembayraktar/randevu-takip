@@ -9,6 +9,7 @@ export default function TableRows({ columns, rows, checkboxSelection = false, pa
 
   return (
     <DataGrid
+      sx={{ p: 1 }}
       localeText={trTR.components.MuiDataGrid.defaultProps.localeText}
       rowHeight={40}
       rows={rows}

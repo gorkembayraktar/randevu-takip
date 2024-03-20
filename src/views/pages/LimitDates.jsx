@@ -17,6 +17,7 @@ import AddCircleSharpIcon from '@mui/icons-material/AddCircleSharp';
 import DeleteDialog from '../components/modal/DeleteDialog';
 import { useState } from 'react';
 import CreateLimitDate from '../components/modal/CreateLimitDate';
+import { useAlert } from '../../hooks/useAlert';
 
 dayjs.locale(locale)
 
@@ -68,14 +69,13 @@ for (let i = 0; i < 100; i++) {
 const LimitDates = () => {
   useTitle("İzinli Tarihler");
 
+  const { success, alert } = useAlert();
 
   const [openCreateModal, setOpenCreateModal] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
 
   const handleDelete = () => {
-
-    alert(`Silme işlemi onaylandı: ${JSON.stringify(selectedRow)}`);
-
+    success('Başarılı şekilde silindi');
     setSelectedRow(null);
   };
 
