@@ -14,6 +14,8 @@ import { useAlert } from '../../hooks/useAlert';
 import DeleteDialog from '../components/modal/DeleteDialog';
 import EditSharpIcon from '@mui/icons-material/EditSharp';
 import AddCircleSharpIcon from '@mui/icons-material/AddCircleSharp';
+import CreateCustomer from '../components/modal/CreateCustomer';
+import EditCustomer from '../components/modal/EditCustomer';
 
 const MEETING_STATUS = {
   1: "Tamamlandı",
@@ -33,34 +35,62 @@ const meetingStatus = {
   }
 };
 
-const CustomIcon = ({ status }) => {
-
-  if (!status || !meetingStatus[status])
-    return null
-  const { Icon, color, hint } = meetingStatus[status];
 
 
-  return <Tooltip title={hint}>
-    <Icon color={color} />
-  </Tooltip>
-}
 
-const rows = [
+const ROWS = [
   { id: 1, fullname: 'Ahmet Çağar', phone: '0535225555', note: 'asfkas fkas kfsak fask fksa kfask fkas kfask fksa kfask kfas kfak fkak f', created_at: new Date() },
 ];
 
-
-
 const Customers = () => {
-  const mode = 'dark';
+
+
+
   useTitle("Müşteriler");
+
   const { success, alert } = useAlert();
   const [selectedRow, setSelectedRow] = useState(null);
+  const [openCreateCustomer, setOpenCreateCustomer] = useState(false);
+  const [openEditCustomer, setOpenEditCustomer] = useState(false);
+  const [data, setData] = useState(ROWS);
   const handleDelete = () => {
 
-    success('Başarılı şekilde silindi');
+    setData(
+      data.filter(item => item.id !== selectedRow.id)
+    );
+
+    success('Müşteri başarılı şekilde silindi');
     setSelectedRow(null);
+
   };
+
+  const addNewItem = (item) => {
+    // başarılı olma durumunda listeye yeni öğe ekle
+
+    setData(
+      [
+        item,
+        ...data
+      ]
+    );
+  }
+
+  const updateItem = (updatedData) => {
+
+    setData(
+      data.map(item => {
+        if (item.id === updatedData.id) {
+          return {
+            ...item,
+            ...updatedData
+          };
+        }
+        return item;
+      })
+    );
+  }
+
+
 
 
   const columns = [
@@ -85,7 +115,10 @@ const Customers = () => {
             </IconButton>
           </Tooltip>
           <Tooltip title="Bu kaydı güncelle">
-            <IconButton color="info" onClick={() => null} >
+            <IconButton color="info" onClick={() => {
+              setSelectedRow(row);
+              setOpenEditCustomer(true);
+            }} >
               <EditSharpIcon />
             </IconButton>
           </Tooltip>
@@ -111,9 +144,9 @@ const Customers = () => {
             variant="outlined"
             tabIndex={-1}
             startIcon={<AddCircleSharpIcon />}
-            onClick={() => null}
+            onClick={() => setOpenCreateCustomer(true)}
           >
-            Oluştur
+            Müşteri Oluştur
           </Button>
 
         </Stack>
@@ -122,19 +155,30 @@ const Customers = () => {
       <Grid container spacing={2}>
         <Grid item md={8} sx={{ width: '100%' }}>
 
-          <TableRows rows={rows} columns={columns} pageSize={10} />
+          <TableRows rows={data} columns={columns} pageSize={10} />
 
         </Grid>
       </Grid>
 
       <DeleteDialog
         props={{
-          open: selectedRow !== null,
+          open: selectedRow !== null && !openEditCustomer,
           title: "İşlem Onayı",
           content: "Bu kaydı silmek istediğinizden emin misiniz?",
         }}
         close={() => setSelectedRow(null)} // Dialog kapatma fonksiyonu
         confirm={handleDelete} // Silme işlemini gerçekleştirme fonksiyonu
+      />
+      <CreateCustomer
+        open={openCreateCustomer}
+        close={() => setOpenCreateCustomer(false)}
+        onsuccess={addNewItem}
+      />
+      <EditCustomer
+        open={openEditCustomer}
+        close={() => (setOpenEditCustomer(false), setSelectedRow(null))}
+        onsuccess={updateItem}
+        data={selectedRow}
       />
     </>
   );
