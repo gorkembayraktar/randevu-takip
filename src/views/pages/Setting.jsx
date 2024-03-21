@@ -4,171 +4,160 @@ import Container from '@mui/material/Container';
 import EventIcon from '@mui/icons-material/Event';
 import AddIcon from '@mui/icons-material/Add';
 
-import {randevu_saatleri, DAYS, DAY_KEYS} from '../../data/constant'
+import { randevu_saatleri, DAYS, DAY_KEYS } from '../../data/constant'
 
-import {ByGroupByData} from '../../utils/array'
+import { ByGroupByData } from '../../utils/array'
 
 import CreateWeeklyHour from '../components/modal/CreateWeeklyHour'
 
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
-import {useTitle} from '../../hooks/useTitle'
+import { useTitle } from '../../hooks/useTitle'
+import DeleteDialog from '../components/modal/DeleteDialog';
 
 
-const Setting = () =>{
+const Setting = () => {
 
-  useTitle("Ayarlar");
-  
-  const [data, setData] = useState(randevu_saatleri);
+    useTitle("Ayarlar");
 
-  const dataNewView = ByGroupByData(DAY_KEYS, data, 'day');
+    const [selectedRow, setSelectedRow] = useState(null);
 
-  const onCreate = ({day, hour}) => {
-    if(hour == "") return;
-    
-    if( data.find(i => i.day == day && i.hour == hour) ){
-        return alert("Böyle bir saat dilimi mevcut.");
-    }
-    setData([
-        ...data,
-        {
-            id: Date.now(),
-            hour: hour,
-            day: day,
-            notAvailable: false
+    const [data, setData] = useState(randevu_saatleri);
+
+    const dataNewView = ByGroupByData(DAY_KEYS, data, 'day');
+
+    const onCreate = ({ day, hour }) => {
+        if (hour == "") return;
+
+        if (data.find(i => i.day == day && i.hour == hour)) {
+            return alert("Böyle bir saat dilimi mevcut.");
         }
-    ])
+        setData([
+            ...data,
+            {
+                id: Date.now(),
+                hour: hour,
+                day: day,
+                notAvailable: false
+            }
+        ])
 
-    hideCreateWeeklyHour();
-  }
+        hideCreateWeeklyHour();
+    }
 
-  const onAvailable = (item) => {
-    setData(
-        data.map(i => {
-            if(item.id == i.id) i.notAvailable=!i.notAvailable;
-            return i;
+    const onAvailable = (item) => {
+        setData(
+            data.map(i => {
+                if (item.id == i.id) i.notAvailable = !i.notAvailable;
+                return i;
+            })
+        )
+    }
+
+    const onDelete = (item) => {
+        setSelectedRow(item);
+    }
+    const handleDelete = () => {
+        if (selectedRow == null) return;
+
+        setData(
+            data.filter(i => i.id !== selectedRow.id)
+        )
+        setSelectedRow(null);
+    }
+
+    const [createWeeklyHourModal, setCreateWeeklyHourModal] = useState({
+        day: 1,
+        open: false,
+    });
+
+    const showCreateWeeklyHour = (day = 1) => {
+        setCreateWeeklyHourModal({
+            ...createWeeklyHourModal,
+            day: day,
+            open: true
         })
-    )
-  }
+    }
+    const hideCreateWeeklyHour = () => {
+        setCreateWeeklyHourModal({
+            ...createWeeklyHourModal,
+            open: false
+        })
+    }
 
-  const onDelete = (item) => {
-    setData(
-        data.filter(i => i.id !== item.id )
-    )
-  }
-
-  const [createWeeklyHourModal, setCreateWeeklyHourModal] = useState({
-    day: 1,
-    open: false,
-  });
- 
-  const showCreateWeeklyHour = (day = 1) => {
-    setCreateWeeklyHourModal({
-        ...createWeeklyHourModal,
-        day: day,
-        open: true
-    })
-  }
-  const hideCreateWeeklyHour = () => {
-    setCreateWeeklyHourModal({
-        ...createWeeklyHourModal,
-        open: false
-    })
-  }
-
-  const mode = 'dark';
-  return (
-      <>
-        <Grid container spacing={2}>
-            <Grid item md={5} xs={12}>
-                <List
-                    sx={{ width: '100%', bgcolor: 'background.paper' }}
-                    component="nav"
-                    aria-labelledby="nested-list-subheader"
-                    subheader={
-                        <ListSubheader component="h2" sx={{display:'flex', justifyContent:'space-between', alignItems:'center'}}  id="nested-list-subheader">
-                            Haftalık Randevu Saatleri
-                            <IconButton onClick={ () => showCreateWeeklyHour(1)}>
+    const mode = 'dark';
+    return (
+        <>
+            <Grid container spacing={2}>
+                <Grid item md={5} xs={12}>
+                    <List
+                        dense
+                        sx={{ width: '100%', bgcolor: 'background.paper' }}
+                        component="nav"
+                        aria-labelledby="nested-list-subheader"
+                        subheader={
+                            <ListSubheader component="h2" sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} id="nested-list-subheader">
+                                Haftalık Randevu Saatleri
+                                <IconButton onClick={() => showCreateWeeklyHour(1)}>
                                     <AddIcon />
-                            </IconButton>
-                        </ListSubheader>
-                    }
-                
+                                </IconButton>
+                            </ListSubheader>
+                        }
+
                     >
-                    {
-                        Object.entries(dataNewView).map(([day, item]) =>(
-                        <>
-                                <ListItemButton>
-                                <ListItemIcon>
-                                    <EventIcon />
-                                </ListItemIcon>
-                                <ListItemText primary={ DAYS[day] } onClick={() => showCreateWeeklyHour(day)} />
-                                
-                            </ListItemButton>
-                            {
-                            <Box sx={{p:0, ml:8, mt: 1}}>
-                                <ViewWeeklyHour onDelete={onDelete} onAvailable={onAvailable} randevu_saatleri={item} />
-                            </Box>
-                            }
-                        </>
-                        )) 
-                    }
-                </List>
-                
-                <Divider  sx={{my:3}}/>
-                
+                        {
+                            Object.entries(dataNewView).map(([day, item]) => (
+                                <>
+                                    <ListItemButton>
+                                        <ListItemIcon>
+                                            <EventIcon />
+                                        </ListItemIcon>
+                                        <ListItemText primary={DAYS[day]} onClick={() => showCreateWeeklyHour(day)} />
+
+                                    </ListItemButton>
+                                    {
+                                        <Box sx={{ p: 0, ml: 8, mt: 1 }}>
+                                            <ViewWeeklyHour onDelete={onDelete} onAvailable={onAvailable} randevu_saatleri={item} />
+                                        </Box>
+                                    }
+                                </>
+                            ))
+                        }
+                    </List>
+
+                    <Divider sx={{ my: 3 }} />
+
+                </Grid>
             </Grid>
-            <Grid item md={4} xs={12}>
-                <Telegram />
-            </Grid>
-        </Grid>
-        <CreateWeeklyHour createWeeklyHourModal={createWeeklyHourModal} setCreateWeeklyHourModal={setCreateWeeklyHourModal} onCreate={onCreate} />
-      </>
-  );
+            <CreateWeeklyHour createWeeklyHourModal={createWeeklyHourModal} setCreateWeeklyHourModal={setCreateWeeklyHourModal} onCreate={onCreate} />
+
+            <DeleteDialog
+                props={{
+                    open: selectedRow !== null,
+                    title: "İşlem Onayı",
+                    content: "Bu kaydı silmek istediğinizden emin misiniz?",
+                }}
+                close={() => setSelectedRow(null)} // Dialog kapatma fonksiyonu
+                confirm={handleDelete} // Silme işlemini gerçekleştirme fonksiyonu
+            />
+
+        </>
+    );
 }
 
-const Telegram = () => {
-    return  <Paper sx={{p: 2}}>
-                <Typography id="modal-modal-title" variant="h6" component="h2">
-                    Telegram API Ayarları
-                </Typography>
-                <Typography component="p">
-                    Randevuların takibi için telegram bot oluşturun ve token değerini kaydedin.
-                </Typography>
-                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                
-                    <TextField
-                        required
-                        id="outlined-required"
-                        label="TOKEN"
-                        defaultValue=""
-                        sx={{mb:2}}
-                        fullWidth
-                    />
-                
-                </Typography>
-                <ButtonGroup sx={{display: 'flex', alignItems: 'end', justifyContent: 'end'}}>
-                        <Button 
-                            aria-label="delete" variant="outlined" size="small" color="success" >
-                            Kaydet
-                        </Button >
-                </ButtonGroup>
 
-            </Paper>
-}
+const ViewWeeklyHour = ({ randevu_saatleri, onDelete, onAvailable }) => {
 
-const ViewWeeklyHour = ({randevu_saatleri, onDelete, onAvailable}) => {
-
-    if(randevu_saatleri.length == 0)
+    if (randevu_saatleri.length == 0)
         return <Alert severity="info">Saat bulunmuyor.</Alert>;
-   
 
-    return randevu_saatleri.map(saat =>(
-        <Tooltip title={ saat.notAvailable ? 'Saat Etkin değil' : 'Saat Etkin' }>
-            <Chip onClick={() => onAvailable(saat)}  sx={{cursor:'pointer'}} label={saat.hour} color={saat.notAvailable ? 'default' : 'success'}  onDelete={() => onDelete(saat)}/>
+
+    return randevu_saatleri.map(saat => (
+        <Tooltip title={saat.notAvailable ? 'Saat Etkin değil' : 'Saat Etkin'}>
+            <Chip onClick={() => onAvailable(saat)} sx={{ cursor: 'pointer' }} label={saat.hour} color={saat.notAvailable ? 'default' : 'success'} onDelete={() => onDelete(saat)} />
         </Tooltip>
-    ))  
+    ))
 }
 
 

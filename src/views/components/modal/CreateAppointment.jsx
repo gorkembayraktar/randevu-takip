@@ -72,7 +72,9 @@ function CreateAppointment() {
 
     return <CenterModal open={open}>
         <Title>
-            <Alert sx={{ mb: 1 }} severity="info" variant="filled">Yeni Randevu Oluştur</Alert>
+            <Typography fontFamily="revert" fontWeight="bold" sx={{ textAlign: 'left', py: 2, px: 1 }}>
+                Yeni Randevu Oluştur
+            </Typography>
         </Title>
         <Description>
             <TextField
@@ -103,6 +105,7 @@ function CreateAppointment() {
                             label="Randevu Tarihi"
                             slotProps={{ textField: { size: 'small' } }}
                             name="date"
+                            minDate={dayjs().startOf('day')}
                         //onChange={(newValue) => setFormItem('date', dayjs(newValue).format("MM.DD.YYYY"))}
                         />
                     </LocalizationProvider>

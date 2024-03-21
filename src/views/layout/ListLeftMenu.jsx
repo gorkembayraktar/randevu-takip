@@ -3,7 +3,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { Divider, Typography } from '@mui/material';
+import { Divider, ListSubheader, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
@@ -13,6 +13,7 @@ import RestoreSharpIcon from '@mui/icons-material/RestoreSharp';
 import EditCalendarSharpIcon from '@mui/icons-material/EditCalendarSharp';
 import BusinessSharpIcon from '@mui/icons-material/BusinessSharp';
 import SettingsSharpIcon from '@mui/icons-material/SettingsSharp';
+import TelegramIcon from '@mui/icons-material/Telegram';
 
 const ROUTES = [
     {
@@ -47,6 +48,13 @@ const ROUTES = [
     }
 ]
 
+const MODULES = [
+    {
+        icon: <TelegramIcon />,
+        to: '/modules/telegram',
+        text: 'Telegram'
+    }
+]
 
 
 export const ListLeftMenu = () => {
@@ -64,6 +72,20 @@ export const ListLeftMenu = () => {
                 </ListItemButton>
             </ListItem>
         ))}
+        <Divider />
+        <List dense>
+            <ListSubheader>Modüller</ListSubheader>
+            {MODULES.map((ROUTE, index) => (
+                <ListItem key={index} disablePadding component={Link} to={ROUTE.to} >
+                    <ListItemButton selected={location.pathname == ROUTE.to}>
+                        <ListItemIcon>
+                            {ROUTE.icon}
+                        </ListItemIcon>
+                        <ListItemText secondary={ROUTE.text} />
+                    </ListItemButton>
+                </ListItem>
+            ))}
+        </List>
 
         <Divider />
         <Typography sx={{ mt: 2 }} variant="body2" color="text.secondary" align="center">

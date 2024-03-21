@@ -4,6 +4,8 @@ import {
 
 import { Home, Setting, History, LimitDates, Login, Holiday, Profile, Customers, ProfilePassword } from '../views/pages'
 
+import {Telegram} from "../views/pages/modules";
+
 
 export const routes = [
     {
@@ -58,6 +60,12 @@ export const routes = [
     {
         path:'/profile/password',
         element:<ProfilePassword />,
+        exact:true,
+        auth:false
+    },
+    {
+        path:'/modules/telegram',
+        element: <Telegram />,
         exact:true,
         auth:false
     },
