@@ -7,6 +7,7 @@ import Holiday from "./Holiday";
 import Profile from "./Profile";
 import Customers from "./Customers";
 import ProfilePassword from './ProfilePassword'
+import Dashboard from './Dashboard'
 
 export {
     Home, 
@@ -17,5 +18,6 @@ export {
     Holiday, 
     Profile,
     Customers,
-    ProfilePassword
+    ProfilePassword,
+    Dashboard
 }

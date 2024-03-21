@@ -77,27 +77,8 @@ function CreateAppointment() {
             </Typography>
         </Title>
         <Description>
-            <TextField
-                required
-                id="outlined-required"
-                label="Ad Soyad"
-                name="name"
-                size="small"
-                onChange={handleForm}
-                fullWidth
-                sx={{ mb: 1 }}
-            />
-            <TextField
-                required
-                id="outlined-required"
-                label="Telefonu"
-                name="phone"
-                size="small"
-                onChange={handleForm}
-                fullWidth
-                sx={{ mb: 1 }}
-            />
-            <Grid container spacing={2}>
+
+            <Grid container spacing={1}>
                 <Grid item xs={6}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
@@ -124,20 +105,24 @@ function CreateAppointment() {
                         sx={{ mb: 1 }}
                     />
                 </Grid>
+
+                <Grid item xs={12}>
+                    <TextField
+                        multiline
+                        label="Not"
+                        type="text"
+                        rows={2}
+                        value={form.note}
+                        fullWidth
+                        size="small"
+                        name="note"
+                        onChange={handleForm}
+
+                    />
+                </Grid>
             </Grid>
 
-            <TextField
-                multiline
-                label="Not"
-                type="text"
-                rows={2}
-                value={form.note}
-                fullWidth
-                size="small"
-                name="note"
-                onChange={handleForm}
-                sx={{ mb: 1, mt: 1 }}
-            />
+
         </Description>
         <Footer>
             <ButtonGroup sx={{ float: 'right' }}>

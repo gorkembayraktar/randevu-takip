@@ -2,7 +2,7 @@ import {
     Navigate 
   } from "react-router-dom";
 
-import { Home, Setting, History, LimitDates, Login, Holiday, Profile, Customers, ProfilePassword } from '../views/pages'
+import { Dashboard, Home, Setting, History, LimitDates, Login, Holiday, Profile, Customers, ProfilePassword } from '../views/pages'
 
 import {Telegram} from "../views/pages/modules";
 
@@ -10,6 +10,12 @@ import {Telegram} from "../views/pages/modules";
 export const routes = [
     {
         path:'/',
+        element:<Dashboard />,
+        exact:true,
+        auth:false
+    },
+    {
+        path:'/appointments',
         element:<Home/>,
         exact:true,
         auth:false

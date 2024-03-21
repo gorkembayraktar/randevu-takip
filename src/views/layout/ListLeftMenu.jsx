@@ -14,11 +14,16 @@ import EditCalendarSharpIcon from '@mui/icons-material/EditCalendarSharp';
 import BusinessSharpIcon from '@mui/icons-material/BusinessSharp';
 import SettingsSharpIcon from '@mui/icons-material/SettingsSharp';
 import TelegramIcon from '@mui/icons-material/Telegram';
-
+import DashboardIcon from '@mui/icons-material/Dashboard';
 const ROUTES = [
     {
-        icon: <DateRangeSharpIcon />,
+        icon: <DashboardIcon />,
         to: '/',
+        text: 'Gösterge Paneli'
+    },
+    {
+        icon: <DateRangeSharpIcon />,
+        to: '/appointments',
         text: 'Randevular'
     },
     {
