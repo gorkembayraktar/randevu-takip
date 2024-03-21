@@ -2,7 +2,7 @@ import {
     Navigate 
   } from "react-router-dom";
 
-import { Home, Setting, History, LimitDates, Login, Holiday, Profile, Customers } from '../views/pages'
+import { Home, Setting, History, LimitDates, Login, Holiday, Profile, Customers, ProfilePassword } from '../views/pages'
 
 
 export const routes = [
@@ -52,6 +52,12 @@ export const routes = [
     {
         path:'/profile',
         element:<Profile />,
+        exact:true,
+        auth:false
+    },
+    {
+        path:'/profile/password',
+        element:<ProfilePassword />,
         exact:true,
         auth:false
     },

@@ -46,7 +46,7 @@ const CustomIcon = ({ status }) => {
 }
 
 const rows = [
-  { id: 1, fullname: 'Ahmet Çağar', phone: '0535225555', created_at: new Date() },
+  { id: 1, fullname: 'Ahmet Çağar', phone: '0535225555', note: 'asfkas fkas kfsak fask fksa kfask fkas kfask fksa kfask kfas kfak fkak f', created_at: new Date() },
 ];
 
 
@@ -69,6 +69,7 @@ const Customers = () => {
     { field: 'fullname', headerName: 'Adı Soyadı', flex: true },
 
     { field: 'phone', flex: true, headerName: 'Telefon', width: 150, valueGetter: (params) => new AsYouType('TR').input(params.row.phone) },
+    { field: 'note', headerName: 'Not', flex: true },
     { field: 'created_at', headerName: 'Oluşturma tarih', width: 150, valueGetter: (params) => '1 ocak' },
 
     {
@@ -119,7 +120,7 @@ const Customers = () => {
       </Paper>
 
       <Grid container spacing={2}>
-        <Grid item md={7} sx={{ width: '100%' }}>
+        <Grid item md={8} sx={{ width: '100%' }}>
 
           <TableRows rows={rows} columns={columns} pageSize={10} />
 

@@ -6,7 +6,7 @@ import Login  from "./Login";
 import Holiday from "./Holiday";
 import Profile from "./Profile";
 import Customers from "./Customers";
-
+import ProfilePassword from './ProfilePassword'
 
 export {
     Home, 
@@ -16,5 +16,6 @@ export {
     Login, 
     Holiday, 
     Profile,
-    Customers
+    Customers,
+    ProfilePassword
 }
