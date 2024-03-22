@@ -9,9 +9,11 @@ import Customers from "./Customers";
 import ProfilePassword from './ProfilePassword'
 import Dashboard from './Dashboard'
 import Visitor from './Visitor'
+import VisitorQuery from './VisitorQuery'
 
 export {
     Visitor,
+    VisitorQuery,
     Home, 
     Setting, 
     History, 

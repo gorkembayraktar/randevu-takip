@@ -2,7 +2,7 @@ import {
     Navigate 
   } from "react-router-dom";
 
-import { Visitor, Dashboard, Home, Setting, History, LimitDates, Login, Holiday, Profile, Customers, ProfilePassword } from '../views/pages'
+import { Visitor, VisitorQuery, Dashboard, Home, Setting, History, LimitDates, Login, Holiday, Profile, Customers, ProfilePassword } from '../views/pages'
 
 import {Telegram} from "../views/pages/modules";
 
@@ -11,6 +11,13 @@ export const routes = [
     {
         path:'/',
         element:<Visitor />,
+        exact:false,
+        auth:false,
+        withoutSection: true
+    },
+    {
+        path:'/appointment-search',
+        element:<VisitorQuery />,
         exact:false,
         auth:false,
         withoutSection: true

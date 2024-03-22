@@ -166,7 +166,7 @@ export default function Visitor() {
                         <Typography variant="body" gutterBottom>
                             Zaten bir randevunuz var mı?
                             <Button variant="text" style={{ textTransform: "none" }}>
-                                <Link to="/" style={{ color: 'default', textDecoration: 'inherit' }} rel="noopener noreferrer" >
+                                <Link to="/appointment-search" style={{ color: 'default', textDecoration: 'inherit' }} rel="noopener noreferrer" >
                                     Randevu sorgula
                                 </Link>
                             </Button>
