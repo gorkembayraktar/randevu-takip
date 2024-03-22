@@ -8,8 +8,10 @@ import Profile from "./Profile";
 import Customers from "./Customers";
 import ProfilePassword from './ProfilePassword'
 import Dashboard from './Dashboard'
+import Visitor from './Visitor'
 
 export {
+    Visitor,
     Home, 
     Setting, 
     History, 

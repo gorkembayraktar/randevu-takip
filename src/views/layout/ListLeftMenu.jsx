@@ -18,7 +18,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 const ROUTES = [
     {
         icon: <DashboardIcon />,
-        to: '/',
+        to: '/dashboard',
         text: 'Gösterge Paneli'
     },
     {

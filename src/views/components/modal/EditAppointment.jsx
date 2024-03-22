@@ -1,4 +1,4 @@
-import { Alert, Box, Button, ButtonGroup, Divider, Grid, Modal, TextField, Typography } from "@mui/material";
+import { Alert, Box, Button, ButtonGroup, Divider, FormControl, Grid, InputLabel, MenuItem, Modal, Select, TextField, Typography } from "@mui/material";
 
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -169,8 +169,24 @@ function EditAppointment() {
                     />
                 </Grid>
 
-
+                <Grid item xs={12}>
+                    <FormControl fullWidth size="small">
+                        <InputLabel id="demo-simple-select-label">Durum</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            label="Age"
+                        >
+                            <MenuItem value={10}>Bekleniyor</MenuItem>
+                            <MenuItem value={20}>Tamamlandı</MenuItem>
+                            <MenuItem value={20}>İptal Edildi</MenuItem>
+                        </Select>
+                    </FormControl>
+                </Grid>
             </Grid>
+
+            <Divider />
+
 
 
         </Description>
