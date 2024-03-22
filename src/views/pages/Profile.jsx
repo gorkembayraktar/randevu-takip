@@ -82,8 +82,9 @@ const SectionProfile = ({ editable }) => {
         <TextField
           hiddenLabel
           id="filled-hidden-label-small"
-          value="test"
-          variant="outlined"
+          defaultValue="test"
+          variant={!editable ? 'standard' : 'outlined'}
+          InputProps={{ disableUnderline: !editable }}
           size="small"
           fullWidth
           disabled={!editable}
@@ -98,9 +99,9 @@ const SectionProfile = ({ editable }) => {
         <TextField
           hiddenLabel
           id="filled-hidden-label-small"
-          value="test"
-          defaultValue=""
-          variant="outlined"
+          variant={!editable ? 'standard' : 'outlined'}
+          InputProps={{ disableUnderline: !editable }}
+          defaultValue="test"
           size="small"
           fullWidth
           disabled={!editable}
