@@ -93,11 +93,11 @@ const Customers = () => {
 
   const columns = [
 
-    { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'fullname', headerName: 'Adı Soyadı', flex: true },
-    { field: 'email', headerName: 'Email', flex: true },
-    { field: 'phone', flex: true, headerName: 'Telefon', width: 150, valueGetter: (params) => new AsYouType('TR').input(params.row.phone) },
-    { field: 'note', headerName: 'Not', flex: true },
+    { field: 'id', headerName: 'ID', width: 100 },
+    { field: 'fullname', headerName: 'Adı Soyadı', width: 150 },
+    { field: 'email', headerName: 'Email', width: 150 },
+    { field: 'phone', headerName: 'Telefon', width: 150, valueGetter: (params) => new AsYouType('TR').input(params.row.phone) },
+    { field: 'note', headerName: 'Not', minWidth: 150, flex: 1 },
     { field: 'created_at', headerName: 'Oluşturma tarih', width: 150, valueGetter: (params) => '1 ocak' },
 
     {
@@ -151,7 +151,7 @@ const Customers = () => {
       </Paper>
 
       <Grid container spacing={2}>
-        <Grid item md={8} sx={{ width: '100%' }}>
+        <Grid item md={12} sx={{ width: '100%' }}>
 
           <TableRows rows={data} columns={columns} pageSize={10} />
 

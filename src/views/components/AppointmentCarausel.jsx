@@ -8,23 +8,28 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { useSwipeable } from "react-swipeable";
 import DeleteDialog from "./modal/DeleteDialog";
 import { useAlert } from "../../hooks/useAlert";
-
-
+import PersonIcon from '@mui/icons-material/Person';
+import SmartphoneIcon from '@mui/icons-material/Smartphone';
+import InfoIcon from '@mui/icons-material/Info';
 const BUGUN_RANDEVULAR = [
   {
     id: 1,
     saat: "10:20",
-    title: "Mehmet 053555525"
+    fullname: "Mehmet",
+    phone: "053555525",
+    note: 'test'
   },
   {
     id: 2,
     saat: "13:10",
-    title: "Veli 053555525"
+    fullname: "Veli",
+    phone: "053555525"
   },
   {
     id: 3,
     saat: "16:20",
-    title: "Hakan 053555525"
+    fullname: "Hakan",
+    phone: "053555525"
   }
 ];
 
@@ -125,11 +130,17 @@ const AppointmentItem = ({ item, next, prev, setRow }) => {
   return <React.Fragment >
     <Grid item sx={{ userSelect: 'none', flex: 1, cursor: 'pointer' }} {...handlers} style={{ touchAction: stopScroll ? 'none' : 'auto' }}>
       <Box sx={{ fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: 1 }}>
-        <AccessTimeIcon sx={{ fontSize: 15 }} />
-        {item.saat}
+        <AccessTimeIcon sx={{ fontSize: 14 }} />
+        <Typography sx={{ fontSize: 14 }}>{item.saat}</Typography>
         <Chip size="small" label="10 dakika kaldı" />
       </Box>
-      <span> {item.title}</span>
+      <Box sx={{ fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: 1 }}>
+        <PersonIcon sx={{ fontSize: 14 }} /> <Typography sx={{ fontSize: 14 }}>{item.fullname}</Typography>
+        <SmartphoneIcon sx={{ fontSize: 14 }} /> <Typography sx={{ fontSize: 14 }}>{item.phone}</Typography>
+        <Tooltip title={`Not: ${item?.note ?? ''}`}>
+          <InfoIcon sx={{ fontSize: 14 }} />
+        </Tooltip>
+      </Box>
     </Grid>
     <Grid item sx={{ width: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <Tooltip title="Randevuyu iptal et">

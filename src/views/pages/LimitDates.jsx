@@ -87,19 +87,19 @@ const LimitDates = () => {
       align: 'center',
       renderCell: (params) => <CustomIcon status={params.row.status} />
     },
-    { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'user', headerName: 'Kullanıcı', valueGetter: (params) => 'test' },
+    { field: 'id', headerName: 'ID', minWidth: 70 },
+    { field: 'user', headerName: 'Kullanıcı', minWidth: 100, valueGetter: (params) => 'test' },
 
     {
       field: 'content',
       headerName: 'Açıklama',
       flex: 1,
-      width: 300,
+      minWidth: 100,
     },
     {
       field: 'created_at',
       headerName: 'Oluşturma Tarihi',
-      width: 170,
+      minWidth: 100,
 
       valueGetter: (params) => dayjs(params.row.start).format('M MMMM YYYY, H:mm')
     },

@@ -83,30 +83,50 @@ function EditAppointment() {
 
     return <CenterModal open={open}>
         <Title>
-            <Alert sx={{ mb: 1 }} severity="info" variant="filled">Randevu Düzenle</Alert>
+            <Typography fontFamily="revert" fontWeight="bold" sx={{ textAlign: 'left', py: 2, px: 1 }}>
+                Randevu Düzenle
+            </Typography>
         </Title>
         <Description>
-            <TextField
-                required
-                id="outlined-required"
-                label="Adı Soyadı"
-                fullWidth
-                value={data?.name}
-                onChange={handleForm}
-                name="name"
-                sx={{ mb: 1 }}
-            />
-            <TextField
-                required
-                id="outlined-required"
-                label="Telefonu"
-                name="phone"
-                onChange={handleForm}
-                value={data?.phone}
-                fullWidth
-                sx={{ mb: 1 }}
-            />
-            <Grid container spacing={2}>
+
+            <Grid container spacing={1}>
+                <Grid item xs={12}>
+                    <TextField
+                        required
+                        id="outlined-required"
+                        label="Adı Soyadı"
+                        fullWidth
+                        value={data?.name}
+                        onChange={handleForm}
+                        name="name"
+                        size="small"
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <TextField
+                        required
+                        id="outlined-required"
+                        label="Telefonu"
+                        name="phone"
+                        onChange={handleForm}
+                        value={data?.phone}
+                        fullWidth
+                        size="small"
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <TextField
+                        required
+                        id="outlined-required"
+                        label="Email"
+                        name="email"
+                        type="email"
+                        onChange={handleForm}
+                        value={data?.email}
+                        fullWidth
+                        size="small"
+                    />
+                </Grid>
                 <Grid item xs={6}>
                     <LocalizationProvider dateAdapter={AdapterDayjs} >
                         <DatePicker
@@ -115,6 +135,7 @@ function EditAppointment() {
                             value={data?.date && dayjs(data.date)}
                             onChange={val => setFormItem('date', val)}
                             format="MM.DD.YYYY"
+                            slotProps={{ textField: { size: 'small' } }}
                         />
                     </LocalizationProvider>
                 </Grid>
@@ -129,22 +150,29 @@ function EditAppointment() {
                         value={data?.time}
                         name="time"
                         onChange={handleForm}
-                        sx={{ mb: 1 }}
+                        size="small"
+
                     />
                 </Grid>
+
+                <Grid item xs={12}>
+                    <TextField
+                        multiline
+                        label="Not"
+                        type="text"
+                        rows={2}
+                        fullWidth
+                        name="note"
+                        onChange={handleForm}
+                        value={data?.note}
+                        size="small"
+                    />
+                </Grid>
+
+
             </Grid>
 
-            <TextField
-                multiline
-                label="Not"
-                type="text"
-                rows={2}
-                fullWidth
-                name="note"
-                onChange={handleForm}
-                value={data?.note}
-                sx={{ mb: 1 }}
-            />
+
         </Description>
         <Footer>
             <ButtonGroup sx={{ float: 'right' }}>

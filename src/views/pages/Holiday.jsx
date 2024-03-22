@@ -74,7 +74,7 @@ const Holiday = () => {
       renderCell: (params) => <CustomIcon type={params.row.type} />
     },
     { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'title', headerName: 'Başlık', flex: 1, width: 300 },
+    { field: 'title', headerName: 'Önemi', minWidth: 150, flex: 1, },
 
     {
       field: 'startend', headerName: 'Resmi Tatil', width: 170,

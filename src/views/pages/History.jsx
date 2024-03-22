@@ -88,14 +88,14 @@ const History = () => {
       renderCell: (params) => <CustomIcon status={params.row.status} />
     },
     { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'fullname', headerName: 'Adı Soyadı', flex: true },
+    { field: 'fullname', headerName: 'Adı Soyadı', minWidth: 120, flex: true },
 
-    { field: 'phone', flex: true, headerName: 'Telefon', width: 150, valueGetter: (params) => new AsYouType('TR').input(params.row.phone) },
-    { field: 'created_at', headerName: 'Oluşturma tarih', width: 150, valueGetter: (params) => '1 ocak' },
+    { field: 'phone', flex: true, headerName: 'Telefon', minWidth: 120, valueGetter: (params) => new AsYouType('TR').input(params.row.phone) },
+    { field: 'created_at', headerName: 'Oluşturma tarih', minWidth: 150, valueGetter: (params) => '1 ocak' },
     {
       field: 'date',
       headerName: 'Randevu Tarih',
-      width: 160,
+      minWidth: 160,
       renderCell: (params) => <Tooltip title="1 gün önce">{dayjs(params.row.start).format('M MMMM YYYY')}</Tooltip>,
     },
     {
