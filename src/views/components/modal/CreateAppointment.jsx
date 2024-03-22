@@ -14,13 +14,11 @@ import { useAlert } from "../../../hooks/useAlert";
 import SwitchAccountIcon from '@mui/icons-material/SwitchAccount';
 import { CenterModal, Title, Description, Footer } from './index'
 import PersonIcon from '@mui/icons-material/Person';
+import TextFieldSearchCustomer from "../TextFieldSearchCustomer";
+import CreateCustomer from "./CreateCustomer";
 
 
 function CreateAppointment() {
-
-    // const [open, setOpen] = useState(false);
-
-    const [getInList, setGetInList] = useState(false);
 
     const { show: open, date, hour, appointmentId } = useSelector(getCreateAppointmentModal);
 
@@ -32,8 +30,10 @@ function CreateAppointment() {
 
     const { success } = useAlert();
 
-
+    const [value, setValue] = useState(null);
     const [form, setForm] = useState({});
+
+    const [openCreateCustomer, setOpenCreateCustomer] = useState(false);
 
     useEffect(() => {
         setForm({
@@ -68,79 +68,91 @@ function CreateAppointment() {
 
 
 
+    return <>
+        <CenterModal open={open}>
+            <Title>
+                <Typography fontFamily="revert" fontWeight="bold" sx={{ textAlign: 'left', py: 2, px: 1 }}>
+                    Yeni Randevu Oluştur
+                </Typography>
+            </Title>
+            <Description>
 
-
-    return <CenterModal open={open}>
-        <Title>
-            <Typography fontFamily="revert" fontWeight="bold" sx={{ textAlign: 'left', py: 2, px: 1 }}>
-                Yeni Randevu Oluştur
-            </Typography>
-        </Title>
-        <Description>
-
-            <Grid container spacing={1}>
-                <Grid item xs={6}>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker
-                            value={form.date}
-                            label="Randevu Tarihi"
-                            slotProps={{ textField: { size: 'small' } }}
-                            name="date"
-                            minDate={dayjs().startOf('day')}
-                        //onChange={(newValue) => setFormItem('date', dayjs(newValue).format("MM.DD.YYYY"))}
+                <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <TextFieldSearchCustomer value={value} setValue={setValue} addNewCustomer={() => setOpenCreateCustomer(true)} />
+                    </Grid>
+                    <Grid item xs={6}>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DatePicker
+                                value={form.date}
+                                label="Randevu Tarihi"
+                                slotProps={{ textField: { size: 'small' } }}
+                                name="date"
+                                minDate={dayjs().startOf('day')}
+                            //onChange={(newValue) => setFormItem('date', dayjs(newValue).format("MM.DD.YYYY"))}
+                            />
+                        </LocalizationProvider>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <TextField
+                            required
+                            id="outlined-required"
+                            label="Saat"
+                            type="time"
+                            size="small"
+                            fullWidth
+                            value={form.time}
+                            name="time"
+                            onChange={handleForm}
+                            sx={{ mb: 1 }}
                         />
-                    </LocalizationProvider>
+                    </Grid>
+
+                    <Grid item xs={12}>
+                        <TextField
+                            multiline
+                            label="Not"
+                            type="text"
+                            rows={2}
+                            value={form.note}
+                            fullWidth
+                            size="small"
+                            name="note"
+                            onChange={handleForm}
+
+                        />
+                    </Grid>
                 </Grid>
-                <Grid item xs={6}>
-                    <TextField
-                        required
-                        id="outlined-required"
-                        label="Saat"
-                        type="time"
+
+
+            </Description>
+            <Footer>
+                <ButtonGroup sx={{ float: 'right' }}>
+                    <Button aria-label="delete" size="small" onClick={handleClose}>
+                        Vazgeç
+                    </Button >
+                    <Button
+                        aria-label="delete"
+                        variant="outlined"
                         size="small"
-                        fullWidth
-                        value={form.time}
-                        name="time"
-                        onChange={handleForm}
-                        sx={{ mb: 1 }}
-                    />
-                </Grid>
+                        color="success"
+                        onClick={handleCreate}
+                    >
+                        Oluştur
+                    </Button >
+                </ButtonGroup>
+            </Footer>
+        </CenterModal>
 
-                <Grid item xs={12}>
-                    <TextField
-                        multiline
-                        label="Not"
-                        type="text"
-                        rows={2}
-                        value={form.note}
-                        fullWidth
-                        size="small"
-                        name="note"
-                        onChange={handleForm}
+        <CreateCustomer
+            open={openCreateCustomer}
+            close={() => setOpenCreateCustomer(false)}
+            onsuccess={() => {
 
-                    />
-                </Grid>
-            </Grid>
+            }}
+        />
+    </>
 
-
-        </Description>
-        <Footer>
-            <ButtonGroup sx={{ float: 'right' }}>
-                <Button aria-label="delete" size="small" onClick={handleClose}>
-                    Vazgeç
-                </Button >
-                <Button
-                    aria-label="delete"
-                    variant="outlined"
-                    size="small"
-                    color="success"
-                    onClick={handleCreate}
-                >
-                    Oluştur
-                </Button >
-            </ButtonGroup>
-        </Footer>
-    </CenterModal>
 
 
 

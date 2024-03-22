@@ -4,6 +4,7 @@ import { Button, ButtonGroup, TextField, Typography } from "@mui/material";
 import { memo, useEffect, useState } from "react";
 import { useAlert } from "../../../hooks/useAlert";
 import { CenterModal, Title, Description, Footer } from './index'
+import { FourMp } from "@mui/icons-material";
 
 
 function EditCustomer({ open, close, data, onsuccess }) {
@@ -19,7 +20,8 @@ function EditCustomer({ open, close, data, onsuccess }) {
         setForm({
             name: data?.fullname,
             phone: data?.phone,
-            note: data?.note
+            note: data?.note,
+            email: data?.email
         });
     }, [open])
 
@@ -40,7 +42,8 @@ function EditCustomer({ open, close, data, onsuccess }) {
             id: data.id,
             fullname: form.name,
             phone: form.phone,
-            note: form.note
+            note: form.note,
+            email: form.email
         });
         handleClose();
     }
@@ -75,6 +78,17 @@ function EditCustomer({ open, close, data, onsuccess }) {
                 size="small"
                 onChange={handleForm}
                 value={form.phone}
+                fullWidth
+                sx={{ mb: 1 }}
+            />
+            <TextField
+                required
+                id="outlined-required"
+                label="Email"
+                name="email"
+                size="small"
+                onChange={handleForm}
+                value={form.email}
                 fullWidth
                 sx={{ mb: 1 }}
             />

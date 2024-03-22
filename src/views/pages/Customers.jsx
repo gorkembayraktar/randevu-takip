@@ -1,12 +1,10 @@
 
-import Container from '@mui/material/Container';
 
 import TableRows from '../components/TableRows';
-import { Button, ButtonGroup, Chip, Divider, Grid, IconButton, Paper, Stack, Tooltip, Typography } from '@mui/material';
+import { Button, ButtonGroup, Grid, IconButton, Paper, Stack, Tooltip, Typography } from '@mui/material';
 import { GridDeleteIcon } from '@mui/x-data-grid';
 import { useTitle } from '../../hooks/useTitle';
 import { AsYouType } from 'libphonenumber-js'
-import dayjs from 'dayjs';
 import DoneSharpIcon from '@mui/icons-material/DoneSharp';
 import BlockSharpIcon from '@mui/icons-material/BlockSharp';
 import { useState } from 'react';
@@ -39,7 +37,7 @@ const meetingStatus = {
 
 
 const ROWS = [
-  { id: 1, fullname: 'Ahmet Çağar', phone: '0535225555', note: 'asfkas fkas kfsak fask fksa kfask fkas kfask fksa kfask kfas kfak fkak f', created_at: new Date() },
+  { id: 1, fullname: 'Ahmet Çağar', email: '', phone: '0535225555', note: 'asfkas fkas kfsak fask fksa kfask fkas kfask fksa kfask kfas kfak fkak f', created_at: new Date() },
 ];
 
 const Customers = () => {
@@ -97,7 +95,7 @@ const Customers = () => {
 
     { field: 'id', headerName: 'ID', width: 70 },
     { field: 'fullname', headerName: 'Adı Soyadı', flex: true },
-
+    { field: 'email', headerName: 'Email', flex: true },
     { field: 'phone', flex: true, headerName: 'Telefon', width: 150, valueGetter: (params) => new AsYouType('TR').input(params.row.phone) },
     { field: 'note', headerName: 'Not', flex: true },
     { field: 'created_at', headerName: 'Oluşturma tarih', width: 150, valueGetter: (params) => '1 ocak' },

@@ -6,6 +6,7 @@ import DateRangeSharpIcon from '@mui/icons-material/DateRangeSharp';
 
 import MyLineChart from './LineChart';
 import TimerIcon from '@mui/icons-material/Timer';
+import { useTitle } from '../../../hooks/useTitle';
 
 const generateRandomData = () => {
     const data = [];
@@ -21,6 +22,8 @@ const generateRandomData = () => {
 };
 
 const Dashboard = () => {
+
+    useTitle('Gösterge Paneli');
 
     const cardItems = [
         {

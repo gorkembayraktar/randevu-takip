@@ -19,7 +19,8 @@ function CreateCustomer({ open, close, onsuccess }) {
         setForm({
             name: '',
             phone: '',
-            note: ''
+            note: '',
+            email: ''
         });
     }, [open])
 
@@ -41,6 +42,7 @@ function CreateCustomer({ open, close, onsuccess }) {
             fullname: form.name,
             phone: form.phone,
             note: form.note,
+            email: form.email,
             created_at: new Date()
         });
         handleClose();
@@ -64,6 +66,7 @@ function CreateCustomer({ open, close, onsuccess }) {
                 name="name"
                 size="small"
                 onChange={handleForm}
+                value={form.name}
                 fullWidth
                 sx={{ mb: 1 }}
             />
@@ -74,6 +77,18 @@ function CreateCustomer({ open, close, onsuccess }) {
                 name="phone"
                 size="small"
                 onChange={handleForm}
+                value={form.phone}
+                fullWidth
+                sx={{ mb: 1 }}
+            />
+            <TextField
+                required
+                id="outlined-required"
+                label="Email"
+                name="email"
+                size="small"
+                onChange={handleForm}
+                value={form.email}
                 fullWidth
                 sx={{ mb: 1 }}
             />
