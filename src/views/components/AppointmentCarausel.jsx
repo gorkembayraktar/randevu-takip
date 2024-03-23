@@ -11,6 +11,7 @@ import { useAlert } from "../../hooks/useAlert";
 import PersonIcon from '@mui/icons-material/Person';
 import SmartphoneIcon from '@mui/icons-material/Smartphone';
 import InfoIcon from '@mui/icons-material/Info';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 const BUGUN_RANDEVULAR = [
   {
     id: 1,
@@ -33,6 +34,12 @@ const BUGUN_RANDEVULAR = [
   }
 ];
 
+
+const ACTIONBUTTON = {
+  CANCEL: 'cancel',
+  COMPLETE: 'complete'
+};
+
 export const AppointmentCaraousel = () => {
 
 
@@ -41,6 +48,7 @@ export const AppointmentCaraousel = () => {
   const [selectedIndis, setSelectedIndis] = useState(0);
   const currenData = data[selectedIndis] ? data[selectedIndis] : null;
   const [selectedRow, setSelectedRow] = useState(null);
+  const [completeRow, setCompleteRow] = useState(null);
   const { success, alert, info } = useAlert();
 
   if (data.length == 0)
@@ -69,6 +77,31 @@ export const AppointmentCaraousel = () => {
     setSelectedRow(null);
   };
 
+  const handleComplete = () => {
+    if (data.findIndex((k) => k.id == completeRow.id) == data.length - 1) {
+      prev();
+    }
+    setData(
+      data.filter(
+        item => item.id !== completeRow.id
+      )
+    )
+
+    success('Başarılı şekilde tamamlandı.');
+    setCompleteRow(null);
+  }
+
+  const setRow = (data, type) => {
+    switch (type) {
+      case ACTIONBUTTON.COMPLETE:
+        setCompleteRow(data);
+        break;
+      case ACTIONBUTTON.CANCEL:
+        setSelectedRow(data);
+        break;
+    }
+  }
+
 
 
   const hasNext = selectedIndis + 1 < data.length;
@@ -91,7 +124,7 @@ export const AppointmentCaraousel = () => {
           </Grid>
           <Grid item sx={{ width: 'auto', flex: 1 }} container >
             {
-              currenData && <AppointmentItem item={currenData} next={next} prev={prev} setRow={setSelectedRow} />
+              currenData && <AppointmentItem item={currenData} next={next} prev={prev} setRow={setRow} />
             }
           </Grid>
 
@@ -116,6 +149,16 @@ export const AppointmentCaraousel = () => {
       close={() => setSelectedRow(null)} // Dialog kapatma fonksiyonu
       confirm={handleCancel} // Silme işlemini gerçekleştirme fonksiyonu
     />
+    <DeleteDialog
+      props={{
+        open: completeRow !== null,
+        title: "Randevu Onayı",
+        content: "Bu randevuyu onayladığınızda listeden kaldırılacaktır.",
+      }}
+      close={() => setCompleteRow(null)} // Dialog kapatma fonksiyonu
+      confirm={handleComplete} // Silme işlemini gerçekleştirme fonksiyonu
+    />
+
   </>
 }
 
@@ -144,8 +187,13 @@ const AppointmentItem = ({ item, next, prev, setRow }) => {
     </Grid>
     <Grid item sx={{ width: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <Tooltip title="Randevuyu iptal et">
-        <IconButton sx={{ float: 'right' }} onClick={() => setRow(item)}>
+        <IconButton sx={{ float: 'right' }} onClick={() => setRow(item, ACTIONBUTTON.CANCEL)}>
           <CancelIcon />
+        </IconButton>
+      </Tooltip>
+      <Tooltip title="Randevuyu tamamla">
+        <IconButton sx={{ float: 'right' }} onClick={() => setRow(item, ACTIONBUTTON.COMPLETE)}>
+          <CheckCircleIcon color="success" />
         </IconButton>
       </Tooltip>
     </Grid>
