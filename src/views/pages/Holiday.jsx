@@ -20,25 +20,16 @@ import CreateHoliday from '../components/modal/CreateHoliday';
 import EditHoliday from '../components/modal/EditHoliday';
 import UpdateDisabledSharpIcon from '@mui/icons-material/UpdateDisabledSharp';
 import UpdateSharpIcon from '@mui/icons-material/UpdateSharp';
+import { useTranslation } from 'react-i18next';
+
+
 
 dayjs.locale(locale)
 
 const holidayRows = ozel_gunler.map((k, i) => ({ ...k, id: i + 1, type: Math.random() > .5 ? 'tekrarla' : 'tek' }));
 
-const holidayStatusProps = {
-  tekrarla: {
-    Icon: UpdateSharpIcon,
-    color: 'success',
-    hint: 'Her sene tekrarla'
-  },
-  tek: {
-    Icon: UpdateDisabledSharpIcon,
-    color: 'default',
-    hint: 'Tek seferlik'
-  }
-};
 
-const CustomIcon = ({ type }) => {
+const CustomIcon = ({ type, holidayStatusProps }) => {
 
   if (!type || !holidayStatusProps[type])
     return null
@@ -51,7 +42,24 @@ const CustomIcon = ({ type }) => {
 }
 
 const Holiday = () => {
-  useTitle("Resmi Tatiller");
+
+  const { t } = useTranslation();
+
+  const holidayStatusProps = {
+    tekrarla: {
+      Icon: UpdateSharpIcon,
+      color: 'success',
+      hint: t('Repeat every year')
+    },
+    tek: {
+      Icon: UpdateDisabledSharpIcon,
+      color: 'default',
+      hint: t('For once')
+    }
+  };
+
+
+  useTitle(t('holiday.Public Holidays'));
 
 
   const { success, alert } = useAlert();
@@ -69,36 +77,36 @@ const Holiday = () => {
   const holidayColumns = [
     {
       field: 'status',
-      headerName: 'Durum',
+      headerName: t('holiday.column.status'),
       align: 'center',
-      renderCell: (params) => <CustomIcon type={params.row.type} />
+      renderCell: (params) => <CustomIcon type={params.row.type} holidayStatusProps={holidayStatusProps} />
     },
-    { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'title', headerName: 'Önemi', minWidth: 150, flex: 1, },
+    { field: 'id', headerName: t('holiday.column.id'), width: 70 },
+    { field: 'title', headerName: t('holiday.column.importance'), minWidth: 150, flex: 1, },
 
     {
-      field: 'startend', headerName: 'Resmi Tatil', width: 170,
+      field: 'startend', headerName: t('holiday.column.holiday'), width: 170,
       valueGetter: (params) => dayjs(params.row.end).format('M MMMM') != dayjs(params.row.start).format('M MMMM') ? dayjs(params.row.end).format('M MMMM') + " - " + dayjs(params.row.end).format('M MMMM') : dayjs(params.row.end).format('M MMMM')
     },
     {
       align: 'center',
       field: 'total',
-      headerName: 'Toplam Gün',
+      headerName: t('holiday.column.total'),
       valueGetter: (params) => dayjs(params.row.end).diff(params.row.start, 'day') + 1
     },
     {
       field: "action",
-      headerName: "Aksiyon",
+      headerName: t('holiday.column.action'),
       sortable: false,
       disableClickEventBubbling: true,
       renderCell: ({ row }) =>
-        <ButtonGroup variant="outlined" aria-label="Aksiyon">
-          <Tooltip title="Bu kaydı sil">
+        <ButtonGroup variant="outlined" aria-label={t('holiday.column.action')}>
+          <Tooltip title={t('holiday.btn_delete')}>
             <IconButton color="error" onClick={() => setSelectedRow(row)} >
               <GridDeleteIcon />
             </IconButton>
           </Tooltip>
-          <Tooltip title="Bu kaydı güncelle">
+          <Tooltip title={t('holiday.btn_edit')}>
             <IconButton color="primary" onClick={() => {
 
               setOpenEditModal(true);
@@ -126,7 +134,7 @@ const Holiday = () => {
         >
 
           <Typography fontFamily="revert" fontWeight="bold">
-            Resmi Tatiller
+            {t('holiday.Public Holidays')}
           </Typography>
           <Button
             variant="outlined"
@@ -134,7 +142,7 @@ const Holiday = () => {
             startIcon={<AddCircleSharpIcon />}
             onClick={() => setOpenCreateModal(true)}
           >
-            Oluştur
+            {t('holiday.btn_create')}
           </Button>
         </Stack>
       </Paper>
@@ -142,8 +150,8 @@ const Holiday = () => {
       <DeleteDialog
         props={{
           open: selectedRow !== null && !openEditModal,
-          title: "İşlem Onayı",
-          content: "Bu kaydı silmek istediğinizden emin misiniz?",
+          title: t('dialog.delete.title'),
+          content: t('dialog.delete.content'),
         }}
         close={() => setSelectedRow(null)} // Dialog kapatma fonksiyonu
         confirm={handleDelete} // Silme işlemini gerçekleştirme fonksiyonu

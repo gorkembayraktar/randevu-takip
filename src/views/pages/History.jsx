@@ -13,11 +13,13 @@ import { useState } from 'react';
 import { useAlert } from '../../hooks/useAlert';
 import DeleteDialog from '../components/modal/DeleteDialog';
 import EditSharpIcon from '@mui/icons-material/EditSharp';
+import { useTranslation } from 'react-i18next';
 
-const MEETING_STATUS = {
-  1: "Tamamlandı",
-  2: "İptal Edildi",
-}
+import relativeTime from 'dayjs/plugin/relativeTime';
+
+dayjs.extend(relativeTime)
+
+
 
 const meetingStatus = {
   1: {
@@ -44,18 +46,7 @@ const CustomIcon = ({ status }) => {
   </Tooltip>
 }
 
-/**
- * kolon işlemi yapmak için
- *  {
-    field: 'fullName',
-    headerName: 'Full name',
-    description: 'This column has a value getter and is not sortable.',
-    sortable: false,
-    width: 160,
-    valueGetter: (params) =>
-      `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-  },
- */
+
 const rows = [
   { id: 1, fullname: 'Ahmet Çağar', phone: '0535225555', date: new Date(), status: 1 },
 ];
@@ -69,13 +60,17 @@ for (let i = 0; i < 100; i++) {
 }
 
 const History = () => {
-  const mode = 'dark';
-  useTitle("Geçmiş Randevular");
+
+  const { t } = useTranslation();
+
+  useTitle(
+    t('Appointments Processed')
+  );
   const { success, alert } = useAlert();
   const [selectedRow, setSelectedRow] = useState(null);
   const handleDelete = () => {
 
-    success('Başarılı şekilde silindi');
+    success(t('history.Successfully deleted'));
     setSelectedRow(null);
   };
 
@@ -83,29 +78,29 @@ const History = () => {
   const columns = [
     {
       field: 'status',
-      headerName: 'Durum',
+      headerName: t('history.column.status'),
       align: 'center',
       renderCell: (params) => <CustomIcon status={params.row.status} />
     },
-    { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'fullname', headerName: 'Adı Soyadı', minWidth: 120, flex: true },
+    { field: 'id', headerName: t('history.column.id'), width: 70 },
+    { field: 'fullname', headerName: t('history.column.fullname'), minWidth: 120, flex: true },
 
-    { field: 'phone', flex: true, headerName: 'Telefon', minWidth: 120, valueGetter: (params) => new AsYouType('TR').input(params.row.phone) },
-    { field: 'created_at', headerName: 'Oluşturma tarih', minWidth: 150, valueGetter: (params) => '1 ocak' },
+    { field: 'phone', flex: true, headerName: t('history.column.phone'), minWidth: 120, valueGetter: (params) => new AsYouType('TR').input(params.row.phone) },
+    { field: 'created_at', headerName: t('history.column.created_at'), minWidth: 150, valueGetter: (params) => '1 ocak' },
     {
       field: 'date',
-      headerName: 'Randevu Tarih',
+      headerName: t('history.column.date'),
       minWidth: 160,
-      renderCell: (params) => <Tooltip title="1 gün önce">{dayjs(params.row.start).format('M MMMM YYYY')}</Tooltip>,
+      renderCell: (params) => <Tooltip title={dayjs(params.row.start).fromNow()}>{dayjs(params.row.start).format('M MMMM YYYY')}</Tooltip>,
     },
     {
       field: "action",
-      headerName: "Aksiyon",
+      headerName: t('history.column.action'),
       sortable: false,
       disableClickEventBubbling: true,
       renderCell: ({ row }) =>
-        <ButtonGroup variant="outlined" aria-label="Aksiyon">
-          <Tooltip title="Bu kaydı sil">
+        <ButtonGroup variant="outlined" aria-label={t('history.column.action')}>
+          <Tooltip title={t('history.btn_delete')}>
             <IconButton color="error" onClick={() => setSelectedRow(row)} >
               <GridDeleteIcon />
             </IconButton>
@@ -126,7 +121,7 @@ const History = () => {
         >
 
           <Typography fontFamily="revert" fontWeight="bold">
-            Geçmiş Randevular
+            {t('Appointments Processed')}
           </Typography>
 
         </Stack>
@@ -143,8 +138,8 @@ const History = () => {
       <DeleteDialog
         props={{
           open: selectedRow !== null,
-          title: "İşlem Onayı",
-          content: "Bu kaydı silmek istediğinizden emin misiniz?",
+          title: t('dialog.delete.title'),
+          content: t('dialog.delete.content'),
         }}
         close={() => setSelectedRow(null)} // Dialog kapatma fonksiyonu
         confirm={handleDelete} // Silme işlemini gerçekleştirme fonksiyonu

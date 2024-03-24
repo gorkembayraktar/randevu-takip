@@ -5,9 +5,11 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-
+import { useTranslation } from 'react-i18next';
 
 export default function DeleteDialog({ props, close, confirm }) {
+  const { t } = useTranslation();
+
 
   const { open, title, content } = props;
 
@@ -31,10 +33,12 @@ export default function DeleteDialog({ props, close, confirm }) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary" autoFocus>Vazgeç</Button>
+          <Button onClick={handleClose} color="primary" autoFocus>
+            {t('dialog.delete.btn_cancel')}
+          </Button>
 
           <Button onClick={confirm} color="success">
-            Onaylıyorum
+            {t('dialog.delete.btn_confirm')}
           </Button>
         </DialogActions>
       </Dialog>

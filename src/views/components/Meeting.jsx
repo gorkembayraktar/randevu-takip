@@ -1,10 +1,10 @@
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
-import trLocale from '@fullcalendar/core/locales/tr';
+//import * as locales from '@fullcalendar/core/locales';
 
 import timeGridPlugin from '@fullcalendar/timegrid'
 import listPlugin from '@fullcalendar/list';
-import interactionPlugin,{ Draggable } from '@fullcalendar/interaction'; // for selectable
+import interactionPlugin, { Draggable } from '@fullcalendar/interaction'; // for selectable
 
 import { createRef, useEffect, useState } from 'react';
 import { Box, Button, IconButton } from '@mui/material';
@@ -14,16 +14,19 @@ import { dispatch } from '../../store';
 import dayjs from 'dayjs';
 import { useAlert } from '../../hooks/useAlert';
 import { IAppointmentStatus } from '../../identify/IScopes';
+import { useTranslation } from 'react-i18next';
 
 
 
-export default function Meeting({calendarEvents, showDialogDelete}) {
+export default function Meeting({ calendarEvents, showDialogDelete }) {
+
+  const { t, i18n } = useTranslation();
 
   const calendarRef = createRef();
 
   const [title, setTitle] = useState("");
 
-  const {success, error} = useAlert();
+  const { success, error } = useAlert();
 
   console.log("meeting", calendarEvents)
 
@@ -38,8 +41,8 @@ export default function Meeting({calendarEvents, showDialogDelete}) {
 
   const handleDateClick = (info) => {
     // Etkinliğe tıklanınca bu işlev çağrılır
-    if(info.view.type == 'timeGridDay') return;
-    if( info.view.type != 'timeGridWeek' ){
+    if (info.view.type == 'timeGridDay') return;
+    if (info.view.type != 'timeGridWeek') {
       console.log(info.view.type, info)
       /*
         calendarRef.current
@@ -58,79 +61,79 @@ export default function Meeting({calendarEvents, showDialogDelete}) {
   
   },[calendarEvents])
   */
- //
+  //
 
-    
 
-    const handleEventClick = (info) => {
-      const props  = info.event.extendedProps;
 
-      if(props.status === IAppointmentStatus.isNotAvailable){
-         error("Bu tarih kullanılamaz") 
-         console.log('not availabe');
-         return;
+  const handleEventClick = (info) => {
+    const props = info.event.extendedProps;
+
+    if (props.status === IAppointmentStatus.isNotAvailable) {
+      error("Bu tarih kullanılamaz")
+      console.log('not availabe');
+      return;
+    }
+
+    if (props.status === IAppointmentStatus.isClosed) {
+      error("Bu tarih kapatıldı.")
+      return console.log('isClosed');
+    }
+    const clickedEvent = info.event;
+
+    const selectDate = clickedEvent.start;
+
+    if (
+      props.status == IAppointmentStatus.isFull ||
+      props.status == IAppointmentStatus.isCompleted
+    ) {
+      dispatch.editAppointmentModal({ open: true, appointmentId: clickedEvent.id });
+      return;
+    }
+
+
+    if (info.event.start < new Date()) {
+      error("başlangıç tarihi şuanki tarihten küçük")
+      return console.log('başlangıç tarihi şuanki tarihten küçük');
+    }
+
+
+    if (props.status == IAppointmentStatus.isAvailable) {
+      const p = {
+        show: true,
+        date: dayjs(selectDate.toString()).toString(),
+        hour: dayjs(selectDate.toString()).format('HH:mm').toString(),
+        appointmentId: clickedEvent.id
+      };
+
+
+      dispatch.createAppointmentModal(p)
+
+      return;
+    }
+
+
+
+
+
+
+
+    /*
+    const updatedEvents = calendarEvents.map((event) => {
+      if (event.id == clickedEvent.id) {
+        return { ...event, isFull: true };
       }
-
-      if(props.status === IAppointmentStatus.isClosed){
-          error("Bu tarih kapatıldı.") 
-          return console.log('isClosed');
-      }
-      const clickedEvent = info.event;
-   
-      const selectDate = clickedEvent.start;
-
-      if(  
-        props.status == IAppointmentStatus.isFull ||
-        props.status == IAppointmentStatus.isCompleted
-        ){
-        dispatch.editAppointmentModal({open: true, appointmentId: clickedEvent.id});
-        return;
-      }
-
-     
-      if(info.event.start < new Date()) {
-        error("başlangıç tarihi şuanki tarihten küçük") 
-        return console.log('başlangıç tarihi şuanki tarihten küçük');
-      }
-          
-     
-      if(  props.status == IAppointmentStatus.isAvailable  ){
-        const p = {
-          show: true,
-          date: dayjs(selectDate.toString()).toString(),
-          hour: dayjs(selectDate.toString()).format('HH:mm').toString(),
-          appointmentId: clickedEvent.id
-        };
-        
-    
-        dispatch.createAppointmentModal(p)
-        
-        return;
-      }
-     
- 
-
-    
-      
-     
-      
-      /*
-      const updatedEvents = calendarEvents.map((event) => {
-        if (event.id == clickedEvent.id) {
-          return { ...event, isFull: true };
-        }
-        return event;
-      });
-      setCalendarEvents( updatedEvents );
-      */
+      return event;
+    });
+    setCalendarEvents( updatedEvents );
+    */
   };
 
-  const handleDataTransform  = (info) => {
-   
-   
+  const handleDataTransform = (info) => {
+
+
   }
 
-  const deleteEvent = (info) =>{
+  const deleteEvent = (info) => {
     showDialogDelete({
       ...info.event.extendedProps,
       id: info.event.id
@@ -155,64 +158,65 @@ export default function Meeting({calendarEvents, showDialogDelete}) {
     */
   }
   // a custom render function
-function renderEventContent(eventInfo) {
-   
-  return (
-    <>
-    {
-      eventInfo.view.type != 'listWeek' &&
-      <div className="fc-daygrid-event-dot" style={{borderColor: eventInfo.event.backgroundColor}}></div>
-    }
-  
-    <div className="fc-event-time">
-      {eventInfo.timeText}
-      
-      </div>
-    <div className="fc-event-title" >
-      {eventInfo.event.title }
-      { ['listWeek', 'timeGridWeek'].includes(eventInfo.view.type ) && eventInfo.event.extendedProps.isFull &&
-       
-        <IconButton size="small" IconButton className="" onClick={ () => deleteEvent(eventInfo) }> <GridDeleteIcon /></IconButton>
-        
-      }
-      
-    </div>
+  function renderEventContent(eventInfo) {
 
-    
-    </>
-  )
-}
+    return (
+      <>
+        {
+          eventInfo.view.type != 'listWeek' &&
+          <div className="fc-daygrid-event-dot" style={{ borderColor: eventInfo.event.backgroundColor }}></div>
+        }
 
- // handle event receive
- const handleEventReceive = (eventInfo) => {
-  const ntt = {
-    id: Date.now(),
-    title: eventInfo.draggedEl.getAttribute("title"),
-    color: eventInfo.draggedEl.getAttribute("data-color"),
-    start: eventInfo.event.start,
-    end: eventInfo.event.end,
-    custom: eventInfo.draggedEl.getAttribute("data-custom")
-  };
+        <div className="fc-event-time">
+          {eventInfo.timeText}
 
-  if( eventInfo.event.start > new Date() ){
-  }else{
-    //setCalendarEvents((state) => [...state,{...ntt}]);
+        </div>
+        <div className="fc-event-title" >
+          {eventInfo.event.title}
+          {['listWeek', 'timeGridWeek'].includes(eventInfo.view.type) && eventInfo.event.extendedProps.isFull &&
+
+            <IconButton size="small" IconButton className="" onClick={() => deleteEvent(eventInfo)}> <GridDeleteIcon /></IconButton>
+
+          }
+
+        </div>
+
+
+      </>
+    )
   }
 
-};
+  // handle event receive
+  const handleEventReceive = (eventInfo) => {
+
+    const ntt = {
+      id: Date.now(),
+      title: eventInfo.draggedEl.getAttribute("title"),
+      color: eventInfo.draggedEl.getAttribute("data-color"),
+      start: eventInfo.event.start,
+      end: eventInfo.event.end,
+      custom: eventInfo.draggedEl.getAttribute("data-custom")
+    };
+
+    if (eventInfo.event.start > new Date()) {
+    } else {
+      //setCalendarEvents((state) => [...state,{...ntt}]);
+    }
+
+  };
 
 
 
 
   return (
     <>
-    <Box sx={{ display:{ xs: 'block', sm: 'none'}}}>{ title }</Box>
+      <Box sx={{ display: { xs: 'block', sm: 'none' } }}>{title}</Box>
       <FullCalendar
-        dayMaxEventRows= {3}
+        dayMaxEventRows={3}
         initialView='dayGridMonth'
         moreLinkClick={'day'}
-        locale={trLocale}
-        plugins={[dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin ]}
+        locale={i18n.language}
+        plugins={[dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin]}
         events={calendarEvents}
         headerToolbar={{
           left: 'prev,next,today',
@@ -220,13 +224,13 @@ function renderEventContent(eventInfo) {
           right: 'timeGridDay,timeGridWeek,dayGridMonth,listWeek' // user can switch between the two
         }}
         selectable={true}
-        dateClick={ handleDateClick}
+        dateClick={handleDateClick}
         ref={calendarRef}
         eventClick={handleEventClick}
         eventContent={renderEventContent}
         droppable={true}
         selectMirror={true}
-        eventReceive={handleEventReceive}      
+        eventReceive={handleEventReceive}
       />
     </>
   )

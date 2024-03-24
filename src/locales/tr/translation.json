@@ -1,0 +1,165 @@
+{
+    "left_menu": {
+        "Dashboard": "Ana Panel",
+        "Appointments": "Randevular",
+        "Customers": "Müşteriler",
+        "History": "Geçmiş",
+        "Off Dates": "Tatil Günleri",
+        "Holiday": "Tatil",
+        "Settings": "Ayarlar",
+        "Modules": "Modüller"
+    },
+    "bottom_menu": {
+        "History": "Geçmiş",
+        "Appointments": "Randevular",
+        "Settings": "Ayarlar",
+        "Profile": "Profil"
+    },
+    "profile_menu": "Profil",
+    "dark_theme": "Koyu",
+    "light_theme": "Açık",
+    "logout": "Çıkış Yap",
+    "profile": {
+        "title": "Profil Hakkında",
+        "btn_change_password": "Şifre Değiştir",
+        "btn_edit": "Düzenle",
+        "btn_save": "Kaydet",
+        "username": "Kullanıcı Adı",
+        "fullname": "Ad Soyad",
+        "email": "E-posta"
+    },
+    "profile_password": {
+        "btn_change_password": "Şifre Değiştir",
+        "btn_back": "Kullanıcı Hakkında",
+        "btn_save": "Kaydet",
+        "password": "Şifre",
+        "new_password": "Yeni Şifre",
+        "new_password2": "Onayla"
+    },
+    "settings": {
+        "title": "Ayarlar",
+        "already_exists": "Böyle bir zaman dilimi zaten mevcut.",
+        "Weekly Appointment Hours": "Haftalık Randevu Saatleri",
+        "There is no record": "Kayıt bulunamadı.",
+        "Inactive": "Pasif",
+        "Active": "Aktif",
+        "Create Appointment Time": "Randevu Zamanı Oluştur",
+        "Appointment Date": "Randevu Tarihi",
+        "Appointment Hour": "Randevu Saati",
+        "cancel": "İptal",
+        "create": "Oluştur"
+    },
+    "holiday": {
+        "Public Holidays": "Resmi Tatiller",
+        "Add Public Holiday": "Resmi Tatil Ekle",
+        "Edit Public Holiday": "Resmi Tatili Düzenle",
+        "Start Date": "Başlangıç Tarihi",
+        "End Date": "Bitiş Tarihi",
+        "Renew every year": "Her yıl yenile",
+        "btn_create": "Oluştur",
+        "column": {
+            "status": "Durum",
+            "id": "ID",
+            "importance": "Önem",
+            "holiday": "Tatil",
+            "total": "Toplam",
+            "action": "Eylem"
+        },
+        "btn_edit": "Kaydı Güncelle",
+        "btn_delete": "Kaydı Sil"
+    },
+    "limit_date": {
+        "Off Dates": "Tatil Günleri",
+        "column": {
+            "status": "Durum",
+            "id": "ID",
+            "user": "Kullanıcı",
+            "explain": "Açıklama",
+            "created_at": "Oluşturulma Tarihi",
+            "start_date": "Başlangıç Tarihi",
+            "end_date": "Bitiş Tarihi",
+            "total": "Toplam",
+            "action": "Eylem"
+        },
+        "btn_delete": "Sil",
+        "btn_create": "Oluştur",
+        "Set a Off Date": "Bir Tatil Günü Belirle",
+        "Start Date": "Başlangıç Tarihi",
+        "Start Hour": "Başlangıç Saati",
+        "End Date": "Bitiş Tarihi",
+        "End Hour": "Bitiş Saati",
+        "Note": "Not",
+        "The end date cannot be earlier than the start date!": "Bitiş tarihi, başlangıç tarihinden önce olamaz!"
+    },
+    "history": {
+        "Appointments Processed": "İşlenen Randevular",
+        "Successfully deleted": "Başarıyla silindi",
+        "column": {
+            "status": "Durum",
+            "id": "ID",
+            "fullname": "Ad Soyad",
+            "phone": "Telefon",
+            "created_at": "Oluşturulma tarihi",
+            "date": "Randevu Tarihi",
+            "action": "Eylem"
+        },
+        "btn_delete": "Kaydı Sil"
+    },
+    "customer": {
+        "Customers": "Müşteriler",
+        "Customer successfully deleted": "Müşteri başarıyla silindi",
+        "column": {
+            "id": "ID",
+            "fullname": "Ad Soyad",
+            "email": "E-posta",
+            "phone": "Telefon",
+            "note": "Not",
+            "created_at": "Oluşturulma tarihi",
+            "action": "Eylem"
+        },
+        "btn_delete": "Kaydı Sil",
+        "btn_edit": "Kaydı Güncelle",
+        "Create Customer": "Müşteri Oluştur",
+        "Customer created": "Müşteri oluşturuldu",
+        "Add Customer": "Müşteri Ekle",
+        "Customer information has been updated": "Müşteri bilgileri güncellendi",
+        "Edit Customer": "Müşteriyi Düzenle"
+    },
+    "home": {
+        "Appointments": "Randevular",
+        "Do you want to cancel the Appointment Request?": "Randevu İsteğini İptal Etmek İstiyor musunuz?",
+        "Press the cancel button to confirm this action": "Bu işlemi onaylamak için iptal düğmesine basın"
+    },
+    "dialog": {
+        "delete": {
+            "title": "İşlem Onayı",
+            "content": "Bu kaydı silmek istediğinizden emin misiniz?",
+            "btn_confirm": "Onayla",
+            "btn_cancel": "İptal"
+        }
+    },
+    "DAYS": {
+        "Monday": "Pazartesi",
+        "Tuesday": "Salı",
+        "Wednesday": "Çarşamba",
+        "Thursday": "Perşembe",
+        "Friday": "Cuma",
+        "Saturday": "Cumartesi",
+        "Sunday": "Pazar"
+    },
+    "btn_add_appointment": "Randevu Ekle",
+    "Create Appointment": "Randevu Oluştur",
+    "Customer not found": "Müşteri bulunamadı",
+    "Add Customer": "Müşteri Ekle",
+    "Choice Customer": "Müşteri Seç",
+    "Appointment Hour": "Randevu Saati",
+    "Appointment Date": "Randevu Tarihi",
+    "Appointment has been created": "Randevu oluşturuldu",
+    "Updated successfully": "Başarıyla güncellendi",
+    "record_number_not_found": "{0} numaralı kayıt bulunamadı",
+    "Note": "Not",
+    "cancel": "İptal",
+    "create": "Oluştur",
+    "update": "Güncelle",
+    "delete": "Sil"
+}

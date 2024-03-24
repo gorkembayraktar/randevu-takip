@@ -13,8 +13,9 @@ code {
 }
 
 
-.fc-theme-standard .fc-list-day-cushion{
+.fc-theme-standard .fc-list-day-cushion {
   background: #22444f;
+  color: #fff;
 }
 
 :root {
@@ -22,8 +23,8 @@ code {
 }
 
 
-@media only screen and (max-width : 600px) {    
-  .fc .fc-toolbar-title{
+@media only screen and (max-width : 600px) {
+  .fc .fc-toolbar-title {
     display: none;
   }
 }

@@ -1,6 +1,5 @@
 
-import { Alert, Box, Button, ButtonGroup, Chip, Collapse, Divider, Grid, IconButton, List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Paper, TextField, Tooltip, Typography } from '@mui/material';
-import Container from '@mui/material/Container';
+import { Alert, Box, Chip, Divider, Grid, IconButton, List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Tooltip } from '@mui/material';
 import EventIcon from '@mui/icons-material/Event';
 import AddIcon from '@mui/icons-material/Add';
 
@@ -10,16 +9,19 @@ import { ByGroupByData } from '../../utils/array'
 
 import CreateWeeklyHour from '../components/modal/CreateWeeklyHour'
 
-import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
 import { useTitle } from '../../hooks/useTitle'
 import DeleteDialog from '../components/modal/DeleteDialog';
+import { useTranslation } from 'react-i18next';
 
+import { useAlert } from '../../hooks/useAlert'
 
 const Setting = () => {
 
-    useTitle("Ayarlar");
+    const { t } = useTranslation();
+
+    useTitle(t('settings.title'));
 
     const [selectedRow, setSelectedRow] = useState(null);
 
@@ -27,11 +29,19 @@ const Setting = () => {
 
     const dataNewView = ByGroupByData(DAY_KEYS, data, 'day');
 
+    const { error } = useAlert();
+
+
     const onCreate = ({ day, hour }) => {
         if (hour == "") return;
 
         if (data.find(i => i.day == day && i.hour == hour)) {
-            return alert("Böyle bir saat dilimi mevcut.");
+
+            error(
+                t('settings.already_exists')
+            );
+
+            return;
         }
         setData([
             ...data,
@@ -86,7 +96,6 @@ const Setting = () => {
         })
     }
 
-    const mode = 'dark';
     return (
         <>
             <Grid container spacing={2}>
@@ -98,7 +107,7 @@ const Setting = () => {
                         aria-labelledby="nested-list-subheader"
                         subheader={
                             <ListSubheader component="h2" sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} id="nested-list-subheader">
-                                Haftalık Randevu Saatleri
+                                {t('settings.Weekly Appointment Hours')}
                                 <IconButton onClick={() => showCreateWeeklyHour(1)}>
                                     <AddIcon />
                                 </IconButton>
@@ -113,7 +122,7 @@ const Setting = () => {
                                         <ListItemIcon>
                                             <EventIcon />
                                         </ListItemIcon>
-                                        <ListItemText primary={DAYS[day]} onClick={() => showCreateWeeklyHour(day)} />
+                                        <ListItemText primary={t(`DAYS.${DAYS[day]}`)} onClick={() => showCreateWeeklyHour(day)} />
 
                                     </ListItemButton>
                                     {
@@ -135,8 +144,8 @@ const Setting = () => {
             <DeleteDialog
                 props={{
                     open: selectedRow !== null,
-                    title: "İşlem Onayı",
-                    content: "Bu kaydı silmek istediğinizden emin misiniz?",
+                    title: t('dialog.delete.title'),
+                    content: t('dialog.delete.content'),
                 }}
                 close={() => setSelectedRow(null)} // Dialog kapatma fonksiyonu
                 confirm={handleDelete} // Silme işlemini gerçekleştirme fonksiyonu
@@ -149,12 +158,14 @@ const Setting = () => {
 
 const ViewWeeklyHour = ({ randevu_saatleri, onDelete, onAvailable }) => {
 
+    const { t } = useTranslation();
+
     if (randevu_saatleri.length == 0)
-        return <Alert severity="info">Saat bulunmuyor.</Alert>;
+        return <Alert severity="info">{t('settings.There is no record')}</Alert>;
 
 
     return randevu_saatleri.map(saat => (
-        <Tooltip title={saat.notAvailable ? 'Saat Etkin değil' : 'Saat Etkin'}>
+        <Tooltip title={saat.notAvailable ? t('settings.Inactive') : t('settings.Active')}>
             <Chip onClick={() => onAvailable(saat)} sx={{ cursor: 'pointer' }} label={saat.hour} color={saat.notAvailable ? 'default' : 'success'} onDelete={() => onDelete(saat)} />
         </Tooltip>
     ))

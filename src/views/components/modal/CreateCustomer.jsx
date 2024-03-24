@@ -4,9 +4,12 @@ import { Alert, Button, ButtonGroup, TextField, Typography } from "@mui/material
 import { memo, useEffect, useState } from "react";
 import { useAlert } from "../../../hooks/useAlert";
 import { CenterModal, Title, Description, Footer } from './index'
+import { useTranslation } from "react-i18next";
 
 
 function CreateCustomer({ open, close, onsuccess }) {
+
+    const { t } = useTranslation();
 
     const handleClose = () => close();
 
@@ -36,7 +39,7 @@ function CreateCustomer({ open, close, onsuccess }) {
 
 
     const handleCreate = () => {
-        success("Müşteri oluşturuldu.");
+        success("customer.Customer created");
         onsuccess({
             id: Date.now(),
             fullname: form.name,
@@ -55,14 +58,14 @@ function CreateCustomer({ open, close, onsuccess }) {
     return <CenterModal open={open}>
         <Title>
             <Typography fontFamily="revert" fontWeight="bold" sx={{ textAlign: 'left', py: 2, px: 1 }}>
-                Müşteri Ekle
+                {t('customer.Add Customer')}
             </Typography>
         </Title>
         <Description>
             <TextField
                 required
                 id="outlined-required"
-                label="Ad Soyad"
+                label={t('customer.column.fullname')}
                 name="name"
                 size="small"
                 onChange={handleForm}
@@ -73,7 +76,7 @@ function CreateCustomer({ open, close, onsuccess }) {
             <TextField
                 required
                 id="outlined-required"
-                label="Telefonu"
+                label={t('customer.column.phone')}
                 name="phone"
                 size="small"
                 onChange={handleForm}
@@ -84,7 +87,7 @@ function CreateCustomer({ open, close, onsuccess }) {
             <TextField
                 required
                 id="outlined-required"
-                label="Email"
+                label={t('customer.column.email')}
                 name="email"
                 size="small"
                 onChange={handleForm}
@@ -95,7 +98,7 @@ function CreateCustomer({ open, close, onsuccess }) {
 
             <TextField
                 multiline
-                label="Not"
+                label={t('customer.column.note')}
                 type="text"
                 rows={2}
                 value={form.note}
@@ -109,7 +112,7 @@ function CreateCustomer({ open, close, onsuccess }) {
         <Footer>
             <ButtonGroup sx={{ float: 'right' }}>
                 <Button aria-label="delete" size="small" onClick={handleClose}>
-                    Vazgeç
+                    {t('cancel')}
                 </Button >
                 <Button
                     aria-label="delete"
@@ -118,7 +121,7 @@ function CreateCustomer({ open, close, onsuccess }) {
                     color="success"
                     onClick={handleCreate}
                 >
-                    Oluştur
+                    {t('create')}
                 </Button >
             </ButtonGroup>
         </Footer>

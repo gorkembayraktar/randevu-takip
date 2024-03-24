@@ -1,12 +1,12 @@
 export const DAYS = {
-    1: "Pazartesi",
-    2: "Salı",
-    3: "Çarşamba",
-    4: "Perşembe",
-    5: "Cuma",
-    6: "Cumartesi",
-    0: "Pazar"
-}
+    1: "Monday", // Pazartesi
+    2: "Tuesday", // Salı
+    3: "Wednesday", // Çarşamba
+    4: "Thursday", // Perşembe
+    5: "Friday", // Cuma
+    6: "Saturday", // Cumartesi
+    0: "Sunday" // Pazar
+};
 export const DAY_KEYS = [1,2,3,4,5,6,0];
 
 

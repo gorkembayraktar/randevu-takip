@@ -15,11 +15,16 @@ import { Link } from 'react-router-dom';
 import { useTitle } from '../../hooks/useTitle';
 import { useSelector } from 'react-redux';
 import { getAppointments } from '../../features/GlobalSlice';
+import { useTranslation } from 'react-i18next';
 
 
 const Home = () => {
-  const mode = 'dark';
-  useTitle("Randevular");
+
+  const { t } = useTranslation();
+
+  useTitle(
+    t('home.Appointments')
+  );
 
 
   const calendarEvents = useSelector(getAppointments);
@@ -30,8 +35,8 @@ const Home = () => {
 
   const [deleteDialog, setDeleteDialog] = useState({
     info: null,
-    title: 'Randevu Talebini iptal etmek istiyor musunuz?',
-    content: 'Bu işlemi onaylamak için iptal düğmesine basınız.',
+    title: t('home.Do you want to cancel the Appointment Request?'),
+    content: t('home.Press the cancel button to confirm this action.'),
     open: false
   });
 

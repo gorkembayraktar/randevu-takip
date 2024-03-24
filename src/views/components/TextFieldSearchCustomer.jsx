@@ -8,11 +8,14 @@ import Typography from '@mui/material/Typography';
 import { debounce } from '@mui/material/utils';
 import PersonIcon from '@mui/icons-material/Person';
 import { Button, Popper } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 
 
 
 export default function TextFieldSearchCustomer({ value, setValue, addNewCustomer = null }) {
+
+    const { t } = useTranslation();
 
     const [inputValue, setInputValue] = React.useState('');
     const [options, setOptions] = React.useState([]);
@@ -81,8 +84,8 @@ export default function TextFieldSearchCustomer({ value, setValue, addNewCustome
             filterSelectedOptions
             value={value}
             noOptionsText={<>
-                Müşteri bulunamadı.
-                <Button variant="outlined" size='small' sx={{ ml: 1 }} onClick={addNewCustomer}>Müşteri ekle</Button>
+                {t('Customer not found')}
+                <Button variant="outlined" size='small' sx={{ ml: 1 }} onClick={addNewCustomer}>{t('Add Customer')}</Button>
             </>}
             onChange={(event, newValue) => {
                 setOptions(newValue ? [newValue, ...options] : options);
@@ -92,7 +95,7 @@ export default function TextFieldSearchCustomer({ value, setValue, addNewCustome
                 setInputValue(newInputValue);
             }}
             renderInput={(params) => (
-                <TextField {...params} label="Müşteri Seçiniz" fullWidth />
+                <TextField {...params} label={t('Choice Customer')} fullWidth />
             )}
             renderOption={(props, option) => {
 

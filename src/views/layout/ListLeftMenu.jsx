@@ -15,41 +15,43 @@ import BusinessSharpIcon from '@mui/icons-material/BusinessSharp';
 import SettingsSharpIcon from '@mui/icons-material/SettingsSharp';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import { useTranslation } from 'react-i18next';
+
 const ROUTES = [
     {
         icon: <DashboardIcon />,
         to: '/dashboard',
-        text: 'Gösterge Paneli'
+        text: 'Dashboard'
     },
     {
         icon: <DateRangeSharpIcon />,
         to: '/appointments',
-        text: 'Randevular'
+        text: 'Appointments'
     },
     {
         icon: <PeopleSharpIcon />,
         to: '/customers',
-        text: 'Müşteriler'
+        text: 'Customers'
     },
     {
         icon: <RestoreSharpIcon />,
         to: '/history',
-        text: 'Geçmiş Randevular'
+        text: 'History'
     },
     {
         icon: <EditCalendarSharpIcon />,
         to: '/limit-dates',
-        text: 'İzinli Tarihler'
+        text: 'Off Dates'
     },
     {
         icon: <BusinessSharpIcon />,
         to: '/holiday',
-        text: 'Resmi Tatiller'
+        text: 'Holiday'
     },
     {
         icon: <SettingsSharpIcon />,
         to: '/setting',
-        text: 'Ayarlar'
+        text: 'Settings'
     }
 ]
 
@@ -64,6 +66,7 @@ const MODULES = [
 
 export const ListLeftMenu = () => {
     const location = useLocation();
+    const { t } = useTranslation();
 
     return <List>
 
@@ -73,13 +76,13 @@ export const ListLeftMenu = () => {
                     <ListItemIcon>
                         {ROUTE.icon}
                     </ListItemIcon>
-                    <ListItemText secondary={ROUTE.text} />
+                    <ListItemText secondary={t(`left_menu.${ROUTE.text}`)} />
                 </ListItemButton>
             </ListItem>
         ))}
         <Divider />
         <List dense>
-            <ListSubheader>Modüller</ListSubheader>
+            <ListSubheader>{t('left_menu.Modules')}</ListSubheader>
             {MODULES.map((ROUTE, index) => (
                 <ListItem key={index} disablePadding component={Link} to={ROUTE.to} >
                     <ListItemButton selected={location.pathname == ROUTE.to}>

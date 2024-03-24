@@ -11,32 +11,35 @@ import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
 import { dispatch } from '../../store'
+import { useTranslation } from 'react-i18next';
 
 export default function SimpleBottomNavigation() {
- const location = useLocation();
+
+  const { t } = useTranslation();
+  const location = useLocation();
   const [value, setValue] = React.useState(location.pathname);
 
   const showCreateAppointment = () => {
-    dispatch.createAppointmentModal({show: true});
+    dispatch.createAppointmentModal({ show: true });
   }
 
   return (
-    <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, display: { xs: 'block', sm: 'none',  md: 'none', lg: 'none'}}} elevation={3}>
+    <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, display: { xs: 'block', sm: 'none', md: 'none', lg: 'none' } }} elevation={3}>
       <BottomNavigation
         showLabels
-        sx={{boxShadow: 2,}}
+        sx={{ boxShadow: 2, }}
         value={value}
         onChange={(event, newValue) => {
           setValue(newValue);
           console.log(newValue)
         }}
       >
-        <BottomNavigationAction value="/history"  component={Link} to="/history" label="Geçmiş" icon={<RestoreIcon />} />
-        <BottomNavigationAction value="/" component={Link} to="/" label="Randevular" icon={<CalendarMonthIcon />} />
-        <BottomNavigationAction label="Yeni Randevu" icon={<CalendarMonthIcon />}  onClick={ showCreateAppointment } />
+        <BottomNavigationAction value="/history" component={Link} to="/history" label={t('bottom_menu.History')} icon={<RestoreIcon />} />
+        <BottomNavigationAction value="/appointments" component={Link} to="/appointments" label={t('bottom_menu.Appointments')} icon={<CalendarMonthIcon />} />
+        <BottomNavigationAction label={t('Add Appointment')} icon={<CalendarMonthIcon />} onClick={showCreateAppointment} />
         {/*<BottomNavigationAction value="/limit-dates"  component={Link} to="/limit-dates" label="Tarih Kısıtlama" icon={<BlockIcon />} /> */}
-        <BottomNavigationAction value="/setting"  component={Link} to="/setting" label="Ayarlar" icon={<SettingsIcon />} />
-        <BottomNavigationAction value="/profile"  component={Link} to="/profile" label="Profil" icon={<UserIcon />} />
+        <BottomNavigationAction value="/setting" component={Link} to="/setting" label={t('bottom_menu.Settings')} icon={<SettingsIcon />} />
+        <BottomNavigationAction value="/profile" component={Link} to="/profile" label={t('bottom_menu.Profile')} icon={<UserIcon />} />
       </BottomNavigation>
     </Paper>
   );

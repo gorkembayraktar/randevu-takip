@@ -14,6 +14,7 @@ import EditSharpIcon from '@mui/icons-material/EditSharp';
 import AddCircleSharpIcon from '@mui/icons-material/AddCircleSharp';
 import CreateCustomer from '../components/modal/CreateCustomer';
 import EditCustomer from '../components/modal/EditCustomer';
+import { useTranslation } from 'react-i18next';
 
 const MEETING_STATUS = {
   1: "Tamamlandı",
@@ -42,9 +43,11 @@ const ROWS = [
 
 const Customers = () => {
 
+  const { t } = useTranslation();
 
-
-  useTitle("Müşteriler");
+  useTitle(
+    t('customer.Customers')
+  );
 
   const { success, alert } = useAlert();
   const [selectedRow, setSelectedRow] = useState(null);
@@ -57,7 +60,7 @@ const Customers = () => {
       data.filter(item => item.id !== selectedRow.id)
     );
 
-    success('Müşteri başarılı şekilde silindi');
+    success(t('customer.Customer successfully deleted'));
     setSelectedRow(null);
 
   };
@@ -93,26 +96,26 @@ const Customers = () => {
 
   const columns = [
 
-    { field: 'id', headerName: 'ID', width: 100 },
-    { field: 'fullname', headerName: 'Adı Soyadı', width: 150 },
-    { field: 'email', headerName: 'Email', width: 150 },
-    { field: 'phone', headerName: 'Telefon', width: 150, valueGetter: (params) => new AsYouType('TR').input(params.row.phone) },
-    { field: 'note', headerName: 'Not', minWidth: 150, flex: 1 },
-    { field: 'created_at', headerName: 'Oluşturma tarih', width: 150, valueGetter: (params) => '1 ocak' },
+    { field: 'id', headerName: t('customer.column.id'), width: 100 },
+    { field: 'fullname', headerName: t('customer.column.fullname'), width: 150 },
+    { field: 'email', headerName: t('customer.column.email'), width: 150 },
+    { field: 'phone', headerName: t('customer.column.phone'), width: 150, valueGetter: (params) => new AsYouType('TR').input(params.row.phone) },
+    { field: 'note', headerName: t('customer.column.note'), minWidth: 150, flex: 1 },
+    { field: 'created_at', headerName: t('customer.column.created_at'), width: 150, valueGetter: (params) => '1 ocak' },
 
     {
       field: "action",
-      headerName: "Aksiyon",
+      headerName: t('customer.column.action'),
       sortable: false,
       disableClickEventBubbling: true,
       renderCell: ({ row }) =>
-        <ButtonGroup variant="outlined" aria-label="Aksiyon">
-          <Tooltip title="Bu kaydı sil">
+        <ButtonGroup variant="outlined" aria-label={t('customer.column.action')}>
+          <Tooltip title={t('customer.btn_delete')}>
             <IconButton color="error" onClick={() => setSelectedRow(row)} >
               <GridDeleteIcon />
             </IconButton>
           </Tooltip>
-          <Tooltip title="Bu kaydı güncelle">
+          <Tooltip title={t('customer.btn_edit')}>
             <IconButton color="info" onClick={() => {
               setSelectedRow(row);
               setOpenEditCustomer(true);
@@ -136,7 +139,7 @@ const Customers = () => {
         >
 
           <Typography fontFamily="revert" fontWeight="bold">
-            Müşteriler
+            {t('customer.Customers')}
           </Typography>
           <Button
             variant="outlined"
@@ -144,7 +147,7 @@ const Customers = () => {
             startIcon={<AddCircleSharpIcon />}
             onClick={() => setOpenCreateCustomer(true)}
           >
-            Müşteri Oluştur
+            {t('customer.Create Customer')}
           </Button>
 
         </Stack>
@@ -161,8 +164,8 @@ const Customers = () => {
       <DeleteDialog
         props={{
           open: selectedRow !== null && !openEditCustomer,
-          title: "İşlem Onayı",
-          content: "Bu kaydı silmek istediğinizden emin misiniz?",
+          title: t('dialog.delete.title'),
+          content: t('dialog.delete.content'),
         }}
         close={() => setSelectedRow(null)} // Dialog kapatma fonksiyonu
         confirm={handleDelete} // Silme işlemini gerçekleştirme fonksiyonu

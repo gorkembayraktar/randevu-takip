@@ -180,9 +180,13 @@ const AppointmentItem = ({ item, next, prev, setRow }) => {
       <Box sx={{ fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: 1 }}>
         <PersonIcon sx={{ fontSize: 14 }} /> <Typography sx={{ fontSize: 14 }}>{item.fullname}</Typography>
         <SmartphoneIcon sx={{ fontSize: 14 }} /> <Typography sx={{ fontSize: 14 }}>{item.phone}</Typography>
-        <Tooltip title={`Not: ${item?.note ?? ''}`}>
-          <InfoIcon sx={{ fontSize: 14 }} />
-        </Tooltip>
+        {
+          item?.note &&
+          <Tooltip title={`Not: ${item?.note ?? ''}`}>
+            <InfoIcon sx={{ fontSize: 14 }} />
+          </Tooltip>
+        }
+
       </Box>
     </Grid>
     <Grid item sx={{ width: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

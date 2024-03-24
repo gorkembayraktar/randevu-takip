@@ -18,8 +18,9 @@ import DeleteDialog from '../components/modal/DeleteDialog';
 import { useState } from 'react';
 import CreateLimitDate from '../components/modal/CreateLimitDate';
 import { useAlert } from '../../hooks/useAlert';
+import { useTranslation } from 'react-i18next';
 
-dayjs.locale(locale)
+
 
 const limitDatesStatusProps = {
   aktif: {
@@ -67,7 +68,12 @@ for (let i = 0; i < 100; i++) {
 
 
 const LimitDates = () => {
-  useTitle("İzinli Tarihler");
+
+  const { t, i18n } = useTranslation();
+
+  useTitle(
+    t('limit_date.Off Dates')
+  );
 
   const { success, alert } = useAlert();
 
@@ -80,60 +86,63 @@ const LimitDates = () => {
   };
 
 
+  dayjs.locale(i18n.language)
+
   const columns = [
     {
       field: 'status',
-      headerName: 'Durum',
+      headerName: t('limit_date.column.status'),
       align: 'center',
       renderCell: (params) => <CustomIcon status={params.row.status} />
     },
-    { field: 'id', headerName: 'ID', minWidth: 70 },
-    { field: 'user', headerName: 'Kullanıcı', minWidth: 100, valueGetter: (params) => 'test' },
+    { field: 'id', headerName: t('limit_date.column.id'), minWidth: 70 },
+    { field: 'user', headerName: t('limit_date.column.user'), minWidth: 100, valueGetter: (params) => 'test' },
 
     {
       field: 'content',
-      headerName: 'Açıklama',
+      headerName: t('limit_date.column.explain'),
       flex: 1,
       minWidth: 100,
     },
     {
       field: 'created_at',
-      headerName: 'Oluşturma Tarihi',
+      headerName: t('limit_date.column.created_at'),
       minWidth: 100,
 
       valueGetter: (params) => dayjs(params.row.start).format('M MMMM YYYY, H:mm')
     },
     {
       field: 'start',
-      headerName: 'Başlangıç Tarihi',
+      headerName: t('limit_date.column.start_date'),
       width: 170,
 
       valueGetter: (params) => dayjs(params.row.start).format('M MMMM YYYY, H:mm')
     },
     {
-      field: 'end', headerName: 'Bitiş Tarihi', width: 170,
+      field: 'end', headerName: t('limit_date.column.end_date'), width: 170,
       valueGetter: (params) => dayjs(params.row.end).format('M MMMM YYYY, H:mm')
     },
     {
       align: 'center',
       field: 'total',
-      headerName: 'Toplam Gün',
+      headerName: t('limit_date.column.total'),
       renderCell: ({ row }) => <Chip label={dayjs(row.end).diff(row.start, 'day')} size='small' />
       // valueGetter: (params) => dayjs(params.row.end).diff(params.row.start, 'day') + 1
     },
     {
       field: "action",
-      headerName: "Aksiyon",
+      headerName: t('limit_date.column.action'),
       sortable: false,
       disableClickEventBubbling: true,
       renderCell: ({ row }) =>
-        <IconButton color="error" onClick={() => setSelectedRow(row)}>
-          <GridDeleteIcon />
-        </IconButton>
+        <Tooltip title={t('limit_date.btn_delete')}>
+          <IconButton color="error" onClick={() => setSelectedRow(row)}>
+            <GridDeleteIcon />
+          </IconButton>
+        </Tooltip>
     },
   ];
 
-  const mode = 'dark';
   return (
     <Box>
 
@@ -146,7 +155,7 @@ const LimitDates = () => {
         >
 
           <Typography fontFamily="revert" fontWeight="bold">
-            İzinli Tarihler
+            {t('limit_date.Off Dates')}
           </Typography>
           <Button
             variant="outlined"
@@ -154,7 +163,7 @@ const LimitDates = () => {
             startIcon={<AddCircleSharpIcon />}
             onClick={() => setOpenCreateModal(true)}
           >
-            Oluştur
+            {t('limit_date.btn_create')}
           </Button>
         </Stack>
       </Paper>
@@ -164,8 +173,8 @@ const LimitDates = () => {
       <DeleteDialog
         props={{
           open: selectedRow !== null,
-          title: "İşlem Onayı",
-          content: "Bu kaydı silmek istediğinizden emin misiniz?",
+          title: t('dialog.delete.title'),
+          content: t('dialog.delete.content'),
         }}
         close={() => setSelectedRow(null)} // Dialog kapatma fonksiyonu
         confirm={handleDelete} // Silme işlemini gerçekleştirme fonksiyonu

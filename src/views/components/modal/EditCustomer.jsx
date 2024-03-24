@@ -5,9 +5,12 @@ import { memo, useEffect, useState } from "react";
 import { useAlert } from "../../../hooks/useAlert";
 import { CenterModal, Title, Description, Footer } from './index'
 import { FourMp } from "@mui/icons-material";
+import { useTranslation } from "react-i18next";
 
 
 function EditCustomer({ open, close, data, onsuccess }) {
+
+    const { t } = useTranslation();
 
     const handleClose = () => close();
 
@@ -37,7 +40,7 @@ function EditCustomer({ open, close, data, onsuccess }) {
 
 
     const handleUpdate = () => {
-        success("Müşteri bilgileri güncellendi.");
+        success(t('customer.Customer information has been updated'));
         onsuccess({
             id: data.id,
             fullname: form.name,
@@ -55,14 +58,14 @@ function EditCustomer({ open, close, data, onsuccess }) {
     return <CenterModal open={open}>
         <Title>
             <Typography fontFamily="revert" fontWeight="bold" sx={{ textAlign: 'left', py: 2, px: 1 }}>
-                Müşteri Düzenle
+                {t('customer.Edit Customer')}
             </Typography>
         </Title>
         <Description>
             <TextField
                 required
                 id="outlined-required"
-                label="Ad Soyad"
+                label={t('customer.column.fullname')}
                 name="name"
                 size="small"
                 onChange={handleForm}
@@ -73,7 +76,7 @@ function EditCustomer({ open, close, data, onsuccess }) {
             <TextField
                 required
                 id="outlined-required"
-                label="Telefonu"
+                label={t('customer.column.phone')}
                 name="phone"
                 size="small"
                 onChange={handleForm}
@@ -84,7 +87,7 @@ function EditCustomer({ open, close, data, onsuccess }) {
             <TextField
                 required
                 id="outlined-required"
-                label="Email"
+                label={t('customer.column.email')}
                 name="email"
                 size="small"
                 onChange={handleForm}
@@ -95,7 +98,7 @@ function EditCustomer({ open, close, data, onsuccess }) {
 
             <TextField
                 multiline
-                label="Not"
+                label={t('customer.column.note')}
                 type="text"
                 rows={2}
                 value={form.note}
@@ -109,7 +112,7 @@ function EditCustomer({ open, close, data, onsuccess }) {
         <Footer>
             <ButtonGroup sx={{ float: 'right' }}>
                 <Button aria-label="delete" size="small" onClick={handleClose}>
-                    Vazgeç
+                    {t('cancel')}
                 </Button >
                 <Button
                     aria-label="delete"
@@ -118,7 +121,7 @@ function EditCustomer({ open, close, data, onsuccess }) {
                     color="success"
                     onClick={handleUpdate}
                 >
-                    Güncelle
+                    {t('update')}
                 </Button >
             </ButtonGroup>
         </Footer>

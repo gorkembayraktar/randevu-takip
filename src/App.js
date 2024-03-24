@@ -17,6 +17,7 @@ import { useSelector } from 'react-redux';
 import { getTheme } from './features/GlobalSlice';
 
 
+import './i18nextConf'
 
 
 export default function App() {
@@ -66,22 +67,24 @@ export default function App() {
 
  return (
     <ThemeProvider theme={theme}>
-     <CssBaseline />
-     <Box>
-     <Routes>
-          {
-          routes.map(route =>(
-            <Route key={route.path} path={route.path} element={
-                route.withoutSection ? 
-                  route.element 
-                :  
-                <AppLayout element={route.element} />
-            }  exact={route.exact}/>
-          ))
-          }
-      </Routes> 
+   
+        <CssBaseline />
+        <Box>
+        <Routes>
+              {
+              routes.map(route =>(
+                <Route key={route.path} path={route.path} element={
+                    route.withoutSection ? 
+                      route.element 
+                    :  
+                    <AppLayout element={route.element} />
+                }  exact={route.exact}/>
+              ))
+              }
+        </Routes> 
+        </Box>
+ 
      
-       </Box>
        
 
    </ThemeProvider>

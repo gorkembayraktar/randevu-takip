@@ -4,10 +4,17 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-dayjs.locale('tr');
+
 
 export default function EditHoliday({ open, close, data }) {
+
+
+    const { t, i18n } = useTranslation();
+    dayjs.locale(i18n.language);
+
+
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [error, setError] = useState('');
@@ -53,7 +60,7 @@ export default function EditHoliday({ open, close, data }) {
         <Title>
             <Paper elevation={1} sx={{ mb: 3, p: 2 }}>
                 <Typography fontFamily="revert" >
-                    Resmi Tatil Düzenle
+                    {t('holiday.Edit Public Holiday')}
                 </Typography>
             </Paper>
         </Title>
@@ -63,7 +70,7 @@ export default function EditHoliday({ open, close, data }) {
                 <Grid item xs={12}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
-                            label="Başlangıç Tarihi"
+                            label={t('holiday.Start Date')}
                             slotProps={{ textField: { size: 'small' } }}
                             name="date"
                             onChange={(date) => checkDate(date, 'startDate')}
@@ -78,7 +85,7 @@ export default function EditHoliday({ open, close, data }) {
                 <Grid item xs={12}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
-                            label="Bitiş Tarihi"
+                            label={t('holiday.End Date')}
                             slotProps={{ textField: { size: 'small' } }}
                             name="date"
                             onChange={(date) => checkDate(date, 'endDate')}
@@ -91,7 +98,7 @@ export default function EditHoliday({ open, close, data }) {
 
             </Grid>
             <Stack alignItems='flex-end'>
-                <FormControlLabel control={<Switch defaultChecked />} label="Her yıl yenile" />
+                <FormControlLabel control={<Switch defaultChecked />} label={t('holiday.Renew every year')} />
             </Stack>
 
 
@@ -106,12 +113,12 @@ export default function EditHoliday({ open, close, data }) {
         <Footer>
             <ButtonGroup sx={{ float: 'right' }}>
                 <Button aria-label="delete" size="small" onClick={handleClose}>
-                    Vazgeç
+                    {t('cancel')}
                 </Button >
                 <Button
                     onClick={create}
                     aria-label="delete" variant="outlined" size="small" color="success">
-                    Güncelle
+                    {t('update')}
                 </Button >
             </ButtonGroup>
         </Footer>

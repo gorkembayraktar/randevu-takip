@@ -12,13 +12,18 @@ import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { FormControlLabel, Switch } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ITheme } from '../../identify/IScopes';
 import { useSelector } from 'react-redux';
 import { getTheme } from '../../features/GlobalSlice';
 import { dispatch } from '../../store';
+import { useTranslation } from 'react-i18next';
 
 export default function AccountMenu() {
+
+  const { t } = useTranslation();
+
+  const location = useLocation();
 
   const theme = useSelector(getTheme);
 
@@ -43,7 +48,7 @@ export default function AccountMenu() {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32 }}>A</Avatar>
+            <Avatar sx={{ width: 32, height: 32 }}>G</Avatar>
           </IconButton>
         </Tooltip>
       </Box>
@@ -55,6 +60,7 @@ export default function AccountMenu() {
         PaperProps={{
           elevation: 0,
           sx: {
+            minWidth: 200,
             overflow: 'visible',
             filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
             mt: 1.5,
@@ -80,37 +86,44 @@ export default function AccountMenu() {
         }}
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+
       >
-        <MenuItem 
-          component={Link} 
-          to="/profile" 
+        <MenuItem
+          component={Link}
+          to="/profile"
           onClick={handleClose}
-          >
-          <Avatar /> Profil
+          selected={location.pathname == '/profile'}
+        >
+          <Avatar /> {t('profile_menu')}
         </MenuItem>
         <Divider />
-        <MenuItem onClick={handleClose}>
+        {
+          /**
+            <MenuItem onClick={handleClose} >
           <ListItemIcon>
             <PersonAdd fontSize="small" />
           </ListItemIcon>
           Add another account
         </MenuItem>
+           */
+        }
+
         <MenuItem >
-            <FormControlLabel
+          <FormControlLabel
             control={
-                <Switch 
-                name="antoine" 
+              <Switch
+                name="antoine"
                 checked={ITheme.dark == theme}
-                onClick={() => dispatch.setTheme(  ITheme.dark == theme ? ITheme.light : ITheme.dark ) } />
+                onClick={() => dispatch.setTheme(ITheme.dark == theme ? ITheme.light : ITheme.dark)} />
             }
-            label={ ITheme.dark == theme ? `Tema: Aydınlık Geç` : `Tema: Karanlık Geç`}
-            />
+            label={ITheme.dark == theme ? t('dark_theme') : t('light_theme')}
+          />
         </MenuItem>
         <MenuItem onClick={handleClose}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
-          Çıkış Yap
+          {t('logout')}
         </MenuItem>
       </Menu>
     </React.Fragment>

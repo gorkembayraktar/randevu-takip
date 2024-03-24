@@ -13,9 +13,13 @@ import { AppointmentStatus, get_fake_appointment, setHours } from "../../../data
 import { useAlert } from "../../../hooks/useAlert";
 
 import { CenterModal, Title, Description, Footer } from './index'
+import { useTranslation } from "react-i18next";
 
 
 function EditAppointment() {
+
+    const { t } = useTranslation();
+
     const { open, appointmentId } = useSelector(getEditAppointmentModal);
     // for dev
     const appointments = useSelector(getAppointments)
@@ -39,14 +43,14 @@ function EditAppointment() {
                 }
             });
             handleClose();
-            success('Başarılı şekilde güncellendi.');
+            success(t('Updated successfully'));
         }
     }
 
     const handleDelete = () => {
         if (data?.id) {
             dispatch.removeAppointment(data.id);
-            success("Başarılı şekilde silindi.");
+            success(t('Successfully deleted'));
             handleClose();
         }
     }
@@ -55,7 +59,7 @@ function EditAppointment() {
         if (appointmentId > 0) {
             const find = appointments.find(a => a.id == appointmentId);
             if (!find) {
-                error(`${appointmentId} numaralı kayıt bulunamadı.`);
+                error(t('record_number_not_found', appointmentId));
                 handleClose();
                 return;
             }
@@ -84,7 +88,7 @@ function EditAppointment() {
     return <CenterModal open={open}>
         <Title>
             <Typography fontFamily="revert" fontWeight="bold" sx={{ textAlign: 'left', py: 2, px: 1 }}>
-                Randevu Düzenle
+                {t('customer.Edit Customer')}
             </Typography>
         </Title>
         <Description>
@@ -94,7 +98,7 @@ function EditAppointment() {
                     <TextField
                         required
                         id="outlined-required"
-                        label="Adı Soyadı"
+                        label={t('customer.column.fullname')}
                         fullWidth
                         value={data?.name}
                         onChange={handleForm}
@@ -106,7 +110,7 @@ function EditAppointment() {
                     <TextField
                         required
                         id="outlined-required"
-                        label="Telefonu"
+                        label={t('customer.column.phone')}
                         name="phone"
                         onChange={handleForm}
                         value={data?.phone}
@@ -118,7 +122,7 @@ function EditAppointment() {
                     <TextField
                         required
                         id="outlined-required"
-                        label="Email"
+                        label={t('customer.column.email')}
                         name="email"
                         type="email"
                         onChange={handleForm}
@@ -130,7 +134,7 @@ function EditAppointment() {
                 <Grid item xs={6}>
                     <LocalizationProvider dateAdapter={AdapterDayjs} >
                         <DatePicker
-                            label="Randevu Tarihi"
+                            label={t('Appointment Date')}
                             name="date"
                             value={data?.date && dayjs(data.date)}
                             onChange={val => setFormItem('date', val)}
@@ -144,7 +148,7 @@ function EditAppointment() {
                     <TextField
                         required
                         id="outlined-required"
-                        label="Saat"
+                        label={t('Appointment Hour')}
                         type="time"
                         fullWidth
                         value={data?.time}
@@ -158,7 +162,7 @@ function EditAppointment() {
                 <Grid item xs={12}>
                     <TextField
                         multiline
-                        label="Not"
+                        label={t('Note')}
                         type="text"
                         rows={2}
                         fullWidth
@@ -171,7 +175,7 @@ function EditAppointment() {
 
                 <Grid item xs={12}>
                     <FormControl fullWidth size="small">
-                        <InputLabel id="demo-simple-select-label">Durum</InputLabel>
+                        <InputLabel id="demo-simple-select-label">{t('history.column.status')}</InputLabel>
                         <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
@@ -204,12 +208,12 @@ function EditAppointment() {
                         color="error"
                         onClick={handleDelete}
                     >
-                        İptal Et
+                        {t('delete')}
                     </Button >
                 }
 
                 <Button aria-label="delete" size="small" onClick={handleClose}>
-                    Vazgeç
+                    {t('cancel')}
                 </Button >
                 <Button
                     aria-label="delete"
@@ -218,7 +222,7 @@ function EditAppointment() {
                     color="success"
                     onClick={handleEdit}
                 >
-                    Güncelle
+                    {t('update')}
                 </Button >
             </ButtonGroup>
         </Footer>

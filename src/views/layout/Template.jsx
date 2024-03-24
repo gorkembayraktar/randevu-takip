@@ -22,10 +22,15 @@ import { Button } from '@mui/material';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 import { dispatch } from '../../store'
+import DropdownLanguage from '../components/DropdownLanguage';
+import { useTranslation } from 'react-i18next';
 
 const drawerWidth = 240;
 
 function Template(props) {
+
+  const { t } = useTranslation();
+
   const { window, element } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -101,9 +106,10 @@ function Template(props) {
             startIcon={<CalendarMonthIcon />}
             onClick={showCreateAppointment}
           >
-            Yeni Randevu
+            {t('btn_add_appointment')}
           </Button>
-          <Box sx={{ ml: 'auto' }}>
+          <Box sx={{ ml: 'auto', display: 'flex' }}>
+            <DropdownLanguage />
             <AccountMenu />
           </Box>
         </Toolbar>

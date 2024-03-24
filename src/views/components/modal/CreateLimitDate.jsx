@@ -4,8 +4,12 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function CreateLimitDate({ open, close }) {
+
+    const { t } = useTranslation();
+
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [error, setError] = useState('');
@@ -27,7 +31,9 @@ export default function CreateLimitDate({ open, close }) {
 
     useEffect(() => {
         if (startDate && endDate && endDate.isBefore(startDate)) {
-            setError('Bitiş tarihi, başlangıç tarihinden önce olamaz!');
+            setError(
+                t('The end date cannot be earlier than the start date!')
+            );
         } else {
             setError('');
         }
@@ -37,7 +43,7 @@ export default function CreateLimitDate({ open, close }) {
         <Title>
             <Paper elevation={1} sx={{ mb: 3, p: 2 }}>
                 <Typography fontFamily="revert" >
-                    İzinli Tarih Belirleyin
+                    {t('limit_date.Set a Off Date')}
                 </Typography>
             </Paper>
         </Title>
@@ -47,7 +53,7 @@ export default function CreateLimitDate({ open, close }) {
                 <Grid item xs={6}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
-                            label="Başlangıç Tarihi"
+                            label={t('limit_date.Start Date')}
                             slotProps={{ textField: { size: 'small' } }}
                             name="date"
                             minDate={dayjs().startOf('day')}
@@ -59,7 +65,7 @@ export default function CreateLimitDate({ open, close }) {
                     <TextField
                         required
                         id="outlined-required"
-                        label="Başlangıç Saati"
+                        label={t('limit_date.Start Hour')}
                         type="time"
                         size="small"
                         fullWidth
@@ -72,7 +78,7 @@ export default function CreateLimitDate({ open, close }) {
                 <Grid item xs={6}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
-                            label="Bitiş Tarihi"
+                            label={t('limit_date.End Date')}
                             slotProps={{ textField: { size: 'small' } }}
                             name="date"
                             minDate={dayjs().startOf('day')}
@@ -84,7 +90,7 @@ export default function CreateLimitDate({ open, close }) {
                     <TextField
                         required
                         id="outlined-required"
-                        label="Bitiş Saati"
+                        label={t('limit_date.End Hour')}
                         type="time"
                         size="small"
                         fullWidth
@@ -100,7 +106,7 @@ export default function CreateLimitDate({ open, close }) {
             }
             <TextField
                 multiline
-                label="Not"
+                label={t('limit_date.Note')}
                 type="text"
                 rows={2}
                 fullWidth
@@ -114,12 +120,12 @@ export default function CreateLimitDate({ open, close }) {
         <Footer>
             <ButtonGroup sx={{ float: 'right' }}>
                 <Button aria-label="delete" size="small" onClick={handleClose}>
-                    Vazgeç
+                    {t('cancel')}
                 </Button >
                 <Button
                     onClick={create}
                     aria-label="delete" variant="outlined" size="small" color="success">
-                    Oluştur
+                    {t('create')}
                 </Button >
             </ButtonGroup>
         </Footer>

@@ -1,8 +1,8 @@
 import Navigation from './Navigation'
 import CreateAppointment from "../components/modal/CreateAppointment"
 import EditAppointment from '../components/modal/EditAppointment'
-import Header from "./Header"
-import { Box } from "@mui/material"
+//import Header from "./Header"
+//import { Box } from "@mui/material"
 import ScrollToTop from "../components/ScrollToTop"
 import AppointmentCaraousel from '../components/AppointmentCarausel'
 import { SnackbarProvider } from 'notistack';

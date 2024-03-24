@@ -16,9 +16,11 @@ import { CenterModal, Title, Description, Footer } from './index'
 import PersonIcon from '@mui/icons-material/Person';
 import TextFieldSearchCustomer from "../TextFieldSearchCustomer";
 import CreateCustomer from "./CreateCustomer";
+import { useTranslation } from "react-i18next";
 
 
 function CreateAppointment() {
+    const { t } = useTranslation();
 
     const { show: open, date, hour, appointmentId } = useSelector(getCreateAppointmentModal);
 
@@ -61,7 +63,7 @@ function CreateAppointment() {
         if (appointmentId) {
             dispatch.removeAppointment(appointmentId);
         }
-        success("Randevu oluşturuldu.");
+        success(t('Appointment has been created'));
         console.log("handleCreate", appointmentId)
         handleClose();
     }
@@ -72,7 +74,7 @@ function CreateAppointment() {
         <CenterModal open={open}>
             <Title>
                 <Typography fontFamily="revert" fontWeight="bold" sx={{ textAlign: 'left', py: 2, px: 1 }}>
-                    Yeni Randevu Oluştur
+                    {t('Create Appointment')}
                 </Typography>
             </Title>
             <Description>
@@ -85,7 +87,7 @@ function CreateAppointment() {
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DatePicker
                                 value={form.date}
-                                label="Randevu Tarihi"
+                                label={t('Appointment Date')}
                                 slotProps={{ textField: { size: 'small' } }}
                                 name="date"
                                 minDate={dayjs().startOf('day')}
@@ -97,7 +99,7 @@ function CreateAppointment() {
                         <TextField
                             required
                             id="outlined-required"
-                            label="Saat"
+                            label={t('Appointment Hour')}
                             type="time"
                             size="small"
                             fullWidth
@@ -111,7 +113,7 @@ function CreateAppointment() {
                     <Grid item xs={12}>
                         <TextField
                             multiline
-                            label="Not"
+                            label={t('Note')}
                             type="text"
                             rows={2}
                             value={form.note}
@@ -129,7 +131,7 @@ function CreateAppointment() {
             <Footer>
                 <ButtonGroup sx={{ float: 'right' }}>
                     <Button aria-label="delete" size="small" onClick={handleClose}>
-                        Vazgeç
+                        {t('cancel')}
                     </Button >
                     <Button
                         aria-label="delete"
@@ -138,7 +140,7 @@ function CreateAppointment() {
                         color="success"
                         onClick={handleCreate}
                     >
-                        Oluştur
+                        {t('create')}
                     </Button >
                 </ButtonGroup>
             </Footer>

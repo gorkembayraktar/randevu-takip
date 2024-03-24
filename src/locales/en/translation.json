@@ -1,0 +1,165 @@
+{
+    "left_menu": {
+        "Dashboard": "Dashboard",
+        "Appointments": "Appointments",
+        "Customers": "Customers",
+        "History": "History",
+        "Off Dates": "Off Dates",
+        "Holiday": "Holiday",
+        "Settings": "Settings",
+        "Modules": "Modules"
+    },
+    "bottom_menu": {
+        "History": "History",
+        "Appointments": "Appointments",
+        "Settings": "Settings",
+        "Profile": "Profile"
+    },
+    "profile_menu": "Profile",
+    "dark_theme": "Dark",
+    "light_theme": "Light",
+    "logout": "Logout",
+    "profile": {
+        "title": "Profile About",
+        "btn_change_password": "Change Password",
+        "btn_edit": "Edit",
+        "btn_save": "Save",
+        "username": "Username",
+        "fullname": "Full Name",
+        "email": "Email"
+    },
+    "profile_password": {
+        "btn_change_password": "Change Password",
+        "btn_back": "User About",
+        "btn_save": "Save",
+        "password": "Password",
+        "new_password": "New Password",
+        "new_password2": "Confirm"
+    },
+    "settings": {
+        "title": "Settings",
+        "already_exists": "Such a time zone exists.",
+        "Weekly Appointment Hours": "Weekly Appointment Hours",
+        "There is no record": "There is no record.",
+        "Inactive": "Inactive",
+        "Active": "Active",
+        "Create Appointment Time": "Create Appointment Time",
+        "Appointment Date": "Appointment Date",
+        "Appointment Hour": "Appointment Hour",
+        "cancel": "Cancel",
+        "create": "Create"
+    },
+    "holiday": {
+        "Public Holidays": "Public Holidays",
+        "Add Public Holiday": "Add Public Holiday",
+        "Edit Public Holiday": "Edit Public Holiday",
+        "Start Date": "Start Date",
+        "End Date": "End Date",
+        "Renew every year": "Renew every year",
+        "btn_create": "Create",
+        "column": {
+            "status": "Status",
+            "id": "id",
+            "importance": "importance",
+            "holiday": "holiday",
+            "total": "Total",
+            "action": "Action"
+        },
+        "btn_edit": "Update record",
+        "btn_delete": "Delete record"
+    },
+    "limit_date": {
+        "Off Dates": "Off Dates",
+        "column": {
+            "status": "Status",
+            "id": "ID",
+            "user": "User",
+            "explain": "Explain",
+            "created_at": "Created At",
+            "start_date": "Start Date",
+            "end_date": "End Date",
+            "total": "Total",
+            "action": "Action"
+        },
+        "btn_delete": "Delete",
+        "btn_create": "Create",
+        "Set a Off Date": "Set a Off Date",
+        "Start Date": "Start Date",
+        "Start Hour": "Start Hour",
+        "End Date": "End Date",
+        "End Hour": "End Hour",
+        "Note": "Note",
+        "The end date cannot be earlier than the start date!": "The end date cannot be earlier than the start date!"
+    },
+    "history": {
+        "Appointments Processed": "Appointments Processed",
+        "Successfully deleted": "Successfully deleted",
+        "column": {
+            "status": "Status",
+            "id": "ID",
+            "fullname": "Full Name",
+            "phone": "Phone",
+            "created_at": "Created at",
+            "date": "Appointment Date",
+            "action": "Action"
+        },
+        "btn_delete": "Delete record"
+    },
+    "customer": {
+        "Customers": "Customers",
+        "Customer successfully deleted": "Customer successfully deleted",
+        "column": {
+            "id": "ID",
+            "fullname": "Fullname",
+            "email": "Email",
+            "phone": "Phone",
+            "note": "Note",
+            "created_at": "Created at",
+            "action": "Action"
+        },
+        "btn_delete": "Delete record",
+        "btn_edit": "Update record",
+        "Create Customer": "Create Customer",
+        "Customer created": "Customer created",
+        "Add Customer": "Add Customer",
+        "Customer information has been updated": "Customer information has been updated",
+        "Edit Customer": "Edit Customer"
+    },
+    "home": {
+        "Appointments": "Appointments",
+        "Do you want to cancel the Appointment Request?": "Do you want to cancel the Appointment Request?",
+        "Press the cancel button to confirm this action": "Press the cancel button to confirm this action"
+    },
+    "dialog": {
+        "delete": {
+            "title": "Transaction Confirmation",
+            "content": "Are you sure you want to delete this record?",
+            "btn_confirm": "Confirm",
+            "btn_cancel": "Cancel"
+        }
+    },
+    "DAYS": {
+        "Monday": "Monday",
+        "Tuesday": "Tuesday",
+        "Wednesday": "Wednesday",
+        "Thursday": "Thursday",
+        "Friday": "Friday",
+        "Saturday": "Saturday",
+        "Sunday": "Sunday"
+    },
+    "btn_add_appointment": "Add Appointment",
+    "Create Appointment": "Create Appointment",
+    "Customer not found": "Customer not found",
+    "Add Customer": "Add Customer",
+    "Choice Customer": "Choice Customer",
+    "Appointment Hour": "Appointment Hour",
+    "Appointment Date": "Appointment Date",
+    "Appointment has been created": "Appointment has been created",
+    "Updated successfully": "Updated successfully",
+    "record_number_not_found": "Record number {0} not found",
+    "Note": "Note",
+    "cancel": "Cancel",
+    "create": "Create",
+    "update": "Update",
+    "delete": "Delete"
+}

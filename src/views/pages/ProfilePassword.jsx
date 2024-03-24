@@ -8,7 +8,8 @@ import SaveIcon from '@mui/icons-material/Save';
 import { Link } from 'react-router-dom';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-
+import { useTranslation } from 'react-i18next';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
@@ -21,7 +22,7 @@ const Item = styled(Paper)(({ theme }) => ({
 const ProfilePassword = () => {
 
   useTitle("Şifre Değiştir");
-
+  const { t } = useTranslation();
 
 
   return (
@@ -29,7 +30,7 @@ const ProfilePassword = () => {
       <Grid item md={6}>
         <Item>
           <Typography fontFamily="revert" fontWeight="bold" sx={{ textAlign: 'left', m: 2 }}>
-            Şifre Değiştir
+            {t('profile_password.btn_change_password')}
           </Typography>
           <Divider sx={{ my: 1 }} />
 
@@ -41,7 +42,7 @@ const ProfilePassword = () => {
             <Grid item>
               <Link to="/profile">
                 <Button variant="text" size='small'>
-                  Kullanıcı bilgileri
+                  <ArrowBackIosNewIcon color='default' />
                 </Button>
               </Link>
             </Grid>
@@ -51,7 +52,7 @@ const ProfilePassword = () => {
                 startIcon={<SaveIcon />}
                 onClick={() => null}
               >
-                Şifre güncelle
+                {t('profile_password.btn_save')}
               </Button>
 
             </Grid>
@@ -65,12 +66,13 @@ const ProfilePassword = () => {
 }
 
 const SectionProfile = () => {
+  const { t } = useTranslation();
 
   return (
     <Grid container spacing={1} justify="start" alignItems="center">
       <Grid item md={3}>
         <Typography variant="body">
-          Mevcut Şifreniz
+          {t('profile_password.password')}
         </Typography>
       </Grid>
       <Grid item md={9}>
@@ -78,7 +80,7 @@ const SectionProfile = () => {
       </Grid>
       <Grid item md={3}>
         <Typography variant="body">
-          Yeni Şifreniz
+          {t('profile_password.new_password')}
         </Typography>
       </Grid>
       <Grid item md={9}>
@@ -86,7 +88,7 @@ const SectionProfile = () => {
       </Grid>
       <Grid item md={3}>
         <Typography variant="body">
-          Yeni Şifreniz Onay
+          {t('profile_password.new_password2')}
         </Typography>
       </Grid>
       <Grid item md={9}>

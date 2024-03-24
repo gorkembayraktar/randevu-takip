@@ -4,8 +4,10 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function CreateHoliday({ open, close }) {
+    const { t } = useTranslation();
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [error, setError] = useState('');
@@ -37,7 +39,7 @@ export default function CreateHoliday({ open, close }) {
         <Title>
             <Paper elevation={1} sx={{ mb: 3, p: 2 }}>
                 <Typography fontFamily="revert" >
-                    Resmi Tatil Ekleyin
+                    {t('holiday.Add Public Holiday')}
                 </Typography>
             </Paper>
         </Title>
@@ -47,7 +49,7 @@ export default function CreateHoliday({ open, close }) {
                 <Grid item xs={12}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
-                            label="Başlangıç Tarihi"
+                            label={t('holiday.Start Date')}
                             slotProps={{ textField: { size: 'small' } }}
                             name="date"
                             minDate={dayjs().startOf('day')}
@@ -62,7 +64,7 @@ export default function CreateHoliday({ open, close }) {
                 <Grid item xs={12}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
-                            label="Bitiş Tarihi"
+                            label={t('holiday.End Date')}
                             slotProps={{ textField: { size: 'small' } }}
                             name="date"
                             minDate={dayjs().startOf('day')}
@@ -75,7 +77,7 @@ export default function CreateHoliday({ open, close }) {
 
             </Grid>
             <Stack alignItems='flex-end'>
-                <FormControlLabel control={<Switch defaultChecked />} label="Her yıl yenile" />
+                <FormControlLabel control={<Switch defaultChecked />} label={t('holiday.Renew every year')} />
             </Stack>
 
 
@@ -90,12 +92,12 @@ export default function CreateHoliday({ open, close }) {
         <Footer>
             <ButtonGroup sx={{ float: 'right' }}>
                 <Button aria-label="delete" size="small" onClick={handleClose}>
-                    Vazgeç
+                    {t('cancel')}
                 </Button >
                 <Button
                     onClick={create}
                     aria-label="delete" variant="outlined" size="small" color="success">
-                    Oluştur
+                    {t('create')}
                 </Button >
             </ButtonGroup>
         </Footer>

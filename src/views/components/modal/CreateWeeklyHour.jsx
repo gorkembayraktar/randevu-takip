@@ -1,13 +1,16 @@
-import { Box, Button, ButtonGroup, Divider, Grid, Modal, TextField, Typography, FormControl, InputLabel, Select, MenuItem, Alert } from "@mui/material";
+import { Box, Button, ButtonGroup, Divider, Grid, Modal, TextField, Typography, FormControl, InputLabel, Select, MenuItem, Alert, Paper } from "@mui/material";
 import { useEffect, useState } from "react";
 
 
 import { DAYS, DAY_KEYS } from '../../../data/constant'
 
 import { CenterModal, Title, Description, Footer } from './index'
+import { useTranslation } from "react-i18next";
 
 
 export default function CreateWeeklyHour({ createWeeklyHourModal, setCreateWeeklyHourModal, onCreate }) {
+
+    const { t } = useTranslation();
 
     const { open } = createWeeklyHourModal;
 
@@ -23,20 +26,25 @@ export default function CreateWeeklyHour({ createWeeklyHourModal, setCreateWeekl
 
     return <CenterModal open={open}>
         <Title>
-            <Alert sx={{ mb: 1 }} severity="info" variant="filled">Randevu Saati Oluştur</Alert>
+
+            <Typography fontFamily="revert" sx={{ mb: 3, p: 2 }}>
+                {t('settings.Create Appointment Time')}
+            </Typography>
+
         </Title>
         <Description>
             <FormControl fullWidth sx={{ mb: 2 }}>
-                <InputLabel id="demo-simple-select-standard-label">Randevu Günü</InputLabel>
+                <InputLabel id="demo-simple-select-standard-label">{t('settings.Appointment Date')}</InputLabel>
                 <Select
                     labelId="demo-simple-select-standard-label"
                     id="demo-simple-select-standard"
                     value={selectDay}
                     onChange={(e) => setSelectDay(e.target.value)}
+                    size="small"
                 >
                     {
                         DAY_KEYS.map(day => (
-                            <MenuItem value={day}>{DAYS[day]}</MenuItem>
+                            <MenuItem value={day}>{t(`DAYS.${DAYS[day]}`)}</MenuItem>
                         ))
                     }
 
@@ -45,11 +53,12 @@ export default function CreateWeeklyHour({ createWeeklyHourModal, setCreateWeekl
             <TextField
                 required
                 id="outlined-required"
-                label="Saat"
+                label={t('settings.Appointment Hour')}
                 type="time"
                 value={hour}
                 onChange={(e) => setHour(e.target.value)}
                 fullWidth
+                size="small"
                 sx={{ mb: 1 }}
             />
 
@@ -57,12 +66,12 @@ export default function CreateWeeklyHour({ createWeeklyHourModal, setCreateWeekl
         <Footer>
             <ButtonGroup sx={{ float: 'right' }}>
                 <Button aria-label="delete" size="small" onClick={handleClose}>
-                    Vazgeç
+                    {t('settings.cancel')}
                 </Button >
                 <Button
                     onClick={() => onCreate({ day: selectDay, hour })}
                     aria-label="delete" variant="outlined" size="small" color="success">
-                    Oluştur
+                    {t('settings.create')}
                 </Button >
             </ButtonGroup>
         </Footer>
