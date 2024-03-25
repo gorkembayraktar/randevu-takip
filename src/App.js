@@ -22,6 +22,7 @@ import { getTheme } from './features/GlobalSlice';
 import './i18nextConf'
 import History from './History';
 import {ProtectedRoute} from './ProtectedRoute'
+import { SnackbarProvider } from 'notistack';
 
 
 export default function App() {
@@ -73,32 +74,33 @@ export default function App() {
 
  return (
     <ThemeProvider theme={theme}>
-   
-        <CssBaseline />
-        <Box>
-        <Routes>
-              {
-              routes.map(route =>(
-                
-                  <Route key={route.path} path={route.path} element={
-                    <ProtectedRoute enable={route.auth}>
-                     { route.withoutSection ? 
-                        route.element 
-                      :  
-                      <AppLayout element={route.element} />
-                     }
-                    </ProtectedRoute>
-                }  exact={route.exact}/>
+        <SnackbarProvider maxSnack={3}>
+          <CssBaseline />
+          <Box>
+          <Routes>
+                {
+                routes.map(route =>(
+                  
+                    <Route key={route.path} path={route.path} element={
+                      <ProtectedRoute enable={route.auth}>
+                      { route.withoutSection ? 
           
-                
-              ))
-              }
-        </Routes> 
-        </Box>
+                          route.element 
+                        :  
+                        <AppLayout element={route.element} />
+                      }
+                      </ProtectedRoute>
+                  }  exact={route.exact}/>
+            
+                  
+                ))
+                }
+          </Routes> 
+          </Box>
  
      
        
-
+      </SnackbarProvider>
    </ThemeProvider>
  );
   

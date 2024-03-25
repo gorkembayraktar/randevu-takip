@@ -4,6 +4,7 @@ import { getLocalStorage, setLocalStorage, removeLocalStorage } from '../utils/l
 
 const initialState = {
    user: getLocalStorage('user', null),
+   mustLogin: false
 };
 
 
@@ -19,12 +20,17 @@ export const authSlice = createSlice({
     logout: (state, action) => {
       removeLocalStorage('user');
       state.user = null;
+    },
+    mustLogin: (state, action) => {
+      state.mustLogin = action.payload;
     }
   },
 });
 
-export const { login, logout } = authSlice.actions;
+export const { login, logout, mustLogin } = authSlice.actions;
 
 export const getUser = (state) => state.auth.user;
+
+export const getMustLogin = (state) => state.auth.mustLogin;
 
 export default authSlice.reducer;

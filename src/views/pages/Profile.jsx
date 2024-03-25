@@ -2,11 +2,13 @@
 import { Button, Divider, Grid, Paper, TextField, Typography } from '@mui/material';
 import { useTitle } from '../../hooks/useTitle'
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { getProfileInfo } from '../../api';
+import { useAlert } from '../../hooks/useAlert';
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
@@ -20,9 +22,49 @@ const Profile = () => {
 
   useTitle("Profil");
 
+  const { success, error } = useAlert();
+
   const { t } = useTranslation();
 
   const [editable, setEditable] = useState(false);
+  const [data, setData] = useState(null);
+  const [form, setForm] = useState({
+    username: '',
+    name: '',
+    email: ''
+  });
+
+  const change = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    })
+
+    console.log(e.target.name)
+
+  }
+
+  const save = () => {
+
+
+    success('test');
+    //setEditable(false);
+
+  }
+
+  useEffect(() => {
+    getProfileInfo().then(data => {
+      setData(data);
+      setForm({
+        ...form,
+        name: data.name,
+        username: data.username,
+        email: data.email
+      });
+    }).catch(function (e) {
+      //
+    });
+  }, [])
 
 
   return (
@@ -34,7 +76,7 @@ const Profile = () => {
           </Typography>
           <Divider sx={{ my: 1 }} />
 
-          <SectionProfile editable={editable} />
+          <SectionProfile editable={editable} form={form} change={change} />
 
           <Divider sx={{ mt: 1 }} />
           <Grid container justifyContent="space-between" sx={{ mt: 2 }}>
@@ -57,7 +99,7 @@ const Profile = () => {
                   </Button> :
                   <Button variant="contained" color="success" sx={{ color: 'white' }} size='small'
                     startIcon={<SaveIcon />}
-                    onClick={() => setEditable(false)}
+                    onClick={save}
                   >
                     {t('profile.btn_save')}
                   </Button>
@@ -73,7 +115,7 @@ const Profile = () => {
   );
 }
 
-const SectionProfile = ({ editable }) => {
+const SectionProfile = ({ editable, form, change }) => {
 
   const { t } = useTranslation();
 
@@ -88,7 +130,9 @@ const SectionProfile = ({ editable }) => {
         <TextField
           hiddenLabel
           id="filled-hidden-label-small"
-          defaultValue="test"
+          value={form.username}
+          name='username'
+          onChange={change}
           variant={!editable ? 'standard' : 'outlined'}
           InputProps={{ disableUnderline: !editable }}
           size="small"
@@ -105,9 +149,11 @@ const SectionProfile = ({ editable }) => {
         <TextField
           hiddenLabel
           id="filled-hidden-label-small"
+          name="name"
           variant={!editable ? 'standard' : 'outlined'}
           InputProps={{ disableUnderline: !editable }}
-          defaultValue="test"
+          value={form.name}
+          onChange={change}
           size="small"
           fullWidth
           disabled={!editable}
@@ -125,7 +171,9 @@ const SectionProfile = ({ editable }) => {
           id="filled-hidden-label-small"
           variant={!editable ? 'standard' : 'outlined'}
           InputProps={{ disableUnderline: !editable }}
-          defaultValue="test"
+          value={form.email}
+          onChange={change}
+          name='email'
           size="small"
           fullWidth
           disabled={!editable}

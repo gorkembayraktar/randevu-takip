@@ -136,6 +136,11 @@
             "content": "Bu kaydı silmek istediğinizden emin misiniz?",
             "btn_confirm": "Onayla",
             "btn_cancel": "İptal"
+        },
+        "must_login": {
+            "title": "Oturumunuz Sonlandı",
+            "content": "Lütfen tekrardan giriş yapınız",
+            "confirm": "Onayla"
         }
     },
     "DAYS": {

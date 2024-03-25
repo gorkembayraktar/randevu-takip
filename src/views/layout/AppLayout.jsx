@@ -5,8 +5,8 @@ import EditAppointment from '../components/modal/EditAppointment'
 //import { Box } from "@mui/material"
 import ScrollToTop from "../components/ScrollToTop"
 import AppointmentCaraousel from '../components/AppointmentCarausel'
-import { SnackbarProvider } from 'notistack';
 import Template from "./Template"
+import MustLoginModal from '../components/modal/MustLoginModal'
 export const AppLayout = ({ element }) => {
 
     /*
@@ -20,12 +20,13 @@ export const AppLayout = ({ element }) => {
         <Navigation />
     </>
     */
-    return <SnackbarProvider maxSnack={3}>
+    return <>
         <ScrollToTop />
         <Template element={element} />
         <CreateAppointment />
         <EditAppointment />
         <AppointmentCaraousel />
         <Navigation />
-    </SnackbarProvider>
+        <MustLoginModal />
+    </>
 }
