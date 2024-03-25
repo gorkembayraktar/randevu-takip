@@ -26,7 +26,9 @@
         "btn_save": "Kaydet",
         "username": "Kullanıcı Adı",
         "fullname": "Ad Soyad",
-        "email": "E-posta"
+        "email": "E-posta",
+        "success": "Başarılı şekilde güncellendi",
+        "error": "Bir sorun oluştu."
     },
     "profile_password": {
         "btn_change_password": "Şifre Değiştir",
@@ -166,5 +168,6 @@
     "cancel": "İptal",
     "create": "Oluştur",
     "update": "Güncelle",
-    "delete": "Sil"
+    "delete": "Sil",
+    "error": "Bir sorun oluştu."
 }

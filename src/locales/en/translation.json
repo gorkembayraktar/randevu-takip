@@ -26,7 +26,9 @@
         "btn_save": "Save",
         "username": "Username",
         "fullname": "Full Name",
-        "email": "Email"
+        "email": "Email",
+        "success": "Successfully updated",
+        "error": "There is a problem."
     },
     "profile_password": {
         "btn_change_password": "Change Password",
@@ -166,5 +168,6 @@
     "cancel": "Cancel",
     "create": "Create",
     "update": "Update",
-    "delete": "Delete"
+    "delete": "Delete",
+    "error": "There is a problem."
 }

@@ -20,10 +20,13 @@ import { dispatch } from '../../store';
 import { useTranslation } from 'react-i18next';
 
 import { logout } from '../../store/utils'
+import { useAuth } from '../../hooks/useAuth';
 
 export default function AccountMenu() {
 
   const navigate = useNavigate();
+
+  const user = useAuth();
 
   const { t } = useTranslation();
 
@@ -59,7 +62,9 @@ export default function AccountMenu() {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32 }}>G</Avatar>
+            <Avatar sx={{ width: 32, height: 32 }}>
+              {user.name[0]?.toUpperCase()}
+            </Avatar>
           </IconButton>
         </Tooltip>
       </Box>

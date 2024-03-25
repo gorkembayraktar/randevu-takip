@@ -1,10 +1,6 @@
 import axios from "axios";
 import { useAuth } from "../hooks/useAuth";
-
-import History from '../History'
-
-import { logout, mustLogin } from '../store/utils'
-import {  useNavigate } from "react-router-dom";
+import { mustLogin } from '../store/utils'
 
 export const axiosInstance = axios.create({
     baseURL: process.env.REACT_APP_API_BASE_URL?.trimEnd('/'),
@@ -27,7 +23,7 @@ export const getProfileInfo = async () => {
     return axiosInstance.get("/profile").then(data => data.data).catch(unAuthorizeRedirect);
 }
 export const editProfileInfo = async (params) => {
-    return axiosInstance.post("/update", params).then(data => data.data).catch(unAuthorizeRedirect);
+    return axiosInstance.post("/profile/update", params).then(data => data.data).catch(unAuthorizeRedirect);
 }
 
 /*

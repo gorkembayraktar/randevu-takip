@@ -7,8 +7,15 @@ import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { getProfileInfo } from '../../api';
+import { editProfileInfo, getProfileInfo } from '../../api';
 import { useAlert } from '../../hooks/useAlert';
+import { useAuth } from '../../hooks/useAuth';
+
+import {
+  login as loginStore
+} from '../../store/utils'
+
+
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
@@ -26,12 +33,14 @@ const Profile = () => {
 
   const { t } = useTranslation();
 
+  const user = useAuth();
+
   const [editable, setEditable] = useState(false);
   const [data, setData] = useState(null);
   const [form, setForm] = useState({
-    username: '',
-    name: '',
-    email: ''
+    username: user.username,
+    name: user.name,
+    email: user.email
   });
 
   const change = (e) => {
@@ -47,24 +56,42 @@ const Profile = () => {
   const save = () => {
 
 
-    success('test');
-    //setEditable(false);
+    editProfileInfo({
+      username: form.username,
+      fullname: form.name,
+      email: form.email
+    }).then(
+      data => {
+        setData(data.data)
+        loginStore({
+          ...user,
+          ...data.data
+        })
+        setForm({
+          ...form,
+          name: data.data.name,
+          username: data.data.username,
+          email: data.data.email
+        });
+        success(t('profile.success'));
+        setEditable(false);
+      }).catch(() => {
+        error(t('profile.error'));
+      });
+
 
   }
 
+  /*
   useEffect(() => {
     getProfileInfo().then(data => {
       setData(data);
-      setForm({
-        ...form,
-        name: data.name,
-        username: data.username,
-        email: data.email
-      });
+     
     }).catch(function (e) {
       //
     });
   }, [])
+  */
 
 
   return (

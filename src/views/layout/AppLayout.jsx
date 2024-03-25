@@ -7,19 +7,29 @@ import ScrollToTop from "../components/ScrollToTop"
 import AppointmentCaraousel from '../components/AppointmentCarausel'
 import Template from "./Template"
 import MustLoginModal from '../components/modal/MustLoginModal'
+import { useEffect } from 'react'
+import { getProfileInfo } from '../../api'
+import { useAuth } from '../../hooks/useAuth'
+
+import {
+    login as loginStore
+} from '../../store/utils'
+
 export const AppLayout = ({ element }) => {
 
-    /*
-    return <>
-        <ScrollToTop />
-        <Header />
-        {element}
-        <Box sx={{height:100}}> </Box> 
-        <CreateAppointment />
-        <AppointmentCaraousel />
-        <Navigation />
-    </>
-    */
+    const user = useAuth();
+
+    useEffect(() => {
+
+        getProfileInfo().then(data => {
+            loginStore({
+                ...user,
+                ...data
+            })
+        }).catch(null);
+
+    }, [])
+
     return <>
         <ScrollToTop />
         <Template element={element} />
