@@ -12,14 +12,18 @@ import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { FormControlLabel, Switch } from '@mui/material';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ITheme } from '../../identify/IScopes';
 import { useSelector } from 'react-redux';
 import { getTheme } from '../../features/GlobalSlice';
 import { dispatch } from '../../store';
 import { useTranslation } from 'react-i18next';
 
+import { logout } from '../../store/utils'
+
 export default function AccountMenu() {
+
+  const navigate = useNavigate();
 
   const { t } = useTranslation();
 
@@ -35,6 +39,13 @@ export default function AccountMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const logoutHandle = () => {
+    logout();
+    navigate('/login');
+
+  }
+
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -119,7 +130,7 @@ export default function AccountMenu() {
             label={ITheme.dark == theme ? t('dark_theme') : t('light_theme')}
           />
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={logoutHandle}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>

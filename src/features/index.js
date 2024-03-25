@@ -1,4 +1,6 @@
 import GlobalReducer from './GlobalSlice'
+import AuthReducer from './AuthSlice'
 export {
-    GlobalReducer
+    GlobalReducer,
+    AuthReducer
 };

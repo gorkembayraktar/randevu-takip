@@ -10,8 +10,14 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import LockIcon from '@mui/icons-material/Lock';
 import { Alert, Button, Container, Typography } from "@mui/material";
 import Paper from '@mui/material/Paper';
-import { useNavigate, Navigate  } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 
+import {
+    login as loginStore
+} from '../../store/utils'
+
+import { login } from '../../api'
+import { useAuth } from '../../hooks/useAuth';
 
 
 
@@ -21,7 +27,7 @@ const Item = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(1),
     textAlign: 'center',
     color: theme.palette.text.secondary,
-  }));
+}));
 const style = {
     position: 'absolute',
     top: '50%',
@@ -34,6 +40,7 @@ const style = {
 export default function Login() {
 
 
+    const user = useAuth();
     const navigate = useNavigate();
     const [username, setUsername] = React.useState("");
     const [password, setPassword] = React.useState("");
@@ -41,62 +48,97 @@ export default function Login() {
 
     const [sending, setSending] = React.useState(false);
 
+    if (user) {
+        return <Navigate to='/dashboard' />
+    }
     const loginHandle = async () => {
-            setError('');
-            //setSending(true);
-            navigate('/');
+        setError('');
+        setSending(true);
+        login(username, password)
+            .then(data => {
+                // başarılı ise
+
+                loginStore({
+                    ...data.user,
+                    token: data.token
+                })
+                navigate('/dashboard');
+
+            }).catch(data => {
+
+                if (data?.response.status == 401) {
+                    setError(data.response.data.error);
+                }
+                else if (data.response && data.response.data) {
+                    setError(data.response.data.error);
+                } else if (data.code == 'ERR_NETWORK') {
+                    setError('Sunucu bağlantı hatası');
+                } else {
+                    setError('Bir sorun oluştu');
+                }
+            }).finally(() => {
+                setSending(false);
+            })
+
+
+
     }
 
 
-  return (
-    <Container dark sx={{ pt:3 }}  style={{minHeight:"80vh"}} >
-        <Item sx={{ maxWidth:300}} style={style}>
-        <Box sx={{ '& > :not(style)': { m: 1 }, display:'flex', flexDirection: 'column', }}  >
-        <Typography variant="h4" gutterBottom>
-            Randevu Takip
-        </Typography>
-        {
-            error &&
-            <Alert severity="error">{ error }</Alert>
-        }
-        
-        <FormControl variant="standard">
-            <InputLabel htmlFor="input-with-icon-adornment">
-            Kullanıcı Adı
-            </InputLabel>
-            <Input
-            value={username}
-            onChange={(e) => setUsername(e.target.value) }
-            id="input-with-icon-adornment"
-            startAdornment={
-                <InputAdornment position="start">
-                <AccountCircle />
-                </InputAdornment>
-            }
-            />
-        </FormControl>
-        <FormControl variant="standard">
-            <InputLabel htmlFor="input-with-icon-adornment">
-            Şifre
-            </InputLabel>
-            <Input
-            value={password}
-            onChange={(e) => setPassword(e.target.value)  }
-            type="password"
-            id="input-with-icon-adornment"
-            startAdornment={
-                <InputAdornment position="start">
-                <LockIcon />
-                </InputAdornment>
-            }
-            />
-        </FormControl>
-        <Button variant="outlined" onClick={loginHandle} disabled={sending}>
-            { sending ? 'Bekleniyor..' : 'Giriş yap'}
-        </Button>
+    return (
+        <Container dark sx={{ pt: 3 }} style={{ minHeight: "80vh" }} >
+            <Item sx={{ maxWidth: 300 }} style={style}>
+                <Box sx={{ '& > :not(style)': { m: 1 }, display: 'flex', flexDirection: 'column', }}  >
+                    <Typography variant="h4" gutterBottom>
+                        Randevu Takip
+                    </Typography>
+                    {
+                        error &&
+                        <Alert severity="error">{error}</Alert>
+                    }
 
-        </Box>
-        </Item>
-    </Container>
-  );
+                    <FormControl variant="standard">
+                        <InputLabel htmlFor="input-with-icon-adornment">
+                            Kullanıcı Adı
+                        </InputLabel>
+                        <Input
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            id="input-with-icon-adornment"
+                            startAdornment={
+                                <InputAdornment position="start">
+                                    <AccountCircle />
+                                </InputAdornment>
+                            }
+                        />
+                    </FormControl>
+                    <FormControl variant="standard">
+                        <InputLabel htmlFor="input-with-icon-adornment">
+                            Şifre
+                        </InputLabel>
+                        <Input
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            type="password"
+                            id="input-with-icon-adornment"
+                            startAdornment={
+                                <InputAdornment position="start">
+                                    <LockIcon />
+                                </InputAdornment>
+                            }
+                            onKeyDown={(ev) => {
+                                if (ev.key === 'Enter') {
+                                    loginHandle();
+                                }
+                            }}
+                        />
+                    </FormControl>
+                    <Button variant="outlined" onClick={loginHandle} disabled={sending}>
+                        {sending ? 'Bekleniyor..' : 'Giriş yap'}
+                    </Button>
+
+                </Box>
+            </Item>
+        </Container>
+    );
 }

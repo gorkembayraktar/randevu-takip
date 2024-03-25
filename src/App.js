@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Routes,
   Route,
+  useNavigate,
 } from "react-router-dom";
 
 
@@ -17,10 +18,15 @@ import { useSelector } from 'react-redux';
 import { getTheme } from './features/GlobalSlice';
 
 
+
 import './i18nextConf'
+import History from './History';
+import {ProtectedRoute} from './ProtectedRoute'
 
 
 export default function App() {
+
+  History.navigate = useNavigate()
 
   const mode = useSelector(getTheme);
    
@@ -73,12 +79,18 @@ export default function App() {
         <Routes>
               {
               routes.map(route =>(
-                <Route key={route.path} path={route.path} element={
-                    route.withoutSection ? 
-                      route.element 
-                    :  
-                    <AppLayout element={route.element} />
+                
+                  <Route key={route.path} path={route.path} element={
+                    <ProtectedRoute enable={route.auth}>
+                     { route.withoutSection ? 
+                        route.element 
+                      :  
+                      <AppLayout element={route.element} />
+                     }
+                    </ProtectedRoute>
                 }  exact={route.exact}/>
+          
+                
               ))
               }
         </Routes> 

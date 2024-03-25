@@ -26,13 +26,13 @@ export const routes = [
         path:'/dashboard',
         element:<Dashboard />,
         exact:true,
-        auth:false
+        auth:true
     },
     {
         path:'/appointments',
         element:<Home/>,
         exact:true,
-        auth:false
+        auth:true
     },
     {
         path:'/login',
@@ -45,49 +45,49 @@ export const routes = [
         path:'/customers',
         element:<Customers/>,
         exact:true,
-        auth:false
+        auth:true
     },
     {
         path:'/setting',
         element:<Setting/>,
         exact:true,
-        auth:false
+        auth:true
     },
     {
         path:'/history',
         element:<History />,
         exact:true,
-        auth:false
+        auth:true
     },
     {
         path:'/limit-dates',
         element:<LimitDates />,
         exact:true,
-        auth:false
+        auth:true
     },
     {
         path:'/holiday',
         element:<Holiday />,
         exact:true,
-        auth:false
+        auth:true
     },
     {
         path:'/profile',
         element:<Profile />,
         exact:true,
-        auth:false
+        auth:true
     },
     {
         path:'/profile/password',
         element:<ProfilePassword />,
         exact:true,
-        auth:false
+        auth:true
     },
     {
         path:'/modules/telegram',
         element: <Telegram />,
         exact:true,
-        auth:false
+        auth:true
     },
     {
         //404 page navigate to main page
